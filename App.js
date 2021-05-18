@@ -22,6 +22,7 @@ import HomeContainer from './src/container/HomeContainer/HomeContainer';
 ////////////////////////////////////////////////////////////
 
 import  DrawerContainer  from './src/container/DrawerContainer/DrawerContainer';
+import LoginHomeContainer from './src/container/LoginHomeContainer/LoginHomeContainer';
 
 
 
@@ -46,6 +47,8 @@ const Drawers = () => {
    return (
       <Drawer.Navigator drawerContent={(props) => <DrawerContainer {...props} />}>
          
+         <Drawer.Screen name="HomeContainer" component={HomeContainer} />
+         
 
          
       </Drawer.Navigator>
@@ -63,8 +66,11 @@ const App = () => {
             }}>
             
             <Stack.Screen name="Login" component={LoginContainer} />
-            <Stack.Screen name="HomeContainer" component={HomeContainer} />
+            
             <Stack.Screen name="Drawers" component={Drawers} />
+            <Stack.Screen name="LoginHomeContainer" component={LoginHomeContainer} />
+            
+            
             
             
      

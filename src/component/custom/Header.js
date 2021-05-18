@@ -24,7 +24,8 @@ const Header = props => {
       
       style={styles.iconBack}
       onPress={() => props.onPressBack()}>
-      <Icon name="arrow-left" size={Sizes.s40} color={colors.white} />
+      <Image source={Images.arrow} style={{width: Sizes.s50,
+        height: Sizes.s50,}} />
     </TouchableOpacity>
   );
   const iconMenu = () => (
@@ -32,24 +33,43 @@ const Header = props => {
       
       style={styles.iconBack}
       onPress={() => props.onPressMenu()}>
-      <Icon name="bars" size={Sizes.s40} color={colors.white} />
+      <Image source={require('../../res/image/img/list.png')} style={{width: Sizes.s50,
+        height: Sizes.s50,}} />
     </TouchableOpacity>
   );
   const iconRight = () => (
-    <TouchableOpacity
-      style={{
-        width: Sizes.s80,
+    <View style={{
+        
         height: Sizes.s80,
         marginHorizontal: Sizes.s20,
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection:'row',
         
-      }}
-      onPress={() => props.iconRight()}>
         
-        <Icon name="plus-circle" size={Sizes.s50} color={colors.white} />
+      }}>
+         <TouchableOpacity
+     
+      onPress={() => props.onPressRightVN()}>
+        <Image source={require('../../res/image/img/flag_vietnam.png')} style={{width: Sizes.s50, 
+        height: Sizes.s50,}} />
+        
+        
+        
       
     </TouchableOpacity>
+    <TouchableOpacity
+      
+      onPress={() => props.onPressRightEN()}>
+        
+        <Image source={require('../../res/image/img/flag_english.png')} style={{width: Sizes.s50,marginLeft:10,
+        height: Sizes.s50,}} />
+        
+        
+      
+    </TouchableOpacity>
+    </View>
+ 
   );
   
   const textRight = () => (
@@ -111,7 +131,8 @@ export default Header;
 Header.defaultProps = {
   onPressBack: () => {},
   onPressMenu: () => {},
-  iconRight :()=>{},
+  onPressRightVN :()=>{},
+  onPressRightEN :()=>{},
   onPressNavigate:()=>{},
   onPressImage :()=>{}
 };
