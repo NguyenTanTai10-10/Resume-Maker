@@ -13,7 +13,9 @@ const Login = (props) => {
       
    }
    const OnPessGG=()=>{
-      Alert.alert('Đang được cập nhập')
+      
+      
+      props.navigation.navigate('ListCVContainer')
       
    }
    const OnPessAP=()=>{

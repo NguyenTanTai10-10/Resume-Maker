@@ -17,10 +17,10 @@ const Home = (props) => {
         onPressRightVN={() => console.log('VN')}
         onPressRightEN={() => console.log('EN')}
       />
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{flex: 1 }} showsVerticalScrollIndicator={false} >
 
       
-      <View style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: 30,paddingTop:50, }}>
+      <View style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: 30,paddingTop:50,}}>
         <View style={{
           
           borderRadius: 10,
@@ -91,66 +91,81 @@ const Home = (props) => {
         </View>
       </View>
       <View style={{marginHorizontal: 30,marginVertical:20 ,}}>
-        <View style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
+        <TouchableOpacity 
+        onPress={()=>props.navigation.navigate('ResumeTitleComponent')}
+        
+        style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
-        <Text>Resume title</Text>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_resume_title.png')}/>
+        <Text style={{marginLeft:10}}>Resume Title</Text>
           </View>
           <View style={{justifyContent:"flex-end", alignItems:'flex-end',flex:0.2}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
-        </View>
-        <View style={{flexDirection:'row', marginVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
+        </TouchableOpacity>
+        <TouchableOpacity 
+        onPress={()=>props.navigation.navigate('ContactComponent')}
+        style={{flexDirection:'row', paddingVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
-        <Text>Resume title</Text>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_contact_information.png')}/>
+        <Text style={{marginLeft:10}}>Contact Information</Text>
           </View>
           <View style={{justifyContent:"flex-end", alignItems:'flex-end',flex:0.2}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
-        </View><View style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
+        </TouchableOpacity>
+        <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
-        <Text>Resume title</Text>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_basic_information.png')}/>
+        <Text style={{marginLeft:10}}>Basic Information</Text>
           </View>
           <View style={{justifyContent:"flex-end", alignItems:'flex-end',flex:0.2}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
-        </View><View style={{flexDirection:'row',marginVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
+        </TouchableOpacity>
+        <TouchableOpacity style={{flexDirection:'row',paddingVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
-        <Text>Resume title</Text>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_career_goals.png')}/>
+        <Text style={{marginLeft:10}}>Career Goals</Text>
           </View>
           <View style={{justifyContent:"flex-end", alignItems:'flex-end',flex:0.2}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
-        </View><View style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
+        </TouchableOpacity>
+        <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
-        <Text>Resume title</Text>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_education.png')}/>
+        <Text style={{marginLeft:10}}>Education</Text>
           </View>
           <View style={{justifyContent:"flex-end", alignItems:'flex-end',flex:0.2}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
-        </View><View style={{flexDirection:'row',marginVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
+        </TouchableOpacity>
+        <TouchableOpacity style={{flexDirection:'row',paddingVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
-        <Text>Resume title</Text>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_experiences.png')}/>
+        <Text style={{marginLeft:10}}>Experiences</Text>
           </View>
           <View style={{justifyContent:"flex-end", alignItems:'flex-end',flex:0.2}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
-        </View><View style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
+        </TouchableOpacity>
+        <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
-        <Text>Resume title</Text>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_skills.png')}/>
+        <Text style={{marginLeft:10}}>Skills</Text>
           </View>
           <View style={{justifyContent:"flex-end", alignItems:'flex-end',flex:0.2}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_yourr_resume_link.png')}/>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
-      <View style={{justifyContent:'center', alignItems:'center'}}>
+      <View style={{justifyContent:'center', alignItems:'center',marginBottom:60}}>
+        <TouchableOpacity style={{width:screenWidth/2 , height:50 , backgroundColor:'#FA8C16',justifyContent:'center', alignItems:'center', borderRadius:13}}>
+          <Text style={{color:'white', fontSize:17, fontWeight: '700',}}>
+            Export CV
+          </Text>
+        </TouchableOpacity>
 
       </View>
       </ScrollView>

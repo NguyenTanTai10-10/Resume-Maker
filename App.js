@@ -23,6 +23,12 @@ import HomeContainer from './src/container/HomeContainer/HomeContainer';
 
 import  DrawerContainer  from './src/container/DrawerContainer/DrawerContainer';
 import LoginHomeContainer from './src/container/LoginHomeContainer/LoginHomeContainer';
+import ListCVContainer from './src/container/ListCVContainer/ListCVContainer';
+import ResumeTitleComponent from './src/component/ResumeTitleComponent';
+import ContactComponent from './src/component/ContactComponent';
+
+
+
 
 
 
@@ -69,6 +75,12 @@ const App = () => {
             
             <Stack.Screen name="Drawers" component={Drawers} />
             <Stack.Screen name="LoginHomeContainer" component={LoginHomeContainer} />
+            <Stack.Screen name="ListCVContainer" component={ListCVContainer} />
+            <Stack.Screen name="ResumeTitleComponent" component={ResumeTitleComponent} />
+            <Stack.Screen name="ContactComponent" component={ContactComponent} />
+            {/* ResumeTitleComponent */}
+            {/* ListCVContainer */}
+            {/* ContactComponent */}
             
             
             

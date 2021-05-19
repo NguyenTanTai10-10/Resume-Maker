@@ -9,7 +9,7 @@ const Slider = () => {
     }
     const fomaHeight2 =(y)=>{
         const kq2 = 140-((y *140)/100)
-        console.log('kq2===',kq2);
+        
         return kq2
 
     }
