@@ -6,7 +6,7 @@ import Sizes from '../utils/Sizes'
 import ButtonChoose from './custom/ButtonChoose'
 import StatusBarView from './custom/StatusBarView'
 
-const ContactComponent = () => {
+const ContactComponent = (props) => {
     const [check, setCheck] = useState(false)
     return (
         <View style={{ flex: 1 }}>
