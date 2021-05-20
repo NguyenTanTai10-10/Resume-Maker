@@ -26,6 +26,11 @@ import LoginHomeContainer from './src/container/LoginHomeContainer/LoginHomeCont
 import ListCVContainer from './src/container/ListCVContainer/ListCVContainer';
 import ResumeTitleComponent from './src/component/ResumeTitleComponent';
 import ContactComponent from './src/component/ContactComponent';
+import BasicInfoComponent from './src/component/BasicInfoComponent';
+import LanguageComponent from './src/component/LanguageComponent';
+import EducationComponent from './src/component/EducationComponent';
+import ExperiencesComponent from './src/component/ExperiencesComponent';
+import SkillsComponent from './src/component/SkillsComponent';
 
 
 
@@ -78,9 +83,19 @@ const App = () => {
             <Stack.Screen name="ListCVContainer" component={ListCVContainer} />
             <Stack.Screen name="ResumeTitleComponent" component={ResumeTitleComponent} />
             <Stack.Screen name="ContactComponent" component={ContactComponent} />
+            <Stack.Screen name="BasicInfoComponent" component={BasicInfoComponent} />
+            <Stack.Screen name="LanguageComponent" component={LanguageComponent} />
+            <Stack.Screen name="EducationComponent" component={EducationComponent} />
+            <Stack.Screen name="ExperiencesComponent" component={ExperiencesComponent} />
+            <Stack.Screen name="SkillsComponent" component={SkillsComponent} />
+            {/* SkillsComponent */}
+            {/* ExperiencesComponent */}
+            {/* Education */}
             {/* ResumeTitleComponent */}
             {/* ListCVContainer */}
             {/* ContactComponent */}
+            {/* BasicInfoComponent */}
+            {/* LanguageComponent */}
             
             
             

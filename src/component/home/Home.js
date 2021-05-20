@@ -114,7 +114,11 @@ const Home = (props) => {
             <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
+        <TouchableOpacity 
+        // BasicInfoComponent
+        onPress={()=>props.navigation.navigate('BasicInfoComponent')}
+        
+        style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
             <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_basic_information.png')}/>
         <Text style={{marginLeft:10}}>Basic Information</Text>
@@ -123,16 +127,23 @@ const Home = (props) => {
             <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{flexDirection:'row',paddingVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
+        <TouchableOpacity 
+        // LanguageComponent
+        onPress={()=>props.navigation.navigate('LanguageComponent')}
+        
+        style={{flexDirection:'row',paddingVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
-            <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_career_goals.png')}/>
-        <Text style={{marginLeft:10}}>Career Goals</Text>
+            <Image style={{height:30, width:30}} source={require('../../res/image/img/translate.png')}/>
+        <Text style={{marginLeft:10}}>Language</Text>
           </View>
           <View style={{justifyContent:"flex-end", alignItems:'flex-end',flex:0.2}}>
             <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
+        <TouchableOpacity 
+        onPress={()=>props.navigation.navigate('EducationComponent')}
+        
+        style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
             <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_education.png')}/>
         <Text style={{marginLeft:10}}>Education</Text>
@@ -141,7 +152,11 @@ const Home = (props) => {
             <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{flexDirection:'row',paddingVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
+        <TouchableOpacity 
+        onPress={()=>props.navigation.navigate('ExperiencesComponent')}
+
+        
+        style={{flexDirection:'row',paddingVertical:15,borderBottomWidth:1, borderBottomColor:'#BFBFBF'}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
             <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_experiences.png')}/>
         <Text style={{marginLeft:10}}>Experiences</Text>
@@ -150,7 +165,11 @@ const Home = (props) => {
             <Image style={{height:30, width:30}} source={require('../../res/image/img/icon_empty_tick.png')}/>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
+        <TouchableOpacity
+        onPress={()=>props.navigation.navigate('SkillsComponent')}
+        
+        
+        style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor:'#BFBFBF',paddingVertical:15}}>
           <View style={{flexDirection:'row',flex:0.8 ,alignItems:'center'}}>
             <Image style={{height:30, width:30}} source={require('../../res/image/img/new_icon_skills.png')}/>
         <Text style={{marginLeft:10}}>Skills</Text>

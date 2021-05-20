@@ -15,14 +15,11 @@ const ResumeTitleComponent = (props) => {
     const onChangeText = (text) => {
         
         if(text.length ===0 || text.trim()===''){
-
             setTitle('')
-
         }
         else{
             
             setTitle(text.trim())
-
         }
         
 
@@ -82,7 +79,7 @@ const ResumeTitleComponent = (props) => {
             
             <View style={{ marginTop: 50, justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ fontSize: 20, color: '#2EB553' }}>
-                    What is your resume title ?
+                    Tiêu đề
                 </Text>
             </View>
             <View style={{marginTop: 35,}}>
@@ -100,7 +97,8 @@ const ResumeTitleComponent = (props) => {
                     onChangeText={(text) => {
                         onChangeText(text)
                     }}
-                    placeholder="Resume Title"
+                    placeholder="Tiêu đề 
+                    "
                     style={{ width: '70%' }}>
                 </TextInput>
             </View>
