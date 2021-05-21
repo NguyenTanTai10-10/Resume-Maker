@@ -3,8 +3,9 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import React,{useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import RNBootSplash from "react-native-bootsplash";
 
 
 
@@ -68,6 +69,13 @@ const Drawers = () => {
 //stack navigation
 const Stack = createStackNavigator();
 const App = () => {
+   useEffect(() => {
+      setTimeout(() => {
+         RNBootSplash.hide()
+         
+      }, 1000);
+     
+   }, [])
    return (
       <NavigationContainer>
          <Stack.Navigator

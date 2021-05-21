@@ -18,6 +18,7 @@
 		3A994B1B525594A9C2F7F5AD /* libPods-Resume_Maker-Resume_MakerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30B4026623C93A6F6D2CD187 /* libPods-Resume_Maker-Resume_MakerTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8AF9E53B90A76A7F1C0B59FF /* libPods-Resume_Maker-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537959EF75B67C78F98CF89 /* libPods-Resume_Maker-tvOS.a */; };
+		C843B3F62657704B00D9C951 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C843B3F52657704B00D9C951 /* BootSplash.storyboard */; };
 		D07F31DB92D07D8229B1D39C /* libPods-Resume_Maker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8F26D9C030D5E019A2AD1F /* libPods-Resume_Maker.a */; };
 		DFEE3EE805B0936760FDE808 /* libPods-Resume_Maker-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D4BD776FADB957603605DCD /* libPods-Resume_Maker-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,7 @@
 		7D4BD776FADB957603605DCD /* libPods-Resume_Maker-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Resume_Maker-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Resume_Maker/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8AE93151A77BDA126083C4AF /* Pods-Resume_Maker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Resume_Maker.release.xcconfig"; path = "Target Support Files/Pods-Resume_Maker/Pods-Resume_Maker.release.xcconfig"; sourceTree = "<group>"; };
+		C843B3F52657704B00D9C951 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Resume_Maker/BootSplash.storyboard; sourceTree = "<group>"; };
 		CE8F26D9C030D5E019A2AD1F /* libPods-Resume_Maker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Resume_Maker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBCDBBE405A9695ED3B3617C /* Pods-Resume_Maker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Resume_Maker.debug.xcconfig"; path = "Target Support Files/Pods-Resume_Maker/Pods-Resume_Maker.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -134,7 +136,6 @@
 				3A560575C84551403A98C9E8 /* Pods-Resume_Maker-tvOSTests.debug.xcconfig */,
 				3F11FE57C0FB5D0E5FC338DD /* Pods-Resume_Maker-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -145,6 +146,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				C843B3F52657704B00D9C951 /* BootSplash.storyboard */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -340,6 +342,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C843B3F62657704B00D9C951 /* BootSplash.storyboard in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
