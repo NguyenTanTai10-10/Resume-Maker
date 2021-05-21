@@ -1,5 +1,5 @@
 import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react'
-import { View, Text, Modal, StyleSheet, Animated, Dimensions, TouchableWithoutFeedback, FlatList, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Modal, StyleSheet, Animated, Dimensions, TouchableWithoutFeedback, FlatList, Image, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import Images from '../../res/image';
 import Sizes from '../../utils/Sizes';
 
@@ -67,6 +67,7 @@ const BottomSheet = forwardRef((props, ref) => {
   }, [show])
 
   return (
+    <KeyboardAvoidingView>
     <Modal visible={show} transparent statusBarTranslucent animationType='fade'>
       <TouchableWithoutFeedback onPress={onHide}>
         <View style={styles.container}>
@@ -74,6 +75,17 @@ const BottomSheet = forwardRef((props, ref) => {
             <Animated.View style={[styles.modal, { height: modalHeight, transform: [{ translateY: animation }] }]}>
               <View style={styles.title}>
                 <Text style={{fontSize: 17}}>{props.title}</Text>
+              </View>
+              <View style={{flexDirection:'row',marginHorizontal:15,backgroundColor:'#F1F6FF', borderRadius:10}}>
+              <Image source={require("../../res/image/img/loupe.png")} style={{ width: Sizes.h46, height: Sizes.h46, resizeMode: 'contain' }} />
+              <TextInput
+              style={{marginLeft:10,width:"70%"}}
+              placeholder="Tìm kiếm"
+              
+              >
+
+              </TextInput>
+                
               </View>
               <FlatList
                 data={props.data}
@@ -85,6 +97,7 @@ const BottomSheet = forwardRef((props, ref) => {
         </View>
       </TouchableWithoutFeedback>
     </Modal>
+    </KeyboardAvoidingView>
   )
 })
 
