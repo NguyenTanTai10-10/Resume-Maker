@@ -1,3 +1,5 @@
+
+
 export const LOGIN = "LOGIN"
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 export const LOGIN_ERROR = "LOGIN_ERROR"
@@ -8,14 +10,15 @@ export const loginAction = (input) => {
         input: input
     })
 }
-// Company Member
-export const COMPANYMEMBER = "COMPANYMEMBER"
-export const COMPANYMEMBER_SUCCESS = "COMPANYMEMBER_SUCCESS"
-export const COMPANYMEMBER_ERROR = "COMPANYMEMBER_ERROR"
-export const companyMenberAction = (input) => {
-    // console.log('loginAction==',input);
+export const CHECKEMAIL = "CHECKEMAIL"
+export const CHECKEMAIL_SUCCESS = "CHECKEMAIL_SUCCESS"
+export const CHECKEMAIL_ERROR = "CHECKEMAIL_ERROR"
+export const checkEmailAction = (input) => {
+    // console.log('checkEmailAction==',input);
     return ({
-        type: COMPANYMEMBER,
+        type: CHECKEMAIL,
         input: input
     })
 }
+
+

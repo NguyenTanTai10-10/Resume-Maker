@@ -1,40 +1,54 @@
-const getAPI = async url => {
-  return new Promise((resolve, reject) => {
-    fetch(url, {
-      method: 'GET',
+const urlSever = "https://viecoi.vn/api/json";
+const Ver = 2;
+
+
+import axios from 'axios';
+import { Alert } from 'react-native';
+function* LoginUser(input) {
+  // console.log("SIGN IN: ", "email-" + email, "password-" + password, "userType-" + userType, "registrationIds-" + registrationIds, "FacebookId-" + FacebookId, "GoogleId-" + GoogleId)
+  let temp;
+  yield axios.post(urlSever, {
+    "method": "is_login",
+    "version": Ver,
+    "params": {
+      "type": input.userType,
+      "email": input.email,
+      "password": input.password,
+      "os": "5",
+      "registration_ids": input.registrationIds,
+      "facebook_id": input.FacebookId,
+      "google_id": input.GoogleId
+    }
+  })
+    .then(function (response) {
+      temp = response.data;
     })
-      .then(rs => resolve(rs.json()))
-      .catch(err => reject(err));
-  });
-};
-// await fetch(url,
-//   {
-//       method: 'GET'
-//   });
-const urlServe = 'http://45.119.213.225/timecard/';
-const postAPI = async url => {
-  return new Promise((resolve, reject) => {
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
+    .catch(function (error) {
+      console.log(error);
+    });
+  const result = yield temp.result_code === 1 ? temp : false;
+  return result;
+}
+//========================================================
+function* CheckEmail(input) {
+  // console.log(input);
+  let temp;
+  yield axios.post(urlSever, {
+    "method": "check_email_exits",
+    "version": Ver,
+    "params": { "email": input.email }
+  })
+    .then(function (response) {
+     
+      temp = response.data;
     })
-      .then(rs => resolve(rs.json()))
-      .catch(err => reject(err));
-  });
-};
-export const LoginAPI = async input => {
-  let url = `${urlServe}api/login?email=${input.email}&password=${input.password}`;
-
-  return await postAPI(url);
-};
-export const CompanyMemberAPI = async input => {
-  // console.log('CompanyMemberAPI=====', input);
-
-  let url = `${urlServe}api/user?api_token=${input.token}`;
-  console.log(url);
-
-  return await getAPI(url);
-};
+    .catch(function (error) {
+      console.log(error);
+    });
+  
+  return temp;
+}
+export const API = {
+  LoginUser,
+  CheckEmail,
+}

@@ -1,10 +1,87 @@
-import React from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import React,{useState,useEffect} from 'react'
+import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import Images from '../../res/image'
 import Header from '../custom/Header'
 import { screenHeight, screenWidth } from '../../res/style/theme'
 
 const LoginHome = (props) => {
+    const [Check, setCheck] = useState(false)
+    
+    const [username, setUsername] = useState('hotroviecoi@gmail.com')
+    const [password, setPassword] = useState('')
+    const [userType, setUserType] = useState('1')
+    const [registrationIds, setRegistrationIds] = useState('')
+    const [FacebookId, setFacebookId] = useState('')
+    const [GoogleId, setGoogleId] = useState('')
+    const onPressLogin = () => {
+        // console.log(props);
+        if (username === '' ) {
+  
+           Alert.alert('Lưu ý', 'Bạn phải nhập đầy đủ thông tin đăng nhập');
+        } else {
+           // console.log('this.state.password====',this.state.password);
+           props.loginAction({ email: username, password: password ,userType:userType, registrationIds: registrationIds, FacebookId:FacebookId,GoogleId:GoogleId});
+        }
+     };
+     useEffect(() => {
+         console.log("123");
+        if (props.status !== null) {
+            console.log('(this.props.status==',props.status);
+            // console.log('vao day1');
+            if (props.status === 1) {
+              
+               props.navigation.replace('Drawers');
+            } else {
+               
+               setTimeout(() => {
+                  Alert.alert('Thông báo', props.message);
+               }, 10);
+            }
+         }
+         
+        
+     }, [props.status])
+     useEffect(() => {
+        // console.log("123");
+       if (props.statusEmail !== null) {
+           if(props.messageEmail==="email đã được đăng ký"){
+            setCheck(true)
+
+           }
+           else if(username=== ""){
+            setCheck(false)
+
+           }
+          
+         
+        }
+        
+       
+    }, [props.statusEmail])
+    const onChangeText = async (text)=>{
+        if (emailValidation(text)){
+           
+            await setUsername(text)
+        await props.checkEmailAction({email: username})
+
+        }
+        
+        
+
+
+    }
+    const emailValidation = (email) => {
+    
+          let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+          if (reg.test(email)) {
+            return true
+          } else {
+            return false
+          }
+        };
+
+
     return (
         <View style={{ flex: 1 }}>
             <Header
@@ -22,17 +99,23 @@ const LoginHome = (props) => {
                     <Image source={require('../../res/image/img/iconemail.png')} style={{ height: 40, width: 40 }} />
                     <TextInput
                         placeholder="Email"
+                        onChangeText={(text)=>{onChangeText(text)}}
                         style={{ width: '70%' }}>
+                        
 
                     </TextInput>
 
 
 
                 </View>
+               {Check === true ?  <Text style={{color:props.messageEmail==="email đã được đăng ký"?"red" :"#2EB553"}}>
+                    {props.messageEmail}
+                </Text>:null}
                 <View style={{ flexDirection: "row", justifyContent: 'center', alignItems: 'center', borderBottomColor: "#FA8C16", borderBottomWidth: 2, marginHorizontal: 30, paddingVertical: 8, marginTop: 10 }}>
                     <Image source={require('../../res/image/img/padlock.png')} style={{ height: 35, width: 35 }} />
                     <TextInput
-                        placeholder="Email"
+                        placeholder="Mật khẩu"
+                        // onChange={(text)=>{onChangeText()}}
                         style={{ width: '70%' }}>
 
                     </TextInput>
@@ -40,9 +123,12 @@ const LoginHome = (props) => {
 
 
                 </View>
+                
                 <View style={{ marginTop: 20 }}>
 
-                    <TouchableOpacity style={{ borderRadius: 20, backgroundColor: '#FA8C16', height: 50, width: screenWidth / 2, justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity 
+                    onPress={()=>{onPressLogin()}}
+                    style={{ borderRadius: 20, backgroundColor: '#FA8C16', height: 50, width: screenWidth / 2, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>
                             Log in
                         </Text>

@@ -1,21 +1,13 @@
 import { combineReducers } from 'redux';
-import CompanyMemberReducer from './CompanyMemberReducer';
+
 import loginReducer from './LoginReducer';
+import checkEmailReducer from './CheckEmailReducer';
 
 
 
 const allReducers = combineReducers({
    loginReducer,
-   CompanyMemberReducer
-   // loginReducer,
-   // signupReducer,
-   // createWalletReducer,
-   // getWalletReducer,
-   // deleteWalletReducer,
-   // updateWalletReducer,
-   // sendOTPReducer,
-   // verifyOTPReducer,
-   // createNewPassReducer,
+   checkEmailReducer
 });
 
 export default allReducers;

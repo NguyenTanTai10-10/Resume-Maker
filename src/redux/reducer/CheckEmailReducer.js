@@ -1,5 +1,5 @@
 
-import {LOGIN, LOGIN_SUCCESS, LOGIN_ERROR} from '../actions/Action';
+import {CHECKEMAIL,CHECKEMAIL_SUCCESS,CHECKEMAIL_ERROR} from '../actions/Action';
 const initState = {
   status: null,
   data: null,
@@ -7,12 +7,13 @@ const initState = {
   message: null,
   error: null,
 };
-const loginReducer = (state = initState, action) => {
+const checkEmailReducer = (state = initState, action) => {
+  console.log('action----',action);
   
-  // console.log('action===',action);
+  
   switch (action.type) {
-    case LOGIN:
-        console.log('LOGIN');
+    case CHECKEMAIL:
+        console.log('CHECKEMAIL');
         return {
           // ...state,
           status: null,
@@ -21,29 +22,29 @@ const loginReducer = (state = initState, action) => {
           error: null,
         };
   
-      case LOGIN_SUCCESS:
-        console.log('LOGIN_SUCCESS');
+      case CHECKEMAIL_SUCCESS:
+        console.log('CHECKEMAIL_SUCCESS');
         return {
           // ...state,
           status:action.data.result_code,
           loading: false,
           data: action.data.result_data,
           error: null,
-          message : "Đăng nhập thành công"
+          message : action.data.result_message === 654 ? "email có thể dùng": "email đã được đăng ký"
         };
   
-      case LOGIN_ERROR:
-        console.log('LOGIN_ERROR');
+      case CHECKEMAIL_ERROR:
+        console.log('CHECKEMAIL_ERROR');
         return {
           // ...state,
           status: null,
           loading: false,
           data: null,
           
-          message : 'Đăng nhập thất bại'
+          message : "Lỗi"
         };
     default:
       return state;
   }
 };
-export default loginReducer
+export default checkEmailReducer
