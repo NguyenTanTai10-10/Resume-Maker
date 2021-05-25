@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ListCVComponent from '../../component/ListCVComponent';
+import { listCvAction } from '../../redux/actions/Action';
+
 
 
 
@@ -11,21 +13,21 @@ export class ListCVContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-//    return {
-//       status: state.loginReducer.status,
-//       data: state.loginReducer.data,
-//       loading: state.loginReducer.loading,
-//       message: state.loginReducer.message,
-//       error: state.loginReducer.error,
-//    };
+   return {
+      status: state.listCVReducer.status,
+      data: state.listCVReducer.data,
+      loading: state.listCVReducer.loading,
+      message: state.listCVReducer.message,
+      error: state.listCVReducer.error,
+   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-//    return {
-//       loginAction: (username, password) => dispatch(loginAction(username, password)),
-//    };
+   return {
+      listCvAction: (input) => dispatch(listCvAction(input)),
+   };
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
-export default ListCVContainer 
+export default connect(mapStateToProps, mapDispatchToProps)(ListCVContainer);
+
 

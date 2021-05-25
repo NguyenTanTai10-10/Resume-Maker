@@ -8,7 +8,7 @@ const initState = {
   error: null,
 };
 const checkEmailReducer = (state = initState, action) => {
-  console.log('action----',action);
+  
   
   
   switch (action.type) {
@@ -30,18 +30,19 @@ const checkEmailReducer = (state = initState, action) => {
           loading: false,
           data: action.data.result_data,
           error: null,
-          message : action.data.result_message === 654 ? "email có thể dùng": "email đã được đăng ký"
+          message : action.data.result_code === 0 ? "email có thể dùng": "email đã được đăng ký"
         };
   
       case CHECKEMAIL_ERROR:
         console.log('CHECKEMAIL_ERROR');
         return {
           // ...state,
+          error:error,
           status: null,
           loading: false,
           data: null,
           
-          message : "Lỗi"
+          message : error
         };
     default:
       return state;

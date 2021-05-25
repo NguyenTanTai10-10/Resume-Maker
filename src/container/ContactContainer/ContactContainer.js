@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Home from '../../component/home/Home';
+import ContactComponent from '../../component/ContactComponent';
+
 
 
 
 
 export class ContactContainer extends Component {
    render() {
-      return <Home {...this.props} />;
+      return <ContactComponent {...this.props} />;
    }
 }
 

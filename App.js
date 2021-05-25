@@ -32,6 +32,8 @@ import LanguageComponent from './src/component/LanguageComponent';
 import EducationComponent from './src/component/EducationComponent';
 import ExperiencesComponent from './src/component/ExperiencesComponent';
 import SkillsComponent from './src/component/SkillsComponent';
+import ResumeTitleContainer from './src/container/ResumeTitleContainer/ResumeTitleContainer';
+import ContactContainer from './src/container/ContactContainer/ContactContainer';
 
 
 
@@ -84,13 +86,13 @@ const App = () => {
                ...TransitionPresets.SlideFromRightIOS,
             }}>
             
-            <Stack.Screen name="Login" component={LoginContainer} />
+            <Stack.Screen name="LoginContainer" component={LoginContainer} />
             
-            <Stack.Screen name="Drawers" component={Drawers} />
             <Stack.Screen name="LoginHomeContainer" component={LoginHomeContainer} />
+            <Stack.Screen name="Drawers" component={Drawers} />
             <Stack.Screen name="ListCVContainer" component={ListCVContainer} />
-            <Stack.Screen name="ResumeTitleComponent" component={ResumeTitleComponent} />
-            <Stack.Screen name="ContactComponent" component={ContactComponent} />
+            <Stack.Screen name="ResumeTitleContainer" component={ResumeTitleContainer} />
+            <Stack.Screen name="ContactContainer" component={ContactContainer} />
             <Stack.Screen name="BasicInfoComponent" component={BasicInfoComponent} />
             <Stack.Screen name="LanguageComponent" component={LanguageComponent} />
             <Stack.Screen name="EducationComponent" component={EducationComponent} />

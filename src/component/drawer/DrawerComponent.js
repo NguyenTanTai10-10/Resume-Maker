@@ -89,7 +89,11 @@ const DrawerComponent = (props) => {
           </Text>
 
           </TouchableOpacity>
-          <TouchableOpacity style={{marginTop:15}} onPress={()=>props.navigation.replace('LoginContainer')}>
+          <TouchableOpacity style={{marginTop:15}} onPress={()=>{
+             props.logoutAction();
+           props.navigation.replace('LoginHomeContainer')
+          }
+         }>
           <Text style={{fontSize: 17,}}>
             LOGOUT
           </Text>

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Home from '../../component/home/Home';
+import ResumeTitleComponent from '../../component/ResumeTitleComponent';
+
 
 
 
 
 export class ResumeTitleContainer extends Component {
    render() {
-      return <Home {...this.props} />;
+      return <ResumeTitleComponent {...this.props} />;
    }
 }
 

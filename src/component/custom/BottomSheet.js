@@ -67,7 +67,7 @@ const BottomSheet = forwardRef((props, ref) => {
   }, [show])
 
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView style={{flex:1}}>
     <Modal visible={show} transparent statusBarTranslucent animationType='fade'>
       <TouchableWithoutFeedback onPress={onHide}>
         <View style={styles.container}>
@@ -76,17 +76,7 @@ const BottomSheet = forwardRef((props, ref) => {
               <View style={styles.title}>
                 <Text style={{fontSize: 17}}>{props.title}</Text>
               </View>
-              <View style={{flexDirection:'row',marginHorizontal:15,backgroundColor:'#F1F6FF', borderRadius:10}}>
-              <Image source={require("../../res/image/img/loupe.png")} style={{ width: Sizes.h46, height: Sizes.h46, resizeMode: 'contain' }} />
-              <TextInput
-              style={{marginLeft:10,width:"70%"}}
-              placeholder="Tìm kiếm"
               
-              >
-
-              </TextInput>
-                
-              </View>
               <FlatList
                 data={props.data}
                 renderItem={renderItems}
