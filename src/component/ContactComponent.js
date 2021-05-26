@@ -40,6 +40,7 @@ const ContactComponent = (props) => {
   const [checkPhone, setCheckPhone] = useState(false);
   const [checkPhoneHL, setCheckPhoneHL] = useState(false);
   const [checkCity, setCheckCity] = useState(false);
+  const [checkAdress, setCheckAdress] = useState(false);
   const [checkDate, setCheckDate] = useState(false);
 
   //================================================
@@ -49,6 +50,7 @@ const ContactComponent = (props) => {
   const [EmailKH, setEmailKH] = useState('');
   const [phone, setPhone] = useState('');
   const [City, setCity] = useState('Tỉnh/thành phố');
+  const [Adress, setAdress] = useState('');
   const modal = React.createRef();
   //================================================
 
@@ -57,7 +59,7 @@ const ContactComponent = (props) => {
   const [clearEmail, setClearEmail] = useState(false);
   const [clearPhone, setClearPhone] = useState(false);
   const [clearCity, setClearCity] = useState(false);
-
+  const [clearAdress, setClearAdress] = useState(false);
 
   const emailValidation = (item) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -76,59 +78,58 @@ const ContactComponent = (props) => {
     }
   };
 
-  const hovaten = (text) => {
+  const onUserName = (text) => {
     setUserName(text);
     setCheckHoTen(false);
-    setClearHoTen(true)
+    setClearHoTen(true);
   };
-  const gmailKH = (text) => {
+  const onGmail = (text) => {
     setEmailKH(text);
     setCheckEmail(false);
     setCheckEmailHL(false);
-    setClearEmail(true)
+    setClearEmail(true);
   };
-  const chooseDate = (item) => {
+  const onChooseDate = (item) => {
+    console.log(item);
     setBirthDay(item);
     setCheckBirthDay(false);
-    setClearBirthDay(true)
+    setClearBirthDay(true);
   };
-  const chooseCity = (item) => {
+  const onChooseCity = (item) => {
     setCity(item);
     setCheckCity(false);
-    setClearCity(true)
+    setClearCity(true);
   };
-  const Phone = (item) => {
+  const onPhone = (item) => {
     setPhone(item);
     setCheckPhone(false);
-    setClearPhone(true)
+    setClearPhone(true);
+  };
+  const onAdress = (text) => {
+    setAdress(text);
+    setCheckAdress(false);
+    setClearAdress(true);
   };
   //=========================================================
   const onClearHoTen = () => {
-    
-    setUserName('')
-    setClearHoTen(false)
-    
+    setUserName('');
+    setClearHoTen(false);
   };
   const onClearBirthDay = () => {
-    setBirthDay('')
-    setClearBirthDay(false)
-    
+    setBirthDay('');
+    setClearBirthDay(false);
   };
   const onClearEmail = () => {
-    setEmailKH('')
-   
+    setEmailKH('');
   };
   const onClearCity = () => {
-    setCity('')
-    
+    setCity('');
   };
   const onClearPhone = () => {
-    setPhone('')
-    
+    setPhone('');
   };
   //==============================================================
   const onSubmit = () => {
-    
     if (
       userName === null ||
       userName.trim() === '' ||
@@ -142,8 +143,7 @@ const ContactComponent = (props) => {
       !phoneValidation(phone) ||
       City === null ||
       City.trim() === '' ||
-      City === "Tỉnh/thành phố"
-
+      City === 'Tỉnh/thành phố'
     ) {
       if (userName === null || userName.trim() === '') {
         setUserName('');
@@ -155,8 +155,6 @@ const ContactComponent = (props) => {
       }
       if (EmailKH === null || EmailKH.trim() === '') {
         setEmailKH('');
-        console.log(EmailKH);
-
         setCheckEmail(true);
       } else if (!emailValidation(EmailKH)) {
         setCheckEmailHL(true);
@@ -168,97 +166,162 @@ const ContactComponent = (props) => {
       } else if (!phoneValidation(phone)) {
         setCheckPhoneHL(true);
       }
-      if(City === "Tỉnh/thành phố"){
-        
-
+      if (City === 'Tỉnh/thành phố') {
         setCheckCity(true);
-
-      }
-      else if (City === null || City.trim() === '') {
+      } else if (City === null || City.trim() === '') {
         setCity('');
 
         setCheckCity(true);
       }
-    } else {
+      if (EmailKH === null || EmailKH.trim() === '') {
+        setEmailKH('');
+        setCheckEmail(true);
+      } 
+    }
+    else {
       console.log('bnanan');
     }
-  };
-  return (
-    <View style={{flex: 1}}>
-      <StatusBarView />
-      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-        <View style={{}}>
+  }
+    return (
+      <View style={{flex: 1}}>
+        <StatusBarView />
+        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+          <View style={{}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity
+                style={{
+                  flex: 0.1,
+                  left: 0,
+                  height: Sizes.h95,
+                  paddingHorizontal: Sizes.h32,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onPress={() => props.navigation.goBack()}>
+                <Image
+                  source={Images.arrow}
+                  style={{
+                    width: Sizes.s50,
+                    height: Sizes.s50,
+                  }}
+                />
+              </TouchableOpacity>
+
+              <Image
+                source={require('../res/image/img/iconnumber02.png')}
+                style={{
+                  width: Sizes.s140,
+                  height: Sizes.s140,
+                  resizeMode: 'contain',
+                }}
+              />
+              <Text style={{paddingHorizontal: Sizes.h32}}>{}</Text>
+            </View>
+          </View>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              marginTop: 20,
+              justifyContent: 'center',
               alignItems: 'center',
             }}>
+            <Text style={{fontSize: 20, color: '#2EB553'}}>
+              Thông tin liên hệ
+            </Text>
+          </View>
+          <View style={{marginTop: 35}}>
             <TouchableOpacity
-              style={{
-                flex: 0.1,
-                left: 0,
-                height: Sizes.h95,
-                paddingHorizontal: Sizes.h32,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => props.navigation.goBack()}>
+              style={{justifyContent: 'center', alignItems: 'center'}}>
               <Image
-                source={Images.arrow}
+                source={require('../res/image/img/avatar.png')}
                 style={{
-                  width: Sizes.s50,
-                  height: Sizes.s50,
+                  height: 60,
+                  width: 60,
+                  resizeMode: 'contain',
+                  borderRadius: 100,
+                }}
+              />
+              <Image
+                source={require('../res/image/img/uploadavatar.png')}
+                style={{
+                  height: 30,
+                  width: 30,
+                  resizeMode: 'contain',
+                  borderRadius: 100,
+                  position: 'absolute',
+                  right: 170,
+                  top: 40,
                 }}
               />
             </TouchableOpacity>
 
-            <Image
-              source={require('../res/image/img/iconnumber02.png')}
+            <View
               style={{
-                width: Sizes.s140,
-                height: Sizes.s140,
-                resizeMode: 'contain',
-              }}
-            />
-            <Text style={{paddingHorizontal: Sizes.h32}}>{}</Text>
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 20,
+              }}>
+              {checkHoTen && (
+                <Text style={{color: 'red'}}>
+                  * Vui lòng nhập đầy đủ họ và tên của bạn
+                </Text>
+              )}
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderBottomColor: '#FA8C16',
+                borderBottomWidth: 2,
+                marginHorizontal: 80,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/iconfullname.png')}
+                  style={{
+                    right: 15,
+                    height: 35,
+                    width: 35,
+                    resizeMode: 'contain',
+                  }}
+                />
+                <TextInput
+                  defaultValue={userName}
+                  onChangeText={(text) => onUserName(text)}
+                  placeholder="Họ và tên"
+                  style={{width: '70%'}}></TextInput>
+              </View>
+              {clearHoTen && (
+                <TouchableOpacity
+                  onPress={() => onClearHoTen()}
+                  style={{
+                    height: 30,
+                    width: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    source={require('../res/image/img/icon_close.png')}
+                    style={{height: 15, width: 15, resizeMode: 'contain'}}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
-        </View>
-        <View
-          style={{
-            marginTop: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{fontSize: 20, color: '#2EB553'}}>
-            Thông tin liên hệ
-          </Text>
-        </View>
-        <View style={{marginTop: 35}}>
-          <TouchableOpacity
-            style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Image
-              source={require('../res/image/img/avatar.png')}
-              style={{
-                height: 60,
-                width: 60,
-                resizeMode: 'contain',
-                borderRadius: 100,
-              }}
-            />
-            <Image
-              source={require('../res/image/img/uploadavatar.png')}
-              style={{
-                height: 30,
-                width: 30,
-                resizeMode: 'contain',
-                borderRadius: 100,
-                position: 'absolute',
-                right: 170,
-                top: 40,
-              }}
-            />
-          </TouchableOpacity>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <ButtonChoose />
+          </View>
 
           <View
             style={{
@@ -266,9 +329,29 @@ const ContactComponent = (props) => {
               alignItems: 'center',
               marginTop: 20,
             }}>
-            {checkHoTen && (
+            {checkBirthDay && (
               <Text style={{color: 'red'}}>
-                * Vui lòng nhập đầy đủ họ và tên của bạn
+                * Vui lòng chọn ngày sinh của bạn
+              </Text>
+            )}
+          </View>
+
+          <DatetimePicker
+            chooseDay={(item) => onChooseDate(item)}
+            title={'Ngày sinh'}
+          />
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            {checkEmail && (
+              <Text style={{color: 'red'}}>* Vui lòng nhập Email của bạn</Text>
+            )}
+            {checkEmailHL && (
+              <Text style={{color: 'red'}}>
+                * Vui lòng nhập Email đúng định dạng
               </Text>
             )}
           </View>
@@ -289,22 +372,185 @@ const ContactComponent = (props) => {
                 alignItems: 'center',
               }}>
               <Image
-                source={require('../res/image/img/iconfullname.png')}
-                style={{
-                  right: 15,
-                  height: 35,
-                  width: 35,
-                  resizeMode: 'contain',
-                }}
+                source={require('../res/image/img/iconemail.png')}
+                style={{height: 35, width: 35, resizeMode: 'contain'}}
               />
               <TextInput
-              defaultValue={userName}
-                onChangeText={(text) => hovaten(text)}
-                placeholder="Họ và tên"
-                style={{width: '70%'}}></TextInput>
+                onChangeText={(text) => {
+                  onGmail(text);
+                }}
+                placeholder="Email"
+                style={{width: '70%', marginLeft: 15}}></TextInput>
             </View>
-            {clearHoTen &&  <TouchableOpacity
-            onPress={()=>onClearHoTen()}
+            {clearEmail && (
+              <TouchableOpacity
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/icon_close.png')}
+                  style={{height: 15, width: 15, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            {checkPhone && (
+              <Text style={{color: 'red'}}>* Vui lòng nhập số điện thoại</Text>
+            )}
+            {checkPhoneHL && (
+              <Text style={{color: 'red'}}>
+                * Vui lòng nhập số điện thoại hợp lệ{' '}
+              </Text>
+            )}
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottomColor: '#FA8C16',
+              borderBottomWidth: 2,
+              marginHorizontal: 80,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/iconphonenumber.png')}
+                style={{height: 35, width: 35, resizeMode: 'contain'}}
+              />
+              <TextInput
+                onChangeText={(text) => {
+                  onPhone(text);
+                }}
+                keyboardType="phone-pad"
+                placeholder="Phone"
+                style={{width: '70%', marginLeft: 15}}></TextInput>
+            </View>
+            {clearPhone && (
+              <TouchableOpacity
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/icon_close.png')}
+                  style={{height: 15, width: 15, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            {checkCity && (
+              <Text style={{color: 'red'}}>* Vui lòng chọn tỉnh thành phố</Text>
+            )}
+          </View>
+
+          <TouchableOpacity
+            onPress={() => modal.current.open()}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottomColor: '#FA8C16',
+              borderBottomWidth: 2,
+              marginHorizontal: 80,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/iconlocation.png')}
+                style={{height: 35, width: 35, resizeMode: 'contain'}}
+              />
+              <Text
+                style={{
+                  marginLeft: 15,
+                  color: City === 'Tỉnh/thành phố' ? '#BFBFBF' : 'black',
+                }}>
+                {City}
+              </Text>
+            </View>
+            {clearCity && (
+              <TouchableOpacity
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/icon_close.png')}
+                  style={{height: 15, width: 15, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+            )}
+          </TouchableOpacity>
+
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            {/* <Text style={{ color: 'red' }}>
+                    * Vui lòng chọn địa chỉ
+                </Text> */}
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottomColor: '#FA8C16',
+              borderBottomWidth: 2,
+              marginHorizontal: 80,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/iconformofwork.png')}
+                style={{height: 35, width: 35, resizeMode: 'contain'}}
+              />
+              <TextInput
+                onChangeText={(text) => {
+                  onAdress(text);
+                }}
+                placeholder="Địa chỉ"
+                style={{width: '70%', marginLeft: 15}}></TextInput>
+            </View>
+
+            <TouchableOpacity
               style={{
                 height: 30,
                 width: 30,
@@ -315,350 +561,105 @@ const ContactComponent = (props) => {
                 source={require('../res/image/img/icon_close.png')}
                 style={{height: 15, width: 15, resizeMode: 'contain'}}
               />
-            </TouchableOpacity>}
-
-           
+            </TouchableOpacity>
           </View>
-        </View>
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <ButtonChoose />
-        </View>
 
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkBirthDay && (
-            <Text style={{color: 'red'}}>
-              * Vui lòng chọn ngày sinh của bạn
-            </Text>
-          )}
-        </View>
-
-        <DatetimePicker
-         ClearBirthday={clearBirthDay}
-         onClearBirthDay={()=>onClearBirthDay()}
-          chooseDay={(item) => chooseDate(item)}
-          title={birthDay === '' && "Ngày sinh"}
-        />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkEmail && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập Email của bạn</Text>
-          )}
-          {checkEmailHL && (
-            <Text style={{color: 'red'}}>
-              * Vui lòng nhập Email đúng định dạng
-            </Text>
-          )}
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomColor: '#FA8C16',
-            borderBottomWidth: 2,
-            marginHorizontal: 80,
-          }}>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/iconemail.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <TextInput
-              onChangeText={(text) => {
-                gmailKH(text);
-              }}
-              placeholder="Email"
-              style={{width: '70%', marginLeft: 15}}></TextInput>
-          </View>
-          {clearEmail && <TouchableOpacity
-            style={{
-              height: 30,
-              width: 30,
+              marginTop: 20,
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Image
-              source={require('../res/image/img/icon_close.png')}
-              style={{height: 15, width: 15, resizeMode: 'contain'}}
-            />
-          </TouchableOpacity> }
-
-         
-        </View>
-
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkPhone && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập số điện thoại</Text>
-          )}
-          {checkPhoneHL && (
-            <Text style={{color: 'red'}}>
-              * Vui lòng nhập số điện thoại hợp lệ{' '}
-            </Text>
-          )}
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomColor: '#FA8C16',
-            borderBottomWidth: 2,
-            marginHorizontal: 80,
-          }}>
+            {check === false ? (
+              <TouchableOpacity
+                onPress={() => onSubmit()}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 50,
+                  width: (screenWidth * 0.8) / 2,
+                  backgroundColor: '#FA8C16',
+                  borderRadius: 13,
+                }}>
+                <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
+                  Cập nhập
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.navigate('');
+                }}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 50,
+                  width: (screenWidth * 0.8) / 2,
+                  backgroundColor: '#2EB553',
+                  borderRadius: 13,
+                }}>
+                <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
+                  Tiếp tục
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
           <View
             style={{
+              marginBottom: 20,
+              marginTop: 10,
+
+              justifyContent: 'space-between',
+              alignItems: 'center',
               flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
             }}>
-            <Image
-              source={require('../res/image/img/iconphonenumber.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <TextInput
-              onChangeText={(text) => {
-                Phone(text);
-              }}
-              keyboardType="phone-pad"
-              placeholder="Phone"
-              style={{width: '70%', marginLeft: 15}}></TextInput>
-          </View>
-          {clearPhone &&  <TouchableOpacity
-            style={{
-              height: 30,
-              width: 30,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/icon_close.png')}
-              style={{height: 15, width: 15, resizeMode: 'contain'}}
-            />
-          </TouchableOpacity>}
-
-         
-        </View>
-
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkCity && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn tỉnh thành phố</Text>
-          )}
-        </View>
-
-        <TouchableOpacity
-          onPress={() => modal.current.open()}
-         
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomColor: '#FA8C16',
-            borderBottomWidth: 2,
-            marginHorizontal: 80,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/iconlocation.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <Text
-              style={{
-                marginLeft: 15,
-                color: City === 'Tỉnh/thành phố' ? '#BFBFBF' : 'black',
-              }}>
-              {City}
-            </Text>
-          </View>
-          {clearCity && <TouchableOpacity
-            style={{
-              height: 30,
-              width: 30,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/icon_close.png')}
-              style={{height: 15, width: 15, resizeMode: 'contain'}}
-            />
-          </TouchableOpacity>}
-          
-        </TouchableOpacity>
-
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {/* <Text style={{ color: 'red' }}>
-                    * Vui lòng chọn địa chỉ
-                </Text> */}
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomColor: '#FA8C16',
-            borderBottomWidth: 2,
-            marginHorizontal: 80,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/iconformofwork.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <TextInput
-              placeholder="Địa chỉ"
-              style={{width: '70%', marginLeft: 15}}></TextInput>
-          </View>
-
-          <TouchableOpacity
-            style={{
-              height: 30,
-              width: 30,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/icon_close.png')}
-              style={{height: 15, width: 15, resizeMode: 'contain'}}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{
-            marginTop: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          {check === false ? (
             <TouchableOpacity
-              onPress={() => onSubmit()}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: 50,
-                width: (screenWidth * 0.8) / 2,
-                backgroundColor: '#FA8C16',
+                width: (screenWidth * 0.7) / 2,
+                flexDirection: 'row',
+
                 borderRadius: 13,
               }}>
-              <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Cập nhập
-              </Text>
+              <Image
+                source={require('../res/image/img/left-arrow.png')}
+                style={{height: 35, width: 35, resizeMode: 'contain'}}
+              />
+              <Text style={{color: 'black'}}>Trở về</Text>
             </TouchableOpacity>
-          ) : (
+
             <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('');
-              }}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
+                flexDirection: 'row',
+
                 height: 50,
-                width: (screenWidth * 0.8) / 2,
-                backgroundColor: '#2EB553',
+                width: (screenWidth * 0.7) / 2,
+
                 borderRadius: 13,
               }}>
-              <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Tiếp tục
-              </Text>
+              <Text style={{color: 'black'}}>Tiếp tục</Text>
+              <Image
+                source={require('../res/image/img/right-arrow.png')}
+                style={{height: 35, width: 35, resizeMode: 'contain'}}
+              />
             </TouchableOpacity>
-          )}
-        </View>
-        <View
-          style={{
-            marginBottom: 20,
-            marginTop: 10,
+          </View>
+          <BottomSheet
+            chooseCity_id={(item) => onChooseCity(item)}
+            type="getCity"
+            ref={modal}
+            title="Chọn tỉnh thành"
+            data={DataCity}
+            modalHeight={screenHeight / 2}
+          />
+        </ScrollView>
+      </View>
+    );
+  };
 
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexDirection: 'row',
-          }}>
-          <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 50,
-              width: (screenWidth * 0.7) / 2,
-              flexDirection: 'row',
-
-              borderRadius: 13,
-            }}>
-            <Image
-              source={require('../res/image/img/left-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <Text style={{color: 'black'}}>Trở về</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'row',
-
-              height: 50,
-              width: (screenWidth * 0.7) / 2,
-
-              borderRadius: 13,
-            }}>
-            <Text style={{color: 'black'}}>Tiếp tục</Text>
-            <Image
-              source={require('../res/image/img/right-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-          </TouchableOpacity>
-        </View>
-        <BottomSheet
-          chooseCity_id={(item) => chooseCity(item)}
-          type="getCity"
-          ref={modal}
-          title="Chọn tỉnh thành"
-          data={DataCity}
-          modalHeight={screenHeight / 2}
-        />
-      </ScrollView>
-    </View>
-  );
-};
 
 export default ContactComponent;

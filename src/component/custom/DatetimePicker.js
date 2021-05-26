@@ -11,27 +11,21 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 
 const DatetimePicker = (props) => {
-    console.log(props.title);
-    useEffect(() => {
-        setDateStart(props.title)
-       
-    }, [])
+  
     
     
   const [date, setDate] = useState(new Date());
   const [color, setColor] = useState(false);
   const [minDate, setMinDate] = useState(new Date());
 
-  const [DateStart, setDateStart] = useState('');
+  const [DateStart, setDateStart] = useState(props.title);
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
-      console.log(selectedDate);
-    const DayStart = formatDate(selectedDate);
-    const kq = formatDate(selectedDate);
-    // console.log('DayStart=======', DayStart);
+    const DayStart = moment(selectedDate).format('L');
+    const kq = formatDate(DayStart);
     setShow(Platform.OS === 'ios');
     setDateStart(DayStart);
     setMinDate(selectedDate);
@@ -49,12 +43,12 @@ const DatetimePicker = (props) => {
     showMode('date');
   };
   const formatDate = (dateChooose) => {
+    console.log("dateChooose===",dateChooose);
       
-    const h = `${dateChooose.getFullYear()}`;
-    const m = `0${dateChooose}`.slice(-2);
-    console.log('1234==',dateChooose.slice(-4))
-    const s = `0${dateChooose.getDay()}`.slice(-2);
-    return `${h}-${m}-${s}`;
+    const y = `${dateChooose}`.slice(-4);
+    const d =`${dateChooose}`.slice(3,5);
+    const m = `${dateChooose}`.slice(0,2);
+    return `${y}-${d}-${m}`;
   };
   return (
     <View>
@@ -86,17 +80,17 @@ const DatetimePicker = (props) => {
           <Text style={{marginLeft: 15, color: 'black'}}>{DateStart}</Text>
         )}</View>
         { props.ClearBirthday &&   <TouchableOpacity
-        onPress={()=>props.onClearBirthDay()}
+        // onPress={()=>props.onClearBirthDay()}
           style={{
             height: 30,
             width: 30,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Image
+          {/* <Image
             source={require('../../res/image/img/icon_close.png')}
             style={{height: 15, width: 15, resizeMode: 'contain'}}
-          />
+          /> */}
         </TouchableOpacity>}
         
       
