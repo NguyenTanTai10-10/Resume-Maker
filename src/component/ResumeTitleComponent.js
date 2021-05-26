@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState,useEffect} from 'react';
 import {View, Text, TouchableOpacity, Image, TextInput} from 'react-native';
 import Images from '../res/image';
@@ -7,12 +8,17 @@ import Header from './custom/Header';
 import StatusBarView from './custom/StatusBarView';
 
 const ResumeTitleComponent = (props) => {
-   useEffect(() => {
-    setIdCV(props.route.params.id)
-       console.log(props.route.params.id);
+  //  useEffect( async() => {
+  //   // setIdCV(props.route.params.id)
+  //   //    console.log(props.route.params.id);
+
+  //   const jsonValue = await AsyncStorage.getItem('@template_cv_id')
+  //   const template_cv_id = JSON.parse(jsonValue) 
+  //   // const value = await AsyncStorage.getItem('@template_cv_id')
+  //   console.log("value===", template_cv_id);
 
      
-   }, [])
+  //  }, [])
 
   const [title, setTitle] = useState('');
   const [idCV, setIdCV] = useState('');
@@ -26,7 +32,13 @@ const ResumeTitleComponent = (props) => {
       setTitle(text.trim());
     }
   };
-  const onUpdate = () => {
+
+
+  const onUpdate = async () => {
+    
+    const jsonValue = JSON.stringify(title)
+    await AsyncStorage.setItem('@title', jsonValue)
+
     if (title === null || title.trim() === '') {
       if (title === null || title.trim() === '') {
         setCheck(false);

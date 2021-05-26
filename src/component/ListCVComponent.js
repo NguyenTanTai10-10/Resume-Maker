@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState,useEffect} from 'react';
 import {
   View,
@@ -33,6 +34,14 @@ const ListCVComponent = (props) => {
   useEffect(() => {
     props.listCvAction({template_cv_id:''});
   }, []);
+  const onPressChoose = async (item)=>{
+    // await AsyncStorage.setItem('@template_cv_id', item)
+    const jsonValue = JSON.stringify(item)
+    await AsyncStorage.setItem('@template_cv_id', jsonValue)
+
+    await props.navigation.navigate('ResumeTitleContainer')
+
+  }
   
 
   const renderItem = (item) => {
@@ -40,7 +49,8 @@ const ListCVComponent = (props) => {
     return (
       <TouchableOpacity 
       onPress={()=>{
-           props.navigation.navigate('ResumeTitleContainer',{id :item.item.template_cv_id})
+        onPressChoose(item.item.template_cv_id)
+           
       }}
       style={{marginHorizontal: 5, marginVertical: 15}}>
         <Image

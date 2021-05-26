@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ContactComponent from '../../component/ContactComponent';
+import { getCityAction } from '../../redux/actions/Action';
 
 
 
@@ -13,21 +14,20 @@ export class ContactContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-//    return {
-//       status: state.loginReducer.status,
-//       data: state.loginReducer.data,
-//       loading: state.loginReducer.loading,
-//       message: state.loginReducer.message,
-//       error: state.loginReducer.error,
-//    };
+   return {
+      statusCity: state.getCityReducer.status,
+      dataCity: state.getCityReducer.data,
+      loadingCity: state.getCityReducer.loading,
+      messageCity: state.getCityReducer.message,
+      errorCity: state.getCityReducer.error,
+   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-//    return {
-//       loginAction: (username, password) => dispatch(loginAction(username, password)),
-//    };
+   return {
+      getCityAction: (input) => dispatch(getCityAction(input)),
+   };
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
-export default ContactContainer 
+export default connect(mapStateToProps, mapDispatchToProps)(ContactContainer);
 

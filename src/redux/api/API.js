@@ -68,8 +68,30 @@ function* ListCV(input) {
 
   return temp;
 }
+//========================================================
+function* GetCity(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_city',
+      version: Ver,
+      params: {
+        city_id: input.city_id,
+        country_id: input.country_id,
+        lang_code: language},
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
 export const API = {
   LoginUser,
   CheckEmail,
   ListCV,
+  GetCity,
 };

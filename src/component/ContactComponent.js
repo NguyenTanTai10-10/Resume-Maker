@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,9 @@ import {
   Image,
   TextInput,
   ScrollView,
+  Alert,
 } from 'react-native';
+import {set} from 'react-native-reanimated';
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
@@ -16,16 +18,169 @@ import DatetimePicker from './custom/DatetimePicker';
 import StatusBarView from './custom/StatusBarView';
 
 const ContactComponent = (props) => {
-    console.log('peosss===', props.route);
-  const [check, setCheck] = useState(false);
-  const modal = React.createRef();
+  useEffect(() => {
+    props.getCityAction({city_id: '', country_id: ''});
+  }, []);
+  useEffect(() => {
+    if (props.statusCity !== null) {
+      if (props.statusCity === 1) {
+        setDataCity(props.dataCity);
+      } else {
+        setTimeout(() => {
+          Alert.alert('Thông báo', props.messageCity);
+        }, 10);
+      }
+    }
+  }, [props.statusCity]);
+  const [DataCity, setDataCity] = useState(false);
+  const [checkHoTen, setCheckHoTen] = useState(false);
+  const [checkBirthDay, setCheckBirthDay] = useState(false);
+  const [checkEmail, setCheckEmail] = useState(false);
+  const [checkEmailHL, setCheckEmailHL] = useState(false);
+  const [checkPhone, setCheckPhone] = useState(false);
+  const [checkPhoneHL, setCheckPhoneHL] = useState(false);
+  const [checkCity, setCheckCity] = useState(false);
+  const [checkDate, setCheckDate] = useState(false);
 
-  const emailValidation = (email) => {
+  //================================================
+  const [check, setCheck] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [birthDay, setBirthDay] = useState('');
+  const [EmailKH, setEmailKH] = useState('');
+  const [phone, setPhone] = useState('');
+  const [City, setCity] = useState('Tỉnh/thành phố');
+  const modal = React.createRef();
+  //================================================
+
+  const [clearHoTen, setClearHoTen] = useState(false);
+  const [clearBirthDay, setClearBirthDay] = useState(false);
+  const [clearEmail, setClearEmail] = useState(false);
+  const [clearPhone, setClearPhone] = useState(false);
+  const [clearCity, setClearCity] = useState(false);
+
+
+  const emailValidation = (item) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (reg.test(email)) {
+    if (reg.test(item)) {
       return true;
     } else {
       return false;
+    }
+  };
+  const phoneValidation = (item) => {
+    var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    if (vnf_regex.test(item)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const hovaten = (text) => {
+    setUserName(text);
+    setCheckHoTen(false);
+    setClearHoTen(true)
+  };
+  const gmailKH = (text) => {
+    setEmailKH(text);
+    setCheckEmail(false);
+    setCheckEmailHL(false);
+    setClearEmail(true)
+  };
+  const chooseDate = (item) => {
+    setBirthDay(item);
+    setCheckBirthDay(false);
+    setClearBirthDay(true)
+  };
+  const chooseCity = (item) => {
+    setCity(item);
+    setCheckCity(false);
+    setClearCity(true)
+  };
+  const Phone = (item) => {
+    setPhone(item);
+    setCheckPhone(false);
+    setClearPhone(true)
+  };
+  //=========================================================
+  const onClearHoTen = () => {
+    
+    setUserName('')
+    setClearHoTen(false)
+    
+  };
+  const onClearBirthDay = () => {
+    setBirthDay('')
+    setClearBirthDay(false)
+    
+  };
+  const onClearEmail = () => {
+    setEmailKH('')
+   
+  };
+  const onClearCity = () => {
+    setCity('')
+    
+  };
+  const onClearPhone = () => {
+    setPhone('')
+    
+  };
+  //==============================================================
+  const onSubmit = () => {
+    
+    if (
+      userName === null ||
+      userName.trim() === '' ||
+      birthDay === null ||
+      birthDay.trim() === '' ||
+      EmailKH === null ||
+      EmailKH.trim() === '' ||
+      !emailValidation(EmailKH) ||
+      phone === null ||
+      phone.trim() === '' ||
+      !phoneValidation(phone) ||
+      City === null ||
+      City.trim() === '' ||
+      City === "Tỉnh/thành phố"
+
+    ) {
+      if (userName === null || userName.trim() === '') {
+        setUserName('');
+        setCheckHoTen(true);
+      }
+      if (birthDay === null || birthDay.trim() === '') {
+        setBirthDay('');
+        setCheckBirthDay(true);
+      }
+      if (EmailKH === null || EmailKH.trim() === '') {
+        setEmailKH('');
+        console.log(EmailKH);
+
+        setCheckEmail(true);
+      } else if (!emailValidation(EmailKH)) {
+        setCheckEmailHL(true);
+      }
+      if (phone === null || phone.trim() === '') {
+        setPhone('');
+
+        setCheckPhone(true);
+      } else if (!phoneValidation(phone)) {
+        setCheckPhoneHL(true);
+      }
+      if(City === "Tỉnh/thành phố"){
+        
+
+        setCheckCity(true);
+
+      }
+      else if (City === null || City.trim() === '') {
+        setCity('');
+
+        setCheckCity(true);
+      }
+    } else {
+      console.log('bnanan');
     }
   };
   return (
@@ -83,7 +238,7 @@ const ContactComponent = (props) => {
           <TouchableOpacity
             style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image
-              source={require('../res/image/img/ic_facebook.png')}
+              source={require('../res/image/img/avatar.png')}
               style={{
                 height: 60,
                 width: 60,
@@ -111,27 +266,58 @@ const ContactComponent = (props) => {
               alignItems: 'center',
               marginTop: 20,
             }}>
-            {/* <Text style={{ color: 'red' }}>
-                        * Vui lòng nhập đầy đủ họ và tên của bạn
-                </Text> */}
+            {checkHoTen && (
+              <Text style={{color: 'red'}}>
+                * Vui lòng nhập đầy đủ họ và tên của bạn
+              </Text>
+            )}
           </View>
 
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'center',
+              justifyContent: 'space-between',
               alignItems: 'center',
               borderBottomColor: '#FA8C16',
               borderBottomWidth: 2,
               marginHorizontal: 80,
             }}>
-            <Image
-              source={require('../res/image/img/iconfullname.png')}
-              style={{right: 15, height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <TextInput
-              placeholder="Họ và tên"
-              style={{width: '70%'}}></TextInput>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/iconfullname.png')}
+                style={{
+                  right: 15,
+                  height: 35,
+                  width: 35,
+                  resizeMode: 'contain',
+                }}
+              />
+              <TextInput
+              defaultValue={userName}
+                onChangeText={(text) => hovaten(text)}
+                placeholder="Họ và tên"
+                style={{width: '70%'}}></TextInput>
+            </View>
+            {clearHoTen &&  <TouchableOpacity
+            onPress={()=>onClearHoTen()}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>}
+
+           
           </View>
         </View>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -144,39 +330,75 @@ const ContactComponent = (props) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {/* <Text style={{ color: 'red' }}>
-                    * Vui lòng nhập đầy đủ ngày sinh của bạn
-                </Text> */}
+          {checkBirthDay && (
+            <Text style={{color: 'red'}}>
+              * Vui lòng chọn ngày sinh của bạn
+            </Text>
+          )}
         </View>
 
-        <DatetimePicker title="Ngày sinh" />
+        <DatetimePicker
+         ClearBirthday={clearBirthDay}
+         onClearBirthDay={()=>onClearBirthDay()}
+          chooseDay={(item) => chooseDate(item)}
+          title={birthDay === '' && "Ngày sinh"}
+        />
         <View
           style={{
             justifyContent: 'center',
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {/* <Text style={{ color: 'red' }}>
-                    * Vui lòng nhập Email của bạn
-                </Text> */}
+          {checkEmail && (
+            <Text style={{color: 'red'}}>* Vui lòng nhập Email của bạn</Text>
+          )}
+          {checkEmailHL && (
+            <Text style={{color: 'red'}}>
+              * Vui lòng nhập Email đúng định dạng
+            </Text>
+          )}
         </View>
 
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomColor: '#FA8C16',
             borderBottomWidth: 2,
             marginHorizontal: 80,
           }}>
-          <Image
-            source={require('../res/image/img/iconemail.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
-          />
-          <TextInput
-            placeholder="Email"
-            style={{width: '70%', marginLeft: 15}}></TextInput>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/iconemail.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <TextInput
+              onChangeText={(text) => {
+                gmailKH(text);
+              }}
+              placeholder="Email"
+              style={{width: '70%', marginLeft: 15}}></TextInput>
+          </View>
+          {clearEmail && <TouchableOpacity
+            style={{
+              height: 30,
+              width: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/icon_close.png')}
+              style={{height: 15, width: 15, resizeMode: 'contain'}}
+            />
+          </TouchableOpacity> }
+
+         
         </View>
 
         <View
@@ -185,28 +407,57 @@ const ContactComponent = (props) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {/* <Text style={{ color: 'red' }}>
-                    * Vui lòng nhập số điện thoại
-                </Text> */}
+          {checkPhone && (
+            <Text style={{color: 'red'}}>* Vui lòng nhập số điện thoại</Text>
+          )}
+          {checkPhoneHL && (
+            <Text style={{color: 'red'}}>
+              * Vui lòng nhập số điện thoại hợp lệ{' '}
+            </Text>
+          )}
         </View>
 
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomColor: '#FA8C16',
             borderBottomWidth: 2,
             marginHorizontal: 80,
           }}>
-          <Image
-            source={require('../res/image/img/iconphonenumber.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
-          />
-          <TextInput
-            keyboardType="phone-pad"
-            placeholder="Phone"
-            style={{width: '70%', marginLeft: 15}}></TextInput>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/iconphonenumber.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <TextInput
+              onChangeText={(text) => {
+                Phone(text);
+              }}
+              keyboardType="phone-pad"
+              placeholder="Phone"
+              style={{width: '70%', marginLeft: 15}}></TextInput>
+          </View>
+          {clearPhone &&  <TouchableOpacity
+            style={{
+              height: 30,
+              width: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/icon_close.png')}
+              style={{height: 15, width: 15, resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>}
+
+         
         </View>
 
         <View
@@ -215,26 +466,53 @@ const ContactComponent = (props) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {/* <Text style={{ color: 'red' }}>
-                    * Vui lòng chọn tỉnh thành phố
-                </Text> */}
+          {checkCity && (
+            <Text style={{color: 'red'}}>* Vui lòng chọn tỉnh thành phố</Text>
+          )}
         </View>
 
         <TouchableOpacity
           onPress={() => modal.current.open()}
+         
           style={{
             flexDirection: 'row',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomColor: '#FA8C16',
             borderBottomWidth: 2,
             marginHorizontal: 80,
           }}>
-          <Image
-            source={require('../res/image/img/iconlocation.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
-          />
-          <Text style={{marginLeft: 15, color: '#BFBFBF'}}>Tỉnh/thành phố</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/iconlocation.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <Text
+              style={{
+                marginLeft: 15,
+                color: City === 'Tỉnh/thành phố' ? '#BFBFBF' : 'black',
+              }}>
+              {City}
+            </Text>
+          </View>
+          {clearCity && <TouchableOpacity
+            style={{
+              height: 30,
+              width: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/icon_close.png')}
+              style={{height: 15, width: 15, resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>}
+          
         </TouchableOpacity>
 
         <View
@@ -251,19 +529,39 @@ const ContactComponent = (props) => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomColor: '#FA8C16',
             borderBottomWidth: 2,
             marginHorizontal: 80,
           }}>
-          <Image
-            source={require('../res/image/img/iconformofwork.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
-          />
-          <TextInput
-            placeholder="Địa chỉ"
-            style={{width: '70%', marginLeft: 15}}></TextInput>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/iconformofwork.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <TextInput
+              placeholder="Địa chỉ"
+              style={{width: '70%', marginLeft: 15}}></TextInput>
+          </View>
+
+          <TouchableOpacity
+            style={{
+              height: 30,
+              width: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/icon_close.png')}
+              style={{height: 15, width: 15, resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>
         </View>
 
         <View
@@ -271,10 +569,10 @@ const ContactComponent = (props) => {
             marginTop: 20,
             justifyContent: 'center',
             alignItems: 'center',
-            
           }}>
           {check === false ? (
             <TouchableOpacity
+              onPress={() => onSubmit()}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -307,53 +605,55 @@ const ContactComponent = (props) => {
           )}
         </View>
         <View
-        style={{
-            marginBottom:20,
-            marginTop:10,
-          
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexDirection: 'row',
-        }}>
-        <TouchableOpacity
           style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 50,
-            width: (screenWidth * 0.7) / 2,
-            flexDirection: 'row',
+            marginBottom: 20,
+            marginTop: 10,
 
-            borderRadius: 13,
-          }}>
-          <Image
-            source={require('../res/image/img/left-arrow.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
-          />
-          <Text style={{color:'black'}}>Trở về</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={{
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             alignItems: 'center',
             flexDirection: 'row',
-
-            height: 50,
-            width: (screenWidth * 0.7) / 2,
-
-            borderRadius: 13,
           }}>
-          <Text style={{color:'black'}}>Tiếp tục</Text>
-          <Image
-            source={require('../res/image/img/right-arrow.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
-          />
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 50,
+              width: (screenWidth * 0.7) / 2,
+              flexDirection: 'row',
+
+              borderRadius: 13,
+            }}>
+            <Image
+              source={require('../res/image/img/left-arrow.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <Text style={{color: 'black'}}>Trở về</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+
+              height: 50,
+              width: (screenWidth * 0.7) / 2,
+
+              borderRadius: 13,
+            }}>
+            <Text style={{color: 'black'}}>Tiếp tục</Text>
+            <Image
+              source={require('../res/image/img/right-arrow.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>
+        </View>
         <BottomSheet
+          chooseCity_id={(item) => chooseCity(item)}
+          type="getCity"
           ref={modal}
           title="Chọn tỉnh thành"
-          data={[]}
+          data={DataCity}
           modalHeight={screenHeight / 2}
         />
       </ScrollView>
