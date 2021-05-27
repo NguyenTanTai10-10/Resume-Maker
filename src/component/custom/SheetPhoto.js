@@ -75,7 +75,7 @@ import React, {
                   {height: modalHeight, transform: [{translateY: animation}]},
                 ]}>
                 <View style={styles.title}>
-                  <Text style={{color: '#bb64a1', fontWeight: '700'}}>
+                  <Text style={{color: '#FA8C16', fontWeight: '700'}}>
                     {props.title}
                   </Text>
                 </View>
@@ -94,7 +94,7 @@ import React, {
                     style={{
                       padding: Sizes.h16,
                       borderWidth: 1,
-                      backgroundColor: '#bb64a1',
+                      backgroundColor: '#FA8C16',
                       width: '70%',
                       borderRadius: 6,
                       borderColor: 'white',
@@ -102,7 +102,7 @@ import React, {
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
-                    <Text style={{color: 'white'}}>Take Photo</Text>
+                    <Text style={{color: 'white'}}>Chụp ảnh</Text>
                     {/* {selectItem===item?<Image source={require("../../res/image/img/arrow-up.png")} style={{ width: Sizes.h16, height: Sizes.h16, resizeMode: 'contain' }} />:null} */}
                   </TouchableOpacity>
                 </View>
@@ -124,7 +124,7 @@ import React, {
                     style={{
                       padding: Sizes.h16,
                       borderWidth: 1,
-                      backgroundColor: '#bb64a1',
+                      backgroundColor: '#FA8C16',
                       width: '70%',
                       borderRadius: 6,
                       borderColor: 'white',
@@ -133,7 +133,7 @@ import React, {
                       alignItems: 'center',
                      
                     }}>
-                    <Text style={{color: 'white'}}>Choose From Library'</Text>
+                    <Text style={{color: 'white'}}>Thư viện ảnh</Text>
                    
                   </TouchableOpacity>
                 </View>

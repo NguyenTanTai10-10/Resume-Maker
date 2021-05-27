@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,9 +7,9 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { set } from 'react-native-reanimated';
+import {set} from 'react-native-reanimated';
 import Images from '../res/image';
-import { screenHeight, screenWidth } from '../res/style/theme';
+import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
 import BottomSheet from './custom/BottomSheet';
 import ButtonChoose from './custom/ButtonChoose';
@@ -20,11 +19,14 @@ import SheetPhoto from './custom/SheetPhoto';
 
 import StatusBarView from './custom/StatusBarView';
 import ImagePicker from 'react-native-image-crop-picker';
+import React, {useState, useEffect} from 'react';
 
 const ContactComponent = (props) => {
+
   useEffect(() => {
-    props.getCityAction({ city_id: '', country_id: '' });
+    props.getCityAction({city_id: '', country_id: ''});
   }, []);
+
   useEffect(() => {
     if (props.statusCity !== null) {
       if (props.statusCity === 1) {
@@ -36,6 +38,16 @@ const ContactComponent = (props) => {
       }
     }
   }, [props.statusCity]);
+
+  useEffect(() => {
+    if (props.statusEmail !== null) {
+      setEmailExits(props.messageEmail)
+      setCheckEmaiExit(true);
+    } else if (props.errorEmail !== null) {
+      Alert.alert(props.errorEmail);
+    }
+  }, [props.statusEmail]);
+
   const [DataCity, setDataCity] = useState(false);
   const [checkHoTen, setCheckHoTen] = useState(false);
   const [checkBirthDay, setCheckBirthDay] = useState(false);
@@ -46,19 +58,25 @@ const ContactComponent = (props) => {
   const [checkCity, setCheckCity] = useState(false);
   const [checkAdress, setCheckAdress] = useState(false);
   const [checkDate, setCheckDate] = useState(false);
-
+  const [CheckEmaiExit, setCheckEmaiExit] = useState('');
+  const [CheckPassword, setCheckPassword] = useState(false);
+  const [CheckPasswordHL, setCheckPasswordHL] = useState(false);
   //================================================
   const [check, setCheck] = useState(false);
+  const [Password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
   const [birthDay, setBirthDay] = useState('');
-  const [EmailKH, setEmailKH] = useState('');
+  const [emailKh, setEmailKh] = useState('');
   const [phone, setPhone] = useState('');
   const [City, setCity] = useState('Tỉnh/thành phố');
   const [Adress, setAdress] = useState('');
+  const [emailExit, setEmailExits] = useState('');
   const [Gender, setGender] = useState('1');
+
+
   const [Photo, setPhoto] = useState([
-    { title: 'Chụp ảnh', value: '' },
-    { title: 'Thư viện ảnh', value: '' },
+    {title: 'Chụp ảnh', value: ''},
+    {title: 'Thư viện ảnh', value: ''},
   ]);
   const [PhotoBase64, setPhotoBase64] = useState('');
   const modal = React.createRef();
@@ -71,6 +89,7 @@ const ContactComponent = (props) => {
   const [clearPhone, setClearPhone] = useState(false);
   const [clearCity, setClearCity] = useState(false);
   const [clearAdress, setClearAdress] = useState(false);
+  const [clearPassword, setClearPassword] = useState(false);
 
   const emailValidation = (item) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -81,6 +100,7 @@ const ContactComponent = (props) => {
     }
   };
   const phoneValidation = (item) => {
+    console.log(item);
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     if (vnf_regex.test(item)) {
       return true;
@@ -93,9 +113,10 @@ const ContactComponent = (props) => {
       width: 300,
       height: 400,
       cropping: true,
-    }).then(image => {
+      includeBase64: true,
+    }).then((image) => {
       console.log(image);
-      // this.bs.current.snapTo(1);
+      //     // this.bs.current.snapTo(1);
     });
   };
   const libraryPhoto = () => {
@@ -103,25 +124,34 @@ const ContactComponent = (props) => {
       width: 300,
       height: 400,
       cropping: true,
+      includeBase64: true,
     }).then((image) => {
-      console.log(image);
-      let ImagesBase64 = `data:${image.mime};base64,${image.data}`
-      setPhotoBase64(ImagesBase64)
-      
+      setPhotoBase64(`data:${image.mime};base64,${image.data}`);
     });
   };
-  
 
+ const onPassword = (text) => {
+    setPassword(text);
+    setCheckPassword(false);
+    setClearPassword(true);
+    setCheckPasswordHL(false)
+  };
   const onUserName = (text) => {
     setUserName(text);
     setCheckHoTen(false);
     setClearHoTen(true);
   };
   const onGmail = (text) => {
-    setEmailKH(text);
+    const kq = text;
+    console.log(kq);
+    if (emailValidation(kq)) {
+      props.checkEmailAction({email: kq});
+    }
+    setEmailKh(text);
     setCheckEmail(false);
     setCheckEmailHL(false);
     setClearEmail(true);
+    setCheckEmaiExit(false);
   };
   const onChooseDate = (item) => {
     console.log(item);
@@ -130,13 +160,14 @@ const ContactComponent = (props) => {
     setClearBirthDay(true);
   };
   const onChooseCity = (item) => {
-    setCity(item);
+    setCity(item)
     setCheckCity(false);
     setClearCity(true);
   };
   const onPhone = (item) => {
     setPhone(item);
     setCheckPhone(false);
+    setCheckPhoneHL(false);
     setClearPhone(true);
   };
   const onAdress = (text) => {
@@ -147,7 +178,6 @@ const ContactComponent = (props) => {
   const onGender = (text) => {
     console.log(text);
     setGender(text);
-    ;
   };
   //=========================================================
   const onClearHoTen = () => {
@@ -159,8 +189,10 @@ const ContactComponent = (props) => {
     setClearBirthDay(false);
   };
   const onClearEmail = () => {
-    setEmailKH('');
+    setEmailKh('');
     setClearEmail(false);
+    setCheckEmaiExit(false)
+    
   };
   const onClearCity = () => {
     setCity('Tỉnh/thành phố');
@@ -174,16 +206,23 @@ const ContactComponent = (props) => {
     setAdress('');
     setClearAdress(false);
   };
+  const onClearPassword = () => {
+    setPassword('');
+    setClearPassword(false);
+    
+  };
   //==============================================================
   const onSubmit = () => {
+    console.log('Password==',Password);
     if (
       userName === null ||
       userName.trim() === '' ||
       birthDay === null ||
       birthDay.trim() === '' ||
-      EmailKH === null ||
-      EmailKH.trim() === '' ||
-      !emailValidation(EmailKH) ||
+      emailKh === null ||
+      emailKh.trim() === '' ||
+      !emailValidation(emailKh) ||
+      emailExit === 'email đã được đăng ký' ||
       phone === null ||
       phone.trim() === '' ||
       !phoneValidation(phone) ||
@@ -191,7 +230,9 @@ const ContactComponent = (props) => {
       City.trim() === '' ||
       City === 'Tỉnh/thành phố' ||
       Adress === null ||
-      Adress.trim() === ''
+      Adress.trim() === ''||
+      Password === null ||
+      Password.trim() === ''
     ) {
       if (userName === null || userName.trim() === '') {
         setUserName('');
@@ -201,12 +242,23 @@ const ContactComponent = (props) => {
         setBirthDay('');
         setCheckBirthDay(true);
       }
-      if (EmailKH === null || EmailKH.trim() === '') {
-        setEmailKH('');
+      if (Password === null || Password.trim() === '') {
+        setPassword('');
+        setCheckPassword(true);
+      }
+      else if (Password.length <4) {
+        setCheckPasswordHL(true)
+      }
+      if (emailKh === null || emailKh.trim() === '') {
+        setEmailKh('');
         setCheckEmail(true);
-      } else if (!emailValidation(EmailKH)) {
+      } else if (!emailValidation(emailKh)) {
         setCheckEmailHL(true);
       }
+      else if (emailExit === 'email đã được đăng ký') {
+        setCheckEmaiExit(true);
+      }
+
       if (phone === null || phone.trim() === '') {
         setPhone('');
 
@@ -226,13 +278,15 @@ const ContactComponent = (props) => {
         setCheckAdress(true);
       }
     } else {
-      console.log('bnanan');
+      setCheck(true)
+      // props.registerAction({email:emailKh, password : ,name : ,address,city,phone,birthday,gender,facebook_id,google_id})
+      
     }
   };
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <StatusBarView />
-      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
           <View
             style={{
@@ -267,7 +321,7 @@ const ContactComponent = (props) => {
                 resizeMode: 'contain',
               }}
             />
-            <Text style={{ paddingHorizontal: Sizes.h32 }}>{ }</Text>
+            <Text style={{paddingHorizontal: Sizes.h32}}>{}</Text>
           </View>
         </View>
         <View
@@ -276,33 +330,36 @@ const ContactComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{ fontSize: 20, color: '#2EB553' }}>
+          <Text style={{fontSize: 20, color: '#2EB553'}}>
             Thông tin liên hệ
           </Text>
         </View>
-        <View style={{ marginTop: 35 }}>
+        <View style={{marginTop: 35}}>
           <TouchableOpacity
             onPress={() => modal1.current.open()}
-            style={{ justifyContent: 'center', alignItems: 'center' }}>
-              {PhotoBase64 === '' ? <Image
-              source={require('../res/image/img/avatar.png')}
-              style={{
-                height: 60,
-                width: 60,
-                resizeMode: 'contain',
-                borderRadius: 100,
-              }}
-            />:<Image
-            source={{uri:{PhotoBase64}}}
-            style={{
-              height: 60,
-              width: 60,
-              resizeMode: 'contain',
-              borderRadius: 100,
-            }}
-          />
-            }
-           
+            style={{justifyContent: 'center', alignItems: 'center'}}>
+            {PhotoBase64 === '' ? (
+              <Image
+                source={require('../res/image/img/avatar.png')}
+                style={{
+                  height: 70,
+                  width: 70,
+                  resizeMode: 'cover',
+                  borderRadius: 9999,
+                }}
+              />
+            ) : (
+              <Image
+                source={{uri: PhotoBase64}}
+                style={{
+                  height: 70,
+                  width: 70,
+                  resizeMode: 'cover',
+                  borderRadius: 9999,
+                }}
+              />
+            )}
+
             <Image
               source={require('../res/image/img/uploadavatar.png')}
               style={{
@@ -311,8 +368,8 @@ const ContactComponent = (props) => {
                 resizeMode: 'contain',
                 borderRadius: 100,
                 position: 'absolute',
-                right: 170,
-                top: 40,
+                right: 160,
+                top: 45,
               }}
             />
           </TouchableOpacity>
@@ -324,7 +381,7 @@ const ContactComponent = (props) => {
               marginTop: 20,
             }}>
             {checkHoTen && (
-              <Text style={{ color: 'red' }}>
+              <Text style={{color: 'red'}}>
                 * Vui lòng nhập đầy đủ họ và tên của bạn
               </Text>
             )}
@@ -348,7 +405,6 @@ const ContactComponent = (props) => {
               <Image
                 source={require('../res/image/img/iconfullname.png')}
                 style={{
-                  right: 15,
                   height: 35,
                   width: 35,
                   resizeMode: 'contain',
@@ -358,7 +414,7 @@ const ContactComponent = (props) => {
                 defaultValue={userName}
                 onChangeText={(text) => onUserName(text)}
                 placeholder="Họ và tên"
-                style={{ width: '70%' }}></TextInput>
+                style={{width: '70%', marginLeft: 15}}></TextInput>
             </View>
             {clearHoTen && (
               <TouchableOpacity
@@ -371,17 +427,14 @@ const ContactComponent = (props) => {
                 }}>
                 <Image
                   source={require('../res/image/img/icon_close.png')}
-                  style={{ height: 15, width: 15, resizeMode: 'contain' }}
+                  style={{height: 15, width: 15, resizeMode: 'contain'}}
                 />
               </TouchableOpacity>
             )}
           </View>
         </View>
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <ButtonChoose
-            OnGender={(item) => onGender(item)}
-
-          />
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <ButtonChoose OnGender={(item) => onGender(item)} />
         </View>
 
         <View
@@ -391,7 +444,7 @@ const ContactComponent = (props) => {
             marginTop: 20,
           }}>
           {checkBirthDay && (
-            <Text style={{ color: 'red' }}>
+            <Text style={{color: 'red'}}>
               * Vui lòng chọn ngày sinh của bạn
             </Text>
           )}
@@ -408,10 +461,10 @@ const ContactComponent = (props) => {
             marginTop: 20,
           }}>
           {checkEmail && (
-            <Text style={{ color: 'red' }}>* Vui lòng nhập Email của bạn</Text>
+            <Text style={{color: 'red'}}>* Vui lòng nhập Email của bạn</Text>
           )}
           {checkEmailHL && (
-            <Text style={{ color: 'red' }}>
+            <Text style={{color: 'red'}}>
               * Vui lòng nhập Email đúng định dạng
             </Text>
           )}
@@ -434,15 +487,18 @@ const ContactComponent = (props) => {
             }}>
             <Image
               source={require('../res/image/img/iconemail.png')}
-              style={{ height: 35, width: 35, resizeMode: 'contain' }}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
             <TextInput
+            onBlur={()=>{
+              setCheckEmaiExit(false)
+            }}
               onChangeText={(text) => {
                 onGmail(text);
               }}
-              defaultValue={EmailKH}
+              defaultValue={emailKh}
               placeholder="Email"
-              style={{ width: '70%', marginLeft: 15 }}></TextInput>
+              style={{width: '70%', marginLeft: 15}}></TextInput>
           </View>
           {clearEmail && (
             <TouchableOpacity
@@ -457,7 +513,86 @@ const ContactComponent = (props) => {
               }}>
               <Image
                 source={require('../res/image/img/icon_close.png')}
-                style={{ height: 15, width: 15, resizeMode: 'contain' }}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {CheckEmaiExit === true ? (
+            <Text
+              style={{
+                color:
+                  props.messageEmail === 'email đã được đăng ký'
+                    ? 'red'
+                    : '#2EB553',
+              }}>
+              {props.messageEmail}
+            </Text>
+          ) : null}
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          {CheckPassword && (
+            <Text style={{color: 'red'}}>* Vui lòng nhập mật khẩu của bạn</Text>
+          )}
+          {CheckPasswordHL && (
+            <Text style={{color: 'red'}}>
+              * Mật khẩu hơn 4 kí tự trở lên
+            </Text>
+          )}
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderBottomColor: '#FA8C16',
+            borderBottomWidth: 2,
+            marginHorizontal: 80,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/padlock1.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <TextInput
+           
+              onChangeText={(text) => {
+                onPassword(text);
+              }}
+              defaultValue={Password}
+              placeholder="Mật khẩu"
+              style={{width: '70%', marginLeft: 15}}></TextInput>
+          </View>
+          {clearPassword && (
+            <TouchableOpacity
+              onPress={() => {
+                onClearPassword();
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
               />
             </TouchableOpacity>
           )}
@@ -470,10 +605,10 @@ const ContactComponent = (props) => {
             marginTop: 20,
           }}>
           {checkPhone && (
-            <Text style={{ color: 'red' }}>* Vui lòng nhập số điện thoại</Text>
+            <Text style={{color: 'red'}}>* Vui lòng nhập số điện thoại</Text>
           )}
           {checkPhoneHL && (
-            <Text style={{ color: 'red' }}>
+            <Text style={{color: 'red'}}>
               * Vui lòng nhập số điện thoại hợp lệ{' '}
             </Text>
           )}
@@ -496,7 +631,7 @@ const ContactComponent = (props) => {
             }}>
             <Image
               source={require('../res/image/img/iconphonenumber.png')}
-              style={{ height: 35, width: 35, resizeMode: 'contain' }}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
             <TextInput
               defaultValue={phone}
@@ -505,7 +640,7 @@ const ContactComponent = (props) => {
               }}
               keyboardType="phone-pad"
               placeholder="Phone"
-              style={{ width: '70%', marginLeft: 15 }}></TextInput>
+              style={{width: '70%', marginLeft: 15}}></TextInput>
           </View>
           {clearPhone && (
             <TouchableOpacity
@@ -520,7 +655,7 @@ const ContactComponent = (props) => {
               }}>
               <Image
                 source={require('../res/image/img/icon_close.png')}
-                style={{ height: 15, width: 15, resizeMode: 'contain' }}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
               />
             </TouchableOpacity>
           )}
@@ -533,7 +668,7 @@ const ContactComponent = (props) => {
             marginTop: 20,
           }}>
           {checkCity && (
-            <Text style={{ color: 'red' }}>* Vui lòng chọn tỉnh thành phố</Text>
+            <Text style={{color: 'red'}}>* Vui lòng chọn tỉnh thành phố</Text>
           )}
         </View>
 
@@ -555,11 +690,12 @@ const ContactComponent = (props) => {
             }}>
             <Image
               source={require('../res/image/img/iconlocation.png')}
-              style={{ height: 35, width: 35, resizeMode: 'contain' }}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
             <Text
               style={{
                 marginLeft: 15,
+                width: '70%',
                 color: City === 'Tỉnh/thành phố' ? '#BFBFBF' : 'black',
               }}>
               {City}
@@ -567,7 +703,9 @@ const ContactComponent = (props) => {
           </View>
           {clearCity && (
             <TouchableOpacity
-              onPress={() => { onClearCity() }}
+              onPress={() => {
+                onClearCity();
+              }}
               style={{
                 height: 30,
                 width: 30,
@@ -576,7 +714,7 @@ const ContactComponent = (props) => {
               }}>
               <Image
                 source={require('../res/image/img/icon_close.png')}
-                style={{ height: 15, width: 15, resizeMode: 'contain' }}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
               />
             </TouchableOpacity>
           )}
@@ -589,7 +727,7 @@ const ContactComponent = (props) => {
             marginTop: 20,
           }}>
           {checkAdress && (
-            <Text style={{ color: 'red' }}>* Vui lòng chọn địa chỉ</Text>
+            <Text style={{color: 'red'}}>* Vui lòng chọn địa chỉ</Text>
           )}
         </View>
 
@@ -610,7 +748,7 @@ const ContactComponent = (props) => {
             }}>
             <Image
               source={require('../res/image/img/iconformofwork.png')}
-              style={{ height: 35, width: 35, resizeMode: 'contain' }}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
             <TextInput
               defaultValue={Adress}
@@ -618,23 +756,25 @@ const ContactComponent = (props) => {
                 onAdress(text);
               }}
               placeholder="Địa chỉ"
-              style={{ width: '70%', marginLeft: 15 }}></TextInput>
+              style={{width: '70%', marginLeft: 15}}></TextInput>
           </View>
-          {clearAdress && <TouchableOpacity
-            onPress={() => { onClearAdress() }}
-            style={{
-              height: 30,
-              width: 30,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/icon_close.png')}
-              style={{ height: 15, width: 15, resizeMode: 'contain' }}
-            />
-          </TouchableOpacity>}
-
-
+          {clearAdress && (
+            <TouchableOpacity
+              onPress={() => {
+                onClearAdress();
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          )}
         </View>
 
         <View
@@ -654,7 +794,7 @@ const ContactComponent = (props) => {
                 backgroundColor: '#FA8C16',
                 borderRadius: 13,
               }}>
-              <Text style={{ color: 'white', fontSize: 17, fontWeight: '700' }}>
+              <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
                 Cập nhập
               </Text>
             </TouchableOpacity>
@@ -671,7 +811,7 @@ const ContactComponent = (props) => {
                 backgroundColor: '#2EB553',
                 borderRadius: 13,
               }}>
-              <Text style={{ color: 'white', fontSize: 17, fontWeight: '700' }}>
+              <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
                 Tiếp tục
               </Text>
             </TouchableOpacity>
@@ -698,9 +838,9 @@ const ContactComponent = (props) => {
             }}>
             <Image
               source={require('../res/image/img/left-arrow.png')}
-              style={{ height: 35, width: 35, resizeMode: 'contain' }}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
-            <Text style={{ color: 'black' }}>Trở về</Text>
+            <Text style={{color: 'black'}}>Trở về</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -714,10 +854,10 @@ const ContactComponent = (props) => {
 
               borderRadius: 13,
             }}>
-            <Text style={{ color: 'black' }}>Tiếp tục</Text>
+            <Text style={{color: 'black'}}>Tiếp tục</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
-              style={{ height: 35, width: 35, resizeMode: 'contain' }}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>
@@ -731,7 +871,7 @@ const ContactComponent = (props) => {
         />
         <SheetPhoto
           ref={modal1}
-          title="UPLOAD PHOTO"
+          title="Thêm ảnh"
           data={Photo}
           modalHeight={200}
           onPressTakePhoto={() => takePhoto()}

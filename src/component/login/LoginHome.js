@@ -10,6 +10,7 @@ import {
 import Images from '../../res/image';
 import Header from '../custom/Header';
 import {screenHeight, screenWidth} from '../../res/style/theme';
+import LoadingView from '../custom/LoadingView';
 
 const LoginHome = (props) => {
   const [Check, setCheck] = useState(false);
@@ -47,6 +48,11 @@ const LoginHome = (props) => {
       }
     }
   }, [props.status]);
+  // useEffect(() => {
+  //   props.navigation.addListener('focus', () => {
+  //     props.checkEmailAction({email: ''});
+  //   });
+  // }, [])
   useEffect(() => {
     if (props.statusEmail !== null) {
       setCheck(true);
@@ -56,6 +62,7 @@ const LoginHome = (props) => {
   }, [props.statusEmail]);
 
   useEffect(() => {
+    console.log('123==',username);
     if (emailValidation(username)) {
           props.checkEmailAction({email: username});
         }
@@ -79,6 +86,7 @@ const LoginHome = (props) => {
 
   return (
     <View style={{flex: 1}}>
+      {props.loading && <LoadingView/>}
       <Header isShowBack onPressBack={() => props.navigation.goBack()} />
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         <Image

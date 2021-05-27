@@ -20,6 +20,11 @@ const ListCVComponent = (props) => {
  
   const [listData, setListData] = useState('')
   useEffect(() => {
+    props.navigation.addListener('focus', () => {
+      props.listCvAction({template_cv_id:''});
+    });
+  }, [])
+  useEffect(() => {
     if (props.status !== null) {
       if (props.status === 1) {
         // console.log('dtatatatatat===',props.data);
@@ -31,9 +36,9 @@ const ListCVComponent = (props) => {
       }
     }
   }, [props.status]);
-  useEffect(() => {
-    props.listCvAction({template_cv_id:''});
-  }, []);
+  // useEffect(() => {
+  //   props.listCvAction({template_cv_id:''});
+  // }, []);
   const onPressChoose = async (item)=>{
     // await AsyncStorage.setItem('@template_cv_id', item)
     const jsonValue = JSON.stringify(item)
@@ -63,7 +68,7 @@ const ListCVComponent = (props) => {
   };
   return (
     <View style={{flex: 1}}>
-        {props.loading && <LoadingView/>}
+        {props.loadingEmail && <LoadingView/>}
       <StatusBarView />
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity

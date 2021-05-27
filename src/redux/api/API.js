@@ -56,8 +56,8 @@ function* ListCV(input) {
       method: 'get_template_cv',
       params: {
         template_cv_id: input.template_cv_id,
-         lang_code: language
-        },
+        lang_code: language,
+      },
     })
     .then(function (response) {
       temp = response.data;
@@ -78,7 +78,42 @@ function* GetCity(input) {
       params: {
         city_id: input.city_id,
         country_id: input.country_id,
-        lang_code: language},
+        lang_code: language,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+//========================================================
+function* Register(input) {
+  
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'register_jobseekers',
+      version: Ver,
+      params: {
+        email: input.email,
+        password: input.password,
+        name: input.username,
+        address: input.address,
+        country: 250,
+        city: input.city,
+        phone: input.phone,
+        functional_role: 69,
+        birthday:input.birthday,
+        gender: input.gender,
+        facebook_id: input.facebook_id,
+        google_id: input.google_id,
+        os_register: 3,
+        lang_code: language,
+      },
     })
     .then(function (response) {
       temp = response.data;
@@ -94,4 +129,5 @@ export const API = {
   CheckEmail,
   ListCV,
   GetCity,
+  Register,
 };
