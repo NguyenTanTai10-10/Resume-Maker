@@ -63,12 +63,15 @@ const BottomSheet = forwardRef((props, ref) => {
   };
   const renderItems = ({item, index}) => {
     
+    
     return (
       <TouchableOpacity
         onPress={() => {
           // props.onPress();
           setSelectItem(item.city);
-          props.chooseCity_id(item.city)
+          props.ChooseCity_id(item.id)
+          props.chooseCity(item.city)
+          
 
           setShow(false);
         }}
@@ -134,7 +137,8 @@ BottomSheet.defaultProps = {
   data: [],
   onPressTime: () => {},
   onPressSession: () => {},
-  chooseCity_id:() => {},
+  ChooseCity_id:() => {},
+  chooseCity:()=>{}
 };
 const styles = StyleSheet.create({
   container: {

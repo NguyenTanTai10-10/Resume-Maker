@@ -7,7 +7,7 @@ import { API } from '../api/API';
 function* CheckEmailFlow(action) {
     try {
 		const response = yield API.CheckEmail(action.input);
-		console.log('response - updateCheckListApi:==== ', response)
+		// console.log('response - updateCheckListApi:==== ', response)
 
 		if (response !== null && response !== undefined) {
 			yield put({ type: CHECKEMAIL_SUCCESS, data: response

@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {screenWidth} from '../../res/style/theme';
@@ -10,6 +11,32 @@ export default class ButtonChoose extends Component {
       select: '1',
     };
   }
+  async componentDidMount(){
+    try {
+      const kq = await AsyncStorage.getItem('@storage_Key')
+     
+
+      if(kq !== null) {
+        this.setState({select:kq})
+        
+        
+      }
+    } catch(e) {
+      // error reading value
+    }
+    
+  }
+  
+  storeData = async (value) => {
+    
+    
+    try {
+      await AsyncStorage.setItem('@storage_Key', value)
+    } catch (e) {
+      // saving error
+    }
+  }
+
   render() {
     const {arrButton, select} = this.state;
     return (
@@ -33,6 +60,7 @@ export default class ButtonChoose extends Component {
                 onPress={
                   () => {
                     this.setState({select: e}); this.props.OnGender(e);
+                    this.storeData(e)
                   }
                   // console.log(index)
                 }

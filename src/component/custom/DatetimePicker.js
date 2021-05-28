@@ -9,29 +9,48 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+import {set} from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DatetimePicker = (props) => {
-  
-    
-    
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@birthday');
+      if (value !== null) {
+        setDateStart(value);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
   const [date, setDate] = useState(new Date());
   const [color, setColor] = useState(false);
+  const [ClearBirthday, setClearBirthday] = useState(false);
   const [minDate, setMinDate] = useState(new Date());
 
-  const [DateStart, setDateStart] = useState(props.title);
+  const [DateStart, setDateStart] = useState('Ngày sinh');
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
-  const onChange = (event, selectedDate) => {
+  const onChange = async (event, selectedDate) => {
     const DayStart = moment(selectedDate).format('L');
     const kq = formatDate(DayStart);
     setShow(Platform.OS === 'ios');
     setDateStart(DayStart);
-    setMinDate(selectedDate);
-    setDate(selectedDate);
     setColor(true);
+    setClearBirthday(true);
+
     props.chooseDay(kq);
+    try {
+      await AsyncStorage.setItem('@birthday', DayStart);
+    } catch (e) {
+      // saving error
+    }
   };
 
   const showMode = (currentMode) => {
@@ -42,12 +61,23 @@ const DatetimePicker = (props) => {
   const showDatepicker = () => {
     showMode('date');
   };
+  const onPressDate = async() => {
+    setDateStart('Ngày sinh');
+    setClearBirthday(false);
+    props.chooseDay('');
+    const deleteDate = 'Ngày sinh'
+    try {
+      await AsyncStorage.setItem('@birthday', deleteDate);
+    } catch (e) {
+      // saving error
+    }
+  };
   const formatDate = (dateChooose) => {
-    console.log("dateChooose===",dateChooose);
-      
+    console.log('dateChooose===', dateChooose);
+
     const y = `${dateChooose}`.slice(-4);
-    const d =`${dateChooose}`.slice(3,5);
-    const m = `${dateChooose}`.slice(0,2);
+    const d = `${dateChooose}`.slice(3, 5);
+    const m = `${dateChooose}`.slice(0, 2);
     return `${y}-${d}-${m}`;
   };
   return (
@@ -65,35 +95,39 @@ const DatetimePicker = (props) => {
           borderBottomWidth: 2,
           marginHorizontal: 80,
         }}>
-            <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}><Image
-          source={require('../../res/image/img/iconbirthday.png')}
-          style={{height: 35, width: 35, resizeMode: 'contain'}}
-        />
-        {DateStart === 'Ngày sinh' ? (
-          <Text style={{marginLeft: 15, color: '#BFBFBF'}}>{DateStart}</Text>
-        ) : (
-          <Text style={{marginLeft: 15, color: 'black'}}>{DateStart}</Text>
-        )}</View>
-        { props.ClearBirthday &&   <TouchableOpacity
-        // onPress={()=>props.onClearBirthDay()}
+        <View
           style={{
-            height: 30,
-            width: 30,
-            justifyContent: 'center',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
             alignItems: 'center',
           }}>
-          {/* <Image
-            source={require('../../res/image/img/icon_close.png')}
-            style={{height: 15, width: 15, resizeMode: 'contain'}}
-          /> */}
-        </TouchableOpacity>}
-        
-      
+          <Image
+            source={require('../../res/image/img/iconbirthday.png')}
+            style={{height: 35, width: 35, resizeMode: 'contain'}}
+          />
+          {DateStart === 'Ngày sinh' ? (
+            <Text style={{marginLeft: 15, color: '#BFBFBF'}}>{DateStart}</Text>
+          ) : (
+            <Text style={{marginLeft: 15, color: 'black'}}>{DateStart}</Text>
+          )}
+        </View>
+        {ClearBirthday && (
+          <TouchableOpacity
+            onPress={() => {
+              onPressDate()
+            }}
+            style={{
+              height: 30,
+              width: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../../res/image/img/icon_close.png')}
+              style={{height: 15, width: 15, resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
       {show && (
         <DateTimePicker

@@ -17,7 +17,7 @@ export class LoginHomeContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-   console.log('checkEmailReducer==',state.checkEmailReducer);
+   // console.log('checkEmailReducer==',state.checkEmailReducer);
   
    return {
       status: state.loginReducer.status,

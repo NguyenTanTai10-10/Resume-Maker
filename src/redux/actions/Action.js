@@ -18,6 +18,12 @@ export const checkEmailAction = (input) => {
     input: input,
   };
 };
+export const LOGOUTCHECKEMAIL = 'LOGOUTCHECKEMAIL';
+export const logoutCheckMailAction = () => {
+  return {
+    type: LOGOUTCHECKEMAIL,
+  };
+};
 //===================================================================================
 export const LOGOUT = 'LOGOUT';
 export const logoutAction = () => {
@@ -54,6 +60,12 @@ export const registerAction = (input) => {
   return {
     type: REGISTER,
     input: input,
+  };
+};
+export const LOGOUTREGISTER = 'LOGOUTREGISTER';
+export const logoutRegisterlAction = () => {
+  return {
+    type: LOGOUTREGISTER,
   };
 };
 

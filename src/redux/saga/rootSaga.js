@@ -5,6 +5,7 @@ import { watchListCV } from './ListCvSaga';
 
 
 import { watchLogin } from './LoginSaga';
+import { watchRegister } from './registerSaga';
 
 
 export default function* rootSaga() {
@@ -13,6 +14,7 @@ export default function* rootSaga() {
       watchCheckEmail(),
       watchListCV(),
       watchGetCity(),
+      watchRegister(),
   
  
    ]);

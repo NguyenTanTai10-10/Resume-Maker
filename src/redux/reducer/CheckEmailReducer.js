@@ -1,5 +1,5 @@
 
-import {CHECKEMAIL,CHECKEMAIL_SUCCESS,CHECKEMAIL_ERROR} from '../actions/Action';
+import {CHECKEMAIL,CHECKEMAIL_SUCCESS,CHECKEMAIL_ERROR, LOGOUTCHECKEMAIL} from '../actions/Action';
 const initState = {
   status: null,
   data: null,
@@ -44,6 +44,11 @@ const checkEmailReducer = (state = initState, action) => {
           
           message : error
         };
+        case LOGOUTCHECKEMAIL:
+          console.log('LOGOUTCHECKEMAIL');
+          return {
+            initState
+          }
     default:
       return state;
   }
