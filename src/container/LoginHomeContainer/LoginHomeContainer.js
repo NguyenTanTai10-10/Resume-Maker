@@ -17,7 +17,7 @@ export class LoginHomeContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-   // console.log('checkEmailReducer==',state.checkEmailReducer);
+   // console.log('loginReducer==',state.loginReducer);
   
    return {
       status: state.loginReducer.status,
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
    return {
       loginAction: (userType,email, password,registrationIds,FacebookId,GoogleId) => dispatch(loginAction(userType,email, password,registrationIds,FacebookId,GoogleId)),
-      checkEmailAction:(email)=>dispatch(checkEmailAction(email))
+      // checkEmailAction:(email)=>dispatch(checkEmailAction(email))
    };
 };
 

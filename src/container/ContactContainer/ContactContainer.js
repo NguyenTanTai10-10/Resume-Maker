@@ -7,6 +7,7 @@ import {
   registerAction,
   logoutCheckMailAction,
   logoutRegisterlAction,
+  editAvatarAction
 } from '../../redux/actions/Action';
 
 export class ContactContainer extends Component {
@@ -16,7 +17,7 @@ export class ContactContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-//   console.log('-========',state.registerReducer.message);
+  
   return {
     statusCity: state.getCityReducer.status,
     dataCity: state.getCityReducer.data,
@@ -35,6 +36,12 @@ const mapStateToProps = (state) => {
     loadingRegister: state.registerReducer.loading,
     messageRegister: state.registerReducer.message,
     errorRegister: state.registerReducer.error,
+     //======================================
+     statusAvt: state.editAvatarReducer.status,
+     dataAvt: state.editAvatarReducer.data,
+     loadingAvtr: state.editAvatarReducer.loading,
+     messageAvt: state.editAvatarReducer.message,
+     errorAvt: state.editAvatarReducer.error,
   };
 };
 
@@ -45,6 +52,8 @@ const mapDispatchToProps = (dispatch) => {
     registerAction: (input) => dispatch(registerAction(input)),
     logoutCheckMailAction: (input) => dispatch(logoutCheckMailAction(input)),
     logoutRegisterlAction: (input) => dispatch(logoutRegisterlAction(input)),
+    editAvatarAction: (input) => dispatch(editAvatarAction(input)),
+    
   };
 };
 

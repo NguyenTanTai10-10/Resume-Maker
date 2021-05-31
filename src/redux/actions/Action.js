@@ -68,4 +68,25 @@ export const logoutRegisterlAction = () => {
     type: LOGOUTREGISTER,
   };
 };
+//===================================================================================
+export const EDITAVATAR = 'EDITAVATAR';
+export const EDITAVATAR_SUCCESS = 'EDITAVATAR_SUCCESS';
+export const EDITAVATAR_ERROR = 'GEDITAVATAR_ERROR';
+export const editAvatarAction = (input) => {
+  return {
+    type: EDITAVATAR,
+    input: input,
+  };
+};
+//===================================================================================
+export const INFO_USER = 'INFO_USER';
+export const INFO_USER_SUCCESS = 'INFO_USER_SUCCESS';
+export const INFO_USER_ERROR = 'INFO_USER_ERROR';
+export const  infoUserAction = (input) => {
+  return {
+    type: INFO_USER,
+    input: input,
+  };
+};
+
 

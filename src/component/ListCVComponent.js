@@ -68,7 +68,7 @@ const ListCVComponent = (props) => {
   };
   return (
     <View style={{flex: 1}}>
-        {props.loadingEmail && <LoadingView/>}
+        {props.loading && <LoadingView/>}
       <StatusBarView />
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity

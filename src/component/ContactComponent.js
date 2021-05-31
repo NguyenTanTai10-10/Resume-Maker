@@ -26,6 +26,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const ContactComponent = (props) => {
   useEffect(() => {
     props.getCityAction({city_id: '', country_id: ''});
+
   }, []);
   useEffect(() => {
     
@@ -161,6 +162,7 @@ const ContactComponent = (props) => {
       } catch (e) {
         // saving error
       }
+      // console.log(`data:${image.mime};base64,${image.data}`);
       
       
       setPhotoBase64(`data:${image.mime};base64,${image.data}`);
@@ -250,6 +252,7 @@ const ContactComponent = (props) => {
     setPassword('');
     setClearPassword(false);
     setCheckPasswordHL(false);
+    
   };
   //==============================================================
   const getData = async () => {
@@ -395,7 +398,9 @@ const ContactComponent = (props) => {
   };
   //=========================================
   const onUpdate = async () => {
-    await set
+    console.log(DataRegister.jobseeker_id);
+    await props.editAvatarAction({user_id:DataRegister!== null ?DataRegister.jobseeker_id:'' ,image:PhotoBase64})
+    await props.navigation.navigate('')
 
 
     // console.log(DataRegister.jobseeker_id);

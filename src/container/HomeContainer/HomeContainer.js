@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Home from '../../component/home/Home';
+import { infoUserAction} from "../../redux/actions/Action"
 
 
 
@@ -12,21 +13,22 @@ export class HomeContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-//    return {
-//       status: state.loginReducer.status,
-//       data: state.loginReducer.data,
-//       loading: state.loginReducer.loading,
-//       message: state.loginReducer.message,
-//       error: state.loginReducer.error,
-//    };
+   // console.log(state.infoUserReducer);
+   return {
+      statusUser: state.infoUserReducer.status,
+      dataUser: state.infoUserReducer.data,
+      loadingUser: state.infoUserReducer.loading,
+      messageUser: state.infoUserReducer.message,
+      errorUser: state.infoUserReducer.error,
+   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-//    return {
-//       loginAction: (username, password) => dispatch(loginAction(username, password)),
-//    };
+   return {
+      infoUserAction: (input) => dispatch(infoUserAction(input)),
+   };
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
-export default HomeContainer 
+export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
+
 

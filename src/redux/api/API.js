@@ -5,7 +5,7 @@ const language = 'vi';
 import axios from 'axios';
 import {Alert} from 'react-native';
 function* LoginUser(input) {
-  // console.log("SIGN IN: ", "email-" + email, "password-" + password, "userType-" + userType, "registrationIds-" + registrationIds, "FacebookId-" + FacebookId, "GoogleId-" + GoogleId)
+  
   let temp;
   yield axios
     .post(urlSever, {
@@ -92,7 +92,6 @@ function* GetCity(input) {
 }
 //========================================================
 function* Register(input) {
-  
   let temp;
   yield axios
     .post(urlSever, {
@@ -101,13 +100,13 @@ function* Register(input) {
       params: {
         email: input.email,
         password: input.password,
-        name: input.username,
+        name: input.name,
         address: input.address,
         country: 250,
         city: input.city,
         phone: input.phone,
         functional_role: 69,
-        birthday:input.birthday,
+        birthday: input.birthday,
         gender: input.gender,
         facebook_id: input.facebook_id,
         google_id: input.google_id,
@@ -124,10 +123,49 @@ function* Register(input) {
 
   return temp;
 }
+//========================================================
+function* EditAvatar(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'edit_logo',
+      version: Ver,
+      params: {user_id: input.user_id, image: input.image},
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+//========================================================
+function* InforUser(input) {
+  console.log(input);
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_detail_cv',
+      version: Ver,
+      params: {user_id:input.user_id, emp_id:input.emp_id, lang_code: language, is_app_cv: input.is_app_cv},
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
 export const API = {
   LoginUser,
   CheckEmail,
   ListCV,
   GetCity,
   Register,
+  EditAvatar,
+  InforUser,
 };

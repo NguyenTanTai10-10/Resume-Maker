@@ -11,11 +11,12 @@ import Images from '../../res/image';
 import Header from '../custom/Header';
 import {screenHeight, screenWidth} from '../../res/style/theme';
 import LoadingView from '../custom/LoadingView';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginHome = (props) => {
   const [Check, setCheck] = useState(false);
 
-  const [username, setUsername] = useState(' ');
+  const [username, setUsername] = useState('hotroviecoi@gmail.com');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('1');
   const [registrationIds, setRegistrationIds] = useState('');
@@ -37,10 +38,8 @@ const LoginHome = (props) => {
   };
   useEffect(() => {
     if (props.status !== null) {
-      console.log('(this.props.status==', props.status);
-
       if (props.status === 1) {
-        props.navigation.replace('Drawers');
+        storeData(props.data.jobseeker_id);
       } else {
         setTimeout(() => {
           Alert.alert('Thông báo', props.message);
@@ -48,31 +47,29 @@ const LoginHome = (props) => {
       }
     }
   }, [props.status]);
+
   // useEffect(() => {
-  //   props.navigation.addListener('focus', () => {
-  //     props.checkEmailAction({email: ''});
-  //   });
-  // }, [])
-  useEffect(() => {
-    if (props.statusEmail !== null) {
-      setCheck(true);
-    } else if (props.errorEmail !== null) {
-      Alert.alert(props.errorEmail);
+  //   if (props.statusEmail !== null) {
+  //     setCheck(true);
+  //   } else if (props.errorEmail !== null) {
+  //     Alert.alert(props.errorEmail);
+  //   }
+  // }, [props.statusEmail]);
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('@jobseeker_id', jsonValue);
+      await props.navigation.replace('Drawers');
+    } catch (e) {
+      // saving error
     }
-  }, [props.statusEmail]);
+  };
 
-  useEffect(() => {
-    console.log('123==',username);
-    if (emailValidation(username)) {
-          props.checkEmailAction({email: username});
-        }
-    
-  }, [username])
-
-
-  const onChangeText = (text) => {
+  const onChangeUser = (text) => {
     setUsername(text);
-   
+  };
+  const onChangePass = (text) => {
+    setPassword(text);
   };
   const emailValidation = (email) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -86,7 +83,7 @@ const LoginHome = (props) => {
 
   return (
     <View style={{flex: 1}}>
-      {props.loading && <LoadingView/>}
+      {props.loading && <LoadingView />}
       <Header isShowBack onPressBack={() => props.navigation.goBack()} />
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         <Image
@@ -121,11 +118,11 @@ const LoginHome = (props) => {
           <TextInput
             placeholder="Email"
             onChangeText={(text) => {
-              onChangeText(text);
+              onChangeUser(text);
             }}
             style={{width: '70%'}}></TextInput>
         </View>
-        {Check === true ? (
+        {/* {Check === true ? (
           <Text
             style={{
               color:
@@ -135,7 +132,7 @@ const LoginHome = (props) => {
             }}>
             {props.messageEmail}
           </Text>
-        ) : null}
+        ) : null} */}
         <View
           style={{
             flexDirection: 'row',
@@ -153,7 +150,9 @@ const LoginHome = (props) => {
           />
           <TextInput
             placeholder="Mật khẩu"
-            // onChange={(text)=>{onChangeText()}}
+            onChangeText={(text) => {
+              onChangePass(text);
+            }}
             style={{width: '70%'}}></TextInput>
         </View>
 
@@ -217,9 +216,8 @@ const LoginHome = (props) => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-        onPress={()=>props.navigation.navigate('ListCVContainer')}
-        
-        style={{marginTop: 20}}>
+          onPress={() => props.navigation.navigate('ListCVContainer')}
+          style={{marginTop: 20}}>
           <Text>Create a new account</Text>
         </TouchableOpacity>
         <View style={{marginTop: 20}}>

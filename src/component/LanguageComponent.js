@@ -105,6 +105,54 @@ const LanguageComponent = (props) => {
 
 
                 </View>
+                <View
+          style={{
+            marginBottom: 20,
+            marginTop: 10,
+
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.goBack();
+            
+            }}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 50,
+              width: (screenWidth * 0.7) / 2,
+              flexDirection: 'row',
+
+              borderRadius: 13,
+            }}>
+            <Image
+              source={require('../res/image/img/left-arrow.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <Text style={{color: 'black'}}>Trở về</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+
+              height: 50,
+              width: (screenWidth * 0.7) / 2,
+
+              borderRadius: 13,
+            }}>
+            <Text style={{color: 'black'}}>Tiếp tục</Text>
+            <Image
+              source={require('../res/image/img/right-arrow.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>
+        </View>
                 <BottomSheet
                     ref={modal}
                     title="Chọn ngôn ngữ"
