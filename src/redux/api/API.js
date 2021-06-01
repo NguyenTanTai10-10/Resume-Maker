@@ -5,7 +5,6 @@ const language = 'vi';
 import axios from 'axios';
 import {Alert} from 'react-native';
 function* LoginUser(input) {
-  
   let temp;
   yield axios
     .post(urlSever, {
@@ -149,7 +148,42 @@ function* InforUser(input) {
     .post(urlSever, {
       method: 'get_detail_cv',
       version: Ver,
-      params: {user_id:input.user_id, emp_id:input.emp_id, lang_code: language, is_app_cv: input.is_app_cv},
+      params: {
+        user_id: input.user_id,
+        emp_id: input.emp_id,
+        lang_code: language,
+        is_app_cv: input.is_app_cv,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+//========================================================
+function* EditInfoUser(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'edit_info_jobseeker',
+      version: Ver,
+      params: {
+        user_id: input.user_id,
+        email: input.email,
+        name: input.name,
+        birthday: input.name,
+        gender: input.gender,
+        marital_status: '1',
+        address: input.address,
+        city: input.city,
+        phone: input.phone,
+        skype: '',
+        langCode: language,
+      },
     })
     .then(function (response) {
       temp = response.data;
@@ -168,4 +202,5 @@ export const API = {
   Register,
   EditAvatar,
   InforUser,
+  EditInfoUser
 };

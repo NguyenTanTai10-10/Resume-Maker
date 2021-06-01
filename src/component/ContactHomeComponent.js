@@ -1,4 +1,3 @@
-
 import {
   View,
   Text,
@@ -8,7 +7,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {set} from 'react-native-reanimated';
+
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
@@ -23,20 +22,88 @@ import ImagePicker from 'react-native-image-crop-picker';
 import React, {useState, useEffect} from 'react';
 import LoadingView from './custom/LoadingView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {set} from 'react-native-reanimated';
 
-const ContactComponent = (props) => {
-  useEffect(() => {
-    props.getCityAction({city_id: '', country_id: ''});
-  }, []);
-  useEffect(() => {
-    // getData();
+const ContactHomeComponent = (props) => {
+  const [data, setData] = useState('');
+  const [ImagesAVT, setImagesAVT] = useState(false);
 
-    props.navigation.addListener('focus', () => {
-      props.logoutCheckMailAction();
-      props.registerAction();
-      props.logoutRegisterlAction();
+  useEffect(() => {
+    
+    props.navigation.addListener('focus', async () => {
+      props.logoutCheckMailAction('');
+
+      
+      props.getCityAction({city_id: '', country_id: ''});
+      try {
+        const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+        setUserID(jsonValue != null ? JSON.parse(jsonValue) : null);
+       
+        props.infoUserAction({
+          user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
+          lang_code: '',
+          emp_id: '',
+          is_app_cv: 1,
+        });
+        const value = await AsyncStorage.getItem('@Images64');
+      if (value !== null) {
+        setPhotoBase64(value);
+      }
+        
+        // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
+      } catch (e) {
+        // error reading value
+      }
     });
   }, []);
+
+  useEffect(() => {
+    if (props.statusUser !== null) {
+      if (props.statusUser === 1) {
+        setImagesAVT(true);
+        setData(props.dataUser);
+        setUserName(props.dataUser.name);
+        setBirthDay(props.dataUser.dob);
+        setEmailKh(props.dataUser.email);
+        setPhone(props.dataUser.phone);
+        setAdress(props.dataUser.address);
+
+        setCity_id(props.dataUser.city_id);
+        setPhotoBase64(props.dataUser.profile_image);
+
+        DataCity.map((item) => {
+          if (item.id === props.dataUser.city_id) {
+            console.log(item.city);
+            setCity(item.city);
+          }
+        });
+      } 
+      // else {
+      //   setTimeout(() => {
+      //     Alert.alert('Thông báo', props.messageUser);
+      //   }, 10);
+      // }
+    }
+  }, [props.statusUser]);
+  // const getData = async () => {
+  //   try {
+  //     const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+  //     setUserID(jsonValue != null ? JSON.parse(jsonValue) : null);
+  //     props.infoUserAction({
+  //       user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
+  //       lang_code: '',
+  //       emp_id: '',
+  //       is_app_cv: 1,
+  //     });
+  //     const value = await AsyncStorage.getItem('@Images64');
+  //     if (value !== null) {
+  //       setPhotoBase64(value);
+  //     }
+  //     // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
+  //   } catch (e) {
+  //     // error reading value
+  //   }
+  // };
 
   useEffect(() => {
     if (props.statusCity !== null) {
@@ -50,19 +117,20 @@ const ContactComponent = (props) => {
     }
   }, [props.statusCity]);
   useEffect(() => {
-    if (props.statusRegister !== null) {
-      if (props.statusRegister === 1) {
-        setDataRegister(props.dataRegister);
+    if (props.statusEditInfo !== null) {
+      if (props.statusEditInfo === 1) {
+        setDataRegister(props.dataEditInfo);
         setCheck(true);
 
-        Alert.alert('Thông báo', props.messageRegister);
-      } else {
-        setTimeout(() => {
-          Alert.alert('Thông báo', props.messageRegister);
-        }, 10);
+        Alert.alert('Thông báo', props.messageEditInfo);
       }
+      //  else {
+      //   setTimeout(() => {
+      //     Alert.alert('Thông báo', props.messageEditInfo);
+      //   }, 10);
+      // }
     }
-  }, [props.statusRegister]);
+  }, [props.statusEditInfo]);
 
   useEffect(() => {
     if (props.statusEmail !== null) {
@@ -73,7 +141,7 @@ const ContactComponent = (props) => {
     }
   }, [props.statusEmail]);
 
-  const [DataCity, setDataCity] = useState(false);
+  const [DataCity, setDataCity] = useState([]);
   const [checkHoTen, setCheckHoTen] = useState(false);
   const [checkBirthDay, setCheckBirthDay] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
@@ -82,25 +150,23 @@ const ContactComponent = (props) => {
   const [checkPhoneHL, setCheckPhoneHL] = useState(false);
   const [checkCity, setCheckCity] = useState(false);
   const [checkAdress, setCheckAdress] = useState(false);
-  const [checkDate, setCheckDate] = useState(false);
+
   const [CheckEmaiExit, setCheckEmaiExit] = useState('');
-  const [CheckPassword, setCheckPassword] = useState(false);
-  const [CheckPasswordHL, setCheckPasswordHL] = useState(false);
+
   //================================================
   const [check, setCheck] = useState(false);
-  const [Password, setPassword] = useState('');
+  const [PasswordNow, setPasswordNow] = useState('');
   const [userName, setUserName] = useState('');
+  const [userID, setUserID] = useState('');
   const [birthDay, setBirthDay] = useState('');
   const [emailKh, setEmailKh] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phoneNumber, setPhone] = useState('');
   const [City, setCity] = useState('Tỉnh/thành phố');
   const [City_id, setCity_id] = useState();
   const [Adress, setAdress] = useState('');
   const [emailExit, setEmailExits] = useState('');
   const [Gender, setGender] = useState('1');
   const [DataRegister, setDataRegister] = useState('');
-  const [id_User, setId_User] = useState('');
-  const [showPassword, setShowPassword] = useState(true);
 
   const [Photo, setPhoto] = useState([
     {title: 'Chụp ảnh', value: ''},
@@ -117,7 +183,6 @@ const ContactComponent = (props) => {
   const [clearPhone, setClearPhone] = useState(false);
   const [clearCity, setClearCity] = useState(false);
   const [clearAdress, setClearAdress] = useState(false);
-  const [clearPassword, setClearPassword] = useState(false);
 
   const emailValidation = (item) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -165,12 +230,6 @@ const ContactComponent = (props) => {
     });
   };
 
-  const onPassword = (text) => {
-    setPassword(text);
-    setCheckPassword(false);
-    setClearPassword(true);
-    setCheckPasswordHL(false);
-  };
   const onUserName = (text) => {
     setUserName(text);
     setCheckHoTen(false);
@@ -221,10 +280,7 @@ const ContactComponent = (props) => {
     setUserName('');
     setClearHoTen(false);
   };
-  const onClearBirthDay = () => {
-    setBirthDay('');
-    setClearBirthDay(false);
-  };
+
   const onClearEmail = () => {
     setEmailKh('');
     setClearEmail(false);
@@ -242,41 +298,8 @@ const ContactComponent = (props) => {
     setAdress('');
     setClearAdress(false);
   };
-  const onClearPassword = () => {
-    setPassword('');
-    setClearPassword(false);
-    setCheckPasswordHL(false);
-  };
+
   //==============================================================
-  // const getData = async () => {
-  //   try {
-  //     const jsonValue = await AsyncStorage.getItem('@Userinfo');
-
-  //     if (jsonValue != null) {
-  //       var data = JSON.parse(jsonValue);
-
-  //       setAdress(data.address);
-  //       setBirthDay(data.birthday);
-  //       setCity(data.city);
-  //       setEmailKh(data.email);
-  //       setGender(data.gender);
-  //       setUserName(data.name);
-  //       setPassword(data.password);
-  //       setPhone(data.phone);
-  //       setCity_id(data.id_city);
-  //     }
-  //   } catch (e) {
-  //     // error reading value
-  //   }
-  //   try {
-  //     const value = await AsyncStorage.getItem('@Images64');
-  //     if (value !== null) {
-  //       setPhotoBase64(value);
-  //     }
-  //   } catch (e) {
-  //     // error reading value
-  //   }
-  // };
 
   //==============================================================
   const onSubmit = async () => {
@@ -285,50 +308,50 @@ const ContactComponent = (props) => {
       userName.trim() === '' ||
       birthDay === null ||
       birthDay.trim() === '' ||
+      birthDay === 'Ngày sinh' ||
       emailKh === null ||
       emailKh.trim() === '' ||
       !emailValidation(emailKh) ||
-      emailExit === 'email đã được đăng ký' ||
-      phone === null ||
-      phone.trim() === '' ||
-      !phoneValidation(phone) ||
+      (emailExit === 'email đã được đăng ký' && PasswordNow !== emailKh) ||
+      phoneNumber === null ||
+      phoneNumber.trim() === '' ||
+      !phoneValidation(phoneNumber) ||
       City === null ||
       City.trim() === '' ||
       City === 'Tỉnh/thành phố' ||
       Adress === null ||
-      Adress.trim() === '' ||
-      Password === null ||
-      Password.trim() === '' ||
-      Password.length < 4
+      Adress.trim() === ''
     ) {
       if (userName === null || userName.trim() === '') {
         setUserName('');
         setCheckHoTen(true);
       }
-      if (birthDay === null || birthDay.trim() === '') {
-        setBirthDay('');
+      if (
+        birthDay === null ||
+        birthDay.trim() === '' ||
+        birthDay === 'Ngày sinh'
+      ) {
+        setBirthDay('Ngày sinh');
         setCheckBirthDay(true);
       }
-      if (Password === null || Password.trim() === '') {
-        setPassword('');
-        setCheckPassword(true);
-      } else if (Password.length < 4) {
-        setCheckPasswordHL(true);
-      }
+
       if (emailKh === null || emailKh.trim() === '') {
         setEmailKh('');
         setCheckEmail(true);
       } else if (!emailValidation(emailKh)) {
         setCheckEmailHL(true);
-      } else if (emailExit === 'email đã được đăng ký') {
+      } else if (
+        emailExit === 'email đã được đăng ký' &&
+        PasswordNow !== emailKh
+      ) {
         setCheckEmaiExit(true);
       }
 
-      if (phone === null || phone.trim() === '') {
+      if (phoneNumber === null || phoneNumber.trim() === '') {
         setPhone('');
 
         setCheckPhone(true);
-      } else if (!phoneValidation(phone)) {
+      } else if (!phoneValidation(phoneNumber)) {
         setCheckPhoneHL(true);
       }
       if (City === 'Tỉnh/thành phố') {
@@ -343,70 +366,43 @@ const ContactComponent = (props) => {
         setCheckAdress(true);
       }
     } else {
-      try {
-        const jsonValue = JSON.stringify({
-          email: emailKh,
-          password: Password,
-          name: userName,
-          address: Adress,
-          city: City,
-          id_city: City_id,
-          phone: phone,
-          birthday: birthDay,
-          gender: Gender,
-          facebook_id: '',
-          google_id: '',
-        });
-        await AsyncStorage.setItem('@Userinfo', jsonValue);
-      } catch (e) {
-        // saving error
-      }
-
       console.log('userName', userName);
       console.log('birthDay', birthDay);
-      console.log('Password', Password);
       console.log('emailKh', emailKh);
-      console.log('phone', phone);
+      console.log('phone', phoneNumber);
       console.log('City', City);
       console.log('Adress', Adress);
       console.log('Gender', Gender);
 
-      props.registerAction({
+      props.editInfoUserAction({
+        user_id: userID,
         email: emailKh,
-        password: Password,
         name: userName,
         address: Adress,
         city: City_id,
-        phone: phone,
+        phone: phoneNumber,
         birthday: birthDay,
         gender: Gender,
-        facebook_id: '',
-        google_id: '',
+        skype: '',
       });
+      props.editAvatarAction({user_id: userID, image: PhotoBase64});
     }
   };
   //=========================================
   const onUpdate = async () => {
-   
-    try {
-      const jsonValue = JSON.stringify(DataRegister.jobseeker_id)
-      await AsyncStorage.setItem('@jobseeker_id', jsonValue)
-    } catch (e) {
-      // saving error
-    }
-    await props.editAvatarAction({
-      user_id: DataRegister !== null ? DataRegister.jobseeker_id : '',
-      image: PhotoBase64,
-    });
-    await props.navigation.navigate('Drawers');
-    
+    // console.log(DataRegister.jobseeker_id);
+    // await props.editAvatarAction({
+    //   user_id: DataRegister !== null ? DataRegister.jobseeker_id : '',
+    //   image: PhotoBase64,
+    // });
+    await props.navigation.navigate('BasicInfoContainer');
 
     // console.log(DataRegister.jobseeker_id);
     // console.log(PhotoBase64);
   };
   return (
     <View style={{flex: 1}}>
-      {props.loadingRegister && <LoadingView />}
+      {props.loadingUser && <LoadingView />}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -428,7 +424,6 @@ const ContactComponent = (props) => {
               onPress={() => {
                 props.navigation.goBack();
                 props.logoutCheckMailAction();
-                props.logoutRegisterlAction();
               }}>
               <Image
                 source={Images.arrow}
@@ -472,7 +467,7 @@ const ContactComponent = (props) => {
           <TouchableOpacity
             onPress={() => modal1.current.open()}
             style={{justifyContent: 'center', alignItems: 'center'}}>
-            {PhotoBase64 === '' ? (
+            {ImagesAVT === false ? (
               <Image
                 source={require('../res/image/img/avatar.png')}
                 style={{
@@ -584,7 +579,10 @@ const ContactComponent = (props) => {
           )}
         </View>
 
-        <DatetimePicker chooseDay={(item) => onChooseDate(item)} />
+        <DatetimePicker
+          chooseDay={(item) => onChooseDate(item)}
+          title={birthDay}
+        />
         <View
           style={{
             justifyContent: 'center',
@@ -671,97 +669,7 @@ const ContactComponent = (props) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-
             marginTop: CheckEmaiExit ? null : 20,
-          }}>
-          {CheckPassword && (
-            <Text style={{color: 'red', marginTop: 10}}>
-              * Vui lòng nhập mật khẩu của bạn
-            </Text>
-          )}
-          {CheckPasswordHL && (
-            <Text style={{color: 'red', marginTop: 10}}>
-              * Mật khẩu hơn 4 kí tự trở lên
-            </Text>
-          )}
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomColor: '#FA8C16',
-            borderBottomWidth: 2,
-            marginHorizontal: 80,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/padlock1.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <TextInput
-              secureTextEntry={showPassword}
-              onChangeText={(text) => {
-                onPassword(text);
-              }}
-              defaultValue={Password}
-              placeholder="Mật khẩu"
-              style={{width: '60%', marginLeft: 15}}></TextInput>
-          </View>
-          {clearPassword && (
-            <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity
-                onPress={() => {
-                  setShowPassword(!showPassword);
-                }}
-                style={{
-                  height: 30,
-                  width: 30,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                {showPassword === true ? (
-                  <Image
-                    source={require('../res/image/img/eye.png')}
-                    style={{height: 20, width: 25, resizeMode: 'contain'}}
-                  />
-                ) : (
-                  <Image
-                    source={require('../res/image/img/invisible.png')}
-                    style={{height: 20, width: 25, resizeMode: 'contain'}}
-                  />
-                )}
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  onClearPassword();
-                }}
-                style={{
-                  height: 30,
-                  width: 30,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={require('../res/image/img/icon_close.png')}
-                  style={{height: 15, width: 15, resizeMode: 'contain'}}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
-
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
           }}>
           {checkPhone && (
             <Text style={{color: 'red'}}>* Vui lòng nhập số điện thoại</Text>
@@ -793,7 +701,7 @@ const ContactComponent = (props) => {
               style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
             <TextInput
-              defaultValue={phone}
+              defaultValue={phoneNumber}
               onChangeText={(text) => {
                 onPhone(text);
               }}
@@ -941,7 +849,6 @@ const ContactComponent = (props) => {
             marginTop: 20,
             justifyContent: 'center',
             alignItems: 'center',
-            marginBottom:30
           }}>
           {check === false ? (
             <TouchableOpacity
@@ -979,7 +886,57 @@ const ContactComponent = (props) => {
             </TouchableOpacity>
           )}
         </View>
-        
+        <View
+          style={{
+            marginBottom: 20,
+            marginTop: 10,
+
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.goBack();
+              props.logoutCheckMailAction();
+            }}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 50,
+              width: (screenWidth * 0.7) / 2,
+              flexDirection: 'row',
+
+              borderRadius: 13,
+            }}>
+            <Image
+              source={require('../res/image/img/left-arrow.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <Text style={{color: 'black'}}>Trở về</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('BasicInfoContainer');
+            }}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+
+              height: 50,
+              width: (screenWidth * 0.7) / 2,
+
+              borderRadius: 13,
+            }}>
+            <Text style={{color: 'black'}}>Tiếp tục</Text>
+            <Image
+              source={require('../res/image/img/right-arrow.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>
+        </View>
         <BottomSheet
           chooseCity={(item) => onChooseCity(item)}
           ChooseCity_id={(id) => onChooseCity_id(id)}
@@ -1002,4 +959,4 @@ const ContactComponent = (props) => {
   );
 };
 
-export default ContactComponent;
+export default ContactHomeComponent;

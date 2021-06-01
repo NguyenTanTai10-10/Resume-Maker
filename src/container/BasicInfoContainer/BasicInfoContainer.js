@@ -1,32 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Home from '../../component/home/Home';
+import BasicInfoComponent from '../../component/BasicInfoComponent';
+
 
 
 
 
 export class BasicInfoContainer extends Component {
    render() {
-      return <Home {...this.props} />;
+      return <BasicInfoComponent {...this.props} />;
    }
 }
 
 const mapStateToProps = (state) => {
-//    return {
-//       status: state.loginReducer.status,
-//       data: state.loginReducer.data,
-//       loading: state.loginReducer.loading,
-//       message: state.loginReducer.message,
-//       error: state.loginReducer.error,
-//    };
+   return {
+      // status: state.loginReducer.status,
+      // data: state.loginReducer.data,
+      // loading: state.loginReducer.loading,
+      // message: state.loginReducer.message,
+      // error: state.loginReducer.error,
+   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-//    return {
-//       loginAction: (username, password) => dispatch(loginAction(username, password)),
-//    };
+   return {
+      // loginAction: (username, password) => dispatch(loginAction(username, password)),
+   };
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
-export default BasicInfoContainer 
+export default connect(mapStateToProps, mapDispatchToProps)(BasicInfoContainer);
+
 

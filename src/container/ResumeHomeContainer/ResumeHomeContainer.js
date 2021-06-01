@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import ResumeTitleComponent from '../../component/ResumeTitleComponent';
+import ResumeHomeComponent from '../../component/ResumeHomeComponent';
+
 import { infoUserAction} from "../../redux/actions/Action"
 
-export class ResumeTitleContainer extends Component {
+export class ResumeHomeContainer extends Component {
   render() {
-    return <ResumeTitleComponent {...this.props} />;
+    return <ResumeHomeComponent {...this.props} />;
   }
 }
 
 const mapStateToProps = (state) => {
+  // console.log("tate.infoUserReducer",state.infoUserReducer);
   return {
     statusUser: state.infoUserReducer.status,
     dataUser: state.infoUserReducer.data,
@@ -21,12 +23,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-   infoUserAction: (input) =>
-      dispatch(infoUserAction(input)),
+    infoUserAction: (input) => dispatch(infoUserAction(input)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ResumeTitleContainer);
+)(ResumeHomeContainer);

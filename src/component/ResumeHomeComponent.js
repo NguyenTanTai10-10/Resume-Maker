@@ -1,24 +1,63 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, Image, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  Alert,
+} from 'react-native';
 import Images from '../res/image';
 import {screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
 import Header from './custom/Header';
+import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
 
-const ResumeTitleComponent = (props) => {
+const ResumeHomeComponent = (props) => {
   const [data, setData] = useState('');
 
   useEffect(() => {
     getData();
   }, []);
 
-
+  useEffect(() => {
+    if (props.statusUser !== null) {
+      if (props.statusUser === 1) {
+        setData(props.dataUser);
+      } else {
+        setTimeout(() => {
+          Alert.alert('Thông báo', props.messageUser);
+        }, 10);
+      }
+    }
+  }, [props.statusUser]);
   const getData = async () => {
-    
+    try {
+      const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      console.log('123');
+      props.infoUserAction({
+        user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
+        lang_code: '',
+        emp_id: '',
+        is_app_cv: 1,
+      });
+      // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
+    } catch (e) {
+      // error reading value
+    }
   };
-  
+  //  useEffect( async() => {
+  //   // setIdCV(props.route.params.id)r
+  //   //    console.log(props.route.params.id);
+
+  //   const jsonValue = await AsyncStorage.getItem('@template_cv_id')
+  //   const template_cv_id = JSON.parse(jsonValue)
+  //   // const value = await AsyncStorage.getItem('@template_cv_id')
+  //   console.log("value===", template_cv_id);
+
+  //  }, [])
 
   const [title, setTitle] = useState('');
   const [idCV, setIdCV] = useState('');
@@ -35,7 +74,6 @@ const ResumeTitleComponent = (props) => {
 
   const onUpdate = async () => {
     const jsonValue = JSON.stringify(title);
-    await AsyncStorage.setItem('@title', jsonValue);
 
     if (title === null || title.trim() === '') {
       if (title === null || title.trim() === '') {
@@ -50,6 +88,7 @@ const ResumeTitleComponent = (props) => {
 
   return (
     <View style={{flex: 1}}>
+      {props.loadingUser && <LoadingView />}
       <StatusBarView />
       <View style={{}}>
         <View
@@ -153,10 +192,7 @@ const ResumeTitleComponent = (props) => {
         ) : (
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('ContactContainer', {
-                id: idCV,
-                title: title,
-              });
+              props.navigation.navigate('ContactContainer');
             }}
             style={{
               justifyContent: 'center',
@@ -190,10 +226,29 @@ const ResumeTitleComponent = (props) => {
             borderRadius: 13,
           }}></TouchableOpacity>
 
-        
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('ContactHomeContainer');
+          }}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+
+            height: 50,
+            width: (screenWidth * 0.7) / 2,
+
+            borderRadius: 13,
+          }}>
+          <Text style={{color: 'black'}}>Tiếp tục</Text>
+          <Image
+            source={require('../res/image/img/right-arrow.png')}
+            style={{height: 35, width: 35, resizeMode: 'contain'}}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default ResumeTitleComponent;
+export default ResumeHomeComponent;

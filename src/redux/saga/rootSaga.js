@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects';
 import { watchCheckEmail } from './CheckEmailSaga';
 import { watchEditAvatar } from './editAvatarSaga';
+import { watchEditInfoUser } from './EditInfoUserSaga';
 import { watchGetCity } from './GetCitySaga';
 import { watchInfoUser } from './InfoUserSaga';
 import { watchListCV } from './ListCvSaga';
@@ -18,8 +19,8 @@ export default function* rootSaga() {
       watchGetCity(),
       watchRegister(),
       watchEditAvatar(),
-      watchInfoUser()
-  
+      watchInfoUser(),
+      watchEditInfoUser()
  
    ]);
 }

@@ -7,7 +7,7 @@ import getCityReducer from './GetcityReducer';
 import registerReducer from './RegisterReducer';
 import editAvatarReducer from './EditAvatarReducer';
 import infoUserReducer from './InfoUserReducer';
-
+import editInfoUserReducer from './EditInfoUserReducer';
 
 
 
@@ -18,7 +18,8 @@ const allReducers = combineReducers({
    getCityReducer,
    registerReducer,
    editAvatarReducer,
-   infoUserReducer
+   infoUserReducer,
+   editInfoUserReducer
 });
 
 export default allReducers;

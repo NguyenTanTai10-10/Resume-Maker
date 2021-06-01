@@ -220,7 +220,7 @@ const Home = (props) => {
         </View>
         <View style={{marginHorizontal: 30, marginVertical: 20}}>
           <TouchableOpacity
-            onPress={() => props.navigation.navigate('ResumeTitleContainer')}
+            onPress={() => props.navigation.navigate('ResumeHomeContainer')}
             style={{
               flexDirection: 'row',
               borderBottomWidth: 1,
@@ -248,7 +248,7 @@ const Home = (props) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => props.navigation.navigate('ContactContainer')}
+            onPress={() => props.navigation.navigate('ContactHomeContainer')}
             style={{
               flexDirection: 'row',
               paddingVertical: 15,

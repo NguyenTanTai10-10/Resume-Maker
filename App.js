@@ -34,6 +34,10 @@ import ExperiencesComponent from './src/component/ExperiencesComponent';
 import SkillsComponent from './src/component/SkillsComponent';
 import ResumeTitleContainer from './src/container/ResumeTitleContainer/ResumeTitleContainer';
 import ContactContainer from './src/container/ContactContainer/ContactContainer';
+import  ContactHomeContainer  from './src/container/ContactHomeContainer/ContactHomeContainer';
+import  ResumeHomeContainer  from './src/container/ResumeHomeContainer/ResumeHomeContainer';
+import  BasicInfoContainer  from './src/container/BasicInfoContainer/BasicInfoContainer';
+
 
 
 
@@ -98,6 +102,13 @@ const App = () => {
             <Stack.Screen name="EducationComponent" component={EducationComponent} />
             <Stack.Screen name="ExperiencesComponent" component={ExperiencesComponent} />
             <Stack.Screen name="SkillsComponent" component={SkillsComponent} />
+            <Stack.Screen name="ContactHomeContainer" component={ContactHomeContainer} />
+            <Stack.Screen name="ResumeHomeContainer" component={ResumeHomeContainer} />
+            <Stack.Screen name="BasicInfoContainer" component={BasicInfoContainer} />
+
+            {/* BasicInfoContainer */}
+            {/* ResumeHomeContainer */}
+            {/* ContactHomeContainer */}
             {/* SkillsComponent */}
             {/* ExperiencesComponent */}
             {/* Education */}

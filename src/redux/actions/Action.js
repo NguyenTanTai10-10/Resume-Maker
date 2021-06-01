@@ -73,6 +73,7 @@ export const EDITAVATAR = 'EDITAVATAR';
 export const EDITAVATAR_SUCCESS = 'EDITAVATAR_SUCCESS';
 export const EDITAVATAR_ERROR = 'GEDITAVATAR_ERROR';
 export const editAvatarAction = (input) => {
+  console.log(input);
   return {
     type: EDITAVATAR,
     input: input,
@@ -88,5 +89,16 @@ export const  infoUserAction = (input) => {
     input: input,
   };
 };
+//===================================================================================
+export const EDIT_INFO_USER = 'EDIT_INFO_USER';
+export const EDIT_INFO_USER_SUCCESS = 'EDIT_INFO_USER_SUCCESS';
+export const EDIT_INFO_USER_ERROR = 'EDIT_INFO_USER_ERROR';
+export const  editInfoUserAction = (input) => {
+  return {
+    type: EDIT_INFO_USER,
+    input: input,
+  };
+};
+
 
 

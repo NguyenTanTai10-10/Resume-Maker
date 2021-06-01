@@ -13,7 +13,7 @@ export class HomeContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-   // console.log(state.infoUserReducer);
+   
    return {
       statusUser: state.infoUserReducer.status,
       dataUser: state.infoUserReducer.data,

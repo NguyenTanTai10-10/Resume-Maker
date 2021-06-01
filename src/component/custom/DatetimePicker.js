@@ -14,27 +14,30 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DatetimePicker = (props) => {
   useEffect(() => {
-    getData();
-  }, []);
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@birthday');
-      if (value !== null) {
-        setDateStart(value);
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
+    setDateStart(props.title)
+  
+  }, [props.title])
+
+
+  // const getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('@birthday');
+  //     if (value !== null) {
+  //       setDateStart(value);
+  //     }
+  //   } catch (e) {
+  //     // error reading value
+  //   }
+  // };
 
   const [date, setDate] = useState(new Date());
   const [color, setColor] = useState(false);
   const [ClearBirthday, setClearBirthday] = useState(false);
   const [minDate, setMinDate] = useState(new Date());
 
-  const [DateStart, setDateStart] = useState('Ngày sinh');
+  const [DateStart, setDateStart] = useState('');
 
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState('');
   const [show, setShow] = useState(false);
 
   const onChange = async (event, selectedDate) => {
@@ -46,11 +49,11 @@ const DatetimePicker = (props) => {
     setClearBirthday(true);
 
     props.chooseDay(kq);
-    try {
-      await AsyncStorage.setItem('@birthday', DayStart);
-    } catch (e) {
-      // saving error
-    }
+    // try {
+    //   await AsyncStorage.setItem('@birthday', DayStart);
+    // } catch (e) {
+    //   // saving error
+    // }
   };
 
   const showMode = (currentMode) => {
@@ -59,18 +62,18 @@ const DatetimePicker = (props) => {
   };
 
   const showDatepicker = () => {
-    showMode('date');
+    showMode('');
   };
   const onPressDate = async() => {
     setDateStart('Ngày sinh');
     setClearBirthday(false);
-    props.chooseDay('');
-    const deleteDate = 'Ngày sinh'
-    try {
-      await AsyncStorage.setItem('@birthday', deleteDate);
-    } catch (e) {
-      // saving error
-    }
+    props.chooseDay('Ngày sinh');
+    // const deleteDate = 'Ngày sinh'
+    // try {
+    //   await AsyncStorage.setItem('@birthday', deleteDate);
+    // } catch (e) {
+    //   // saving error
+    // }
   };
   const formatDate = (dateChooose) => {
     console.log('dateChooose===', dateChooose);
@@ -131,12 +134,13 @@ const DatetimePicker = (props) => {
       </TouchableOpacity>
       {show && (
         <DateTimePicker
+        
           maximumDate={new Date()}
           testID="dateTimePicker"
           value={date}
           mode={mode}
-          is24Hour={true}
-          display="default"
+          // is24Hour={true}
+          // display="default"
           onChange={onChange}
         />
       )}
