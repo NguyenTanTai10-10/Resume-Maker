@@ -15,11 +15,11 @@ export class HomeContainer extends Component {
 const mapStateToProps = (state) => {
    
    return {
-      statusUser: state.infoUserReducer.status,
-      dataUser: state.infoUserReducer.data,
-      loadingUser: state.infoUserReducer.loading,
-      messageUser: state.infoUserReducer.message,
-      errorUser: state.infoUserReducer.error,
+      statusUser: state.userInfoReducer.status,
+      dataUser: state.userInfoReducer.data,
+      loadingUser: state.userInfoReducer.loading,
+      messageUser: state.userInfoReducer.message,
+      errorUser: state.userInfoReducer.error,
    };
 };
 

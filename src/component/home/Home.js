@@ -150,6 +150,8 @@ const Home = (props) => {
                   style={{
                     fontSize: 17,
                     alignSelf: 'center',
+                    textAlign:'center',
+                    
                     color: '#FA8C16',
                     width: '40%',
                   }}>
@@ -277,7 +279,7 @@ const Home = (props) => {
           </TouchableOpacity>
           <TouchableOpacity
             // BasicInfoComponent
-            onPress={() => props.navigation.navigate('BasicInfoComponent')}
+            onPress={() => props.navigation.navigate('BasicsInfoContainer')}
             style={{
               flexDirection: 'row',
               borderBottomWidth: 1,

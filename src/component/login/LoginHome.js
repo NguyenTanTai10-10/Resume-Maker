@@ -39,6 +39,7 @@ const LoginHome = (props) => {
   useEffect(() => {
     if (props.status !== null) {
       if (props.status === 1) {
+        console.log(props.data.jobseeker_id);
         storeData(props.data.jobseeker_id);
       } else {
         setTimeout(() => {

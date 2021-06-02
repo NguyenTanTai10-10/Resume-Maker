@@ -10,7 +10,7 @@ import {
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
-import BottomSheet from './custom/BottomSheet';
+import BottomSheetCity from './custom/BottomSheetCity';
 import DatetimePicker from './custom/DatetimePicker';
 import StatusBarView from './custom/StatusBarView';
 
@@ -285,7 +285,7 @@ const ExperiencesComponent = (props) => {
             />
           </TouchableOpacity>
         </View>
-        <BottomSheet
+        <BottomSheetCity
           ref={modal}
           title="Chọn cấp bật"
           data={[]}

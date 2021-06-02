@@ -18,6 +18,8 @@ export class ContactHomeContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log("state.infoUserReducer",state.userInfoReducer);
+
   return {
     statusCity: state.getCityReducer.status,
     dataCity: state.getCityReducer.data,
@@ -43,11 +45,11 @@ const mapStateToProps = (state) => {
     messageAvt: state.editAvatarReducer.message,
     errorAvt: state.editAvatarReducer.error,
     //=======================================
-    statusUser: state.infoUserReducer.status,
-    dataUser: state.infoUserReducer.data,
-    loadingUser: state.infoUserReducer.loading,
-    messageUser: state.infoUserReducer.message,
-    errorUser: state.infoUserReducer.error,
+    statusUser: state.userInfoReducer.status,
+    dataUser: state.userInfoReducer.data,
+    loadingUser: state.userInfoReducer.loading,
+    messageUser: state.userInfoReducer.message,
+    errorUser: state.userInfoReducer.error,
   };
 };
 

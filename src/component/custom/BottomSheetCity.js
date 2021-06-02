@@ -21,7 +21,7 @@ import {
 import Images from '../../res/image';
 import Sizes from '../../utils/Sizes';
 
-const BottomSheet = forwardRef((props, ref) => {
+const BottomSheetCity = forwardRef((props, ref) => {
   // console.log('123',props.data);
   const [show, setShow] = useState(false);
   const [selectItem, setSelectItem] = useState('');
@@ -131,8 +131,8 @@ const BottomSheet = forwardRef((props, ref) => {
   );
 });
 
-export default BottomSheet;
-BottomSheet.defaultProps = {
+export default BottomSheetCity;
+BottomSheetCity.defaultProps = {
   modalHeight: Dimensions.get('window').height * 0.4,
   data: [],
   onPressTime: () => {},

@@ -7,7 +7,8 @@ import {
   registerAction,
   logoutCheckMailAction,
   logoutRegisterlAction,
-  editAvatarAction
+  editAvatarAction,
+  editCiviAction
 } from '../../redux/actions/Action';
 
 export class ContactContainer extends Component {
@@ -17,7 +18,6 @@ export class ContactContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  
   return {
     statusCity: state.getCityReducer.status,
     dataCity: state.getCityReducer.data,
@@ -36,12 +36,18 @@ const mapStateToProps = (state) => {
     loadingRegister: state.registerReducer.loading,
     messageRegister: state.registerReducer.message,
     errorRegister: state.registerReducer.error,
-     //======================================
-     statusAvt: state.editAvatarReducer.status,
-     dataAvt: state.editAvatarReducer.data,
-     loadingAvtr: state.editAvatarReducer.loading,
-     messageAvt: state.editAvatarReducer.message,
-     errorAvt: state.editAvatarReducer.error,
+    //======================================
+    statusAvt: state.editAvatarReducer.status,
+    dataAvt: state.editAvatarReducer.data,
+    loadingAvtr: state.editAvatarReducer.loading,
+    messageAvt: state.editAvatarReducer.message,
+    errorAvt: state.editAvatarReducer.error,
+    //=======================================
+    statusEditCv: state.editCiviReducer.status,
+    dataEditCv: state.editCiviReducer.data,
+    loadingEditCv: state.editCiviReducer.loading,
+    messageEditCv: state.editCiviReducer.message,
+    errorEditCv: state.editCiviReducer.error,
   };
 };
 
@@ -53,7 +59,7 @@ const mapDispatchToProps = (dispatch) => {
     logoutCheckMailAction: (input) => dispatch(logoutCheckMailAction(input)),
     logoutRegisterlAction: (input) => dispatch(logoutRegisterlAction(input)),
     editAvatarAction: (input) => dispatch(editAvatarAction(input)),
-    
+    editCiviAction: (input) => dispatch(editCiviAction(input)),
   };
 };
 

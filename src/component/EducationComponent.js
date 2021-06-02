@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView, TextInput } from 'reac
 import Images from '../res/image'
 import { screenHeight, screenWidth } from '../res/style/theme'
 import Sizes from '../utils/Sizes'
-import BottomSheet from './custom/BottomSheet'
+import BottomSheetCity from './custom/BottomSheetCity'
 import DatetimePicker from './custom/DatetimePicker'
 import StatusBarView from './custom/StatusBarView'
 
@@ -197,14 +197,14 @@ const EducationComponent = (props) => {
           />
         </TouchableOpacity>
       </View>
-                <BottomSheet
+                <BottomSheetCity
                     ref={modal}
                     title="Chọn trình độ"
                     data={[]}
                     modalHeight={screenHeight/2}
 
                 />
-                <BottomSheet
+                <BottomSheetCity
                     ref={modal1}
                     title="Chọn chuyên ngành"
                     data={[]}

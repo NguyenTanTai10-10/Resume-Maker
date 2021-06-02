@@ -1,4 +1,4 @@
-import {EDITAVATAR,EDITAVATAR_SUCCESS,EDITAVATAR_ERROR} from '../actions/Action';
+import {EDIT_AVATAR,EDIT_AVATAR_SUCCESS,EDIT_AVATAR_ERROR} from '../actions/Action';
 
 import { call, takeEvery, put } from 'redux-saga/effects';
 import { API } from '../api/API';
@@ -10,22 +10,22 @@ function* EditAvatarFlow(action) {
 		// console.log('response - updateCheckListApi: ', response)
 
 		if (response !== null && response !== undefined) {
-			yield put({ type: EDITAVATAR_SUCCESS, data: response
+			yield put({ type: EDIT_AVATAR_SUCCESS, data: response
 			});
 		} else {
 			yield put({
-				type: EDITAVATAR_ERROR,
+				type: EDIT_AVATAR_ERROR,
 				error: "Lỗi Sever"
 			});
 		}
 	} catch (error) {
 		yield put({
-			type: EDITAVATAR_ERROR,
+			type: EDIT_AVATAR_ERROR,
 			error: "Lỗi Sever"
 		});
 	}
 }
 
 export function* watchEditAvatar() {
-    yield takeEvery(EDITAVATAR, EditAvatarFlow);
+    yield takeEvery(EDIT_AVATAR, EditAvatarFlow);
 }

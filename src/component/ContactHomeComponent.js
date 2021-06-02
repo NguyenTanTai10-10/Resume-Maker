@@ -11,7 +11,7 @@ import {
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
-import BottomSheet from './custom/BottomSheet';
+import BottomSheetCity from './custom/BottomSheetCity';
 import ButtonChoose from './custom/ButtonChoose';
 
 import DatetimePicker from './custom/DatetimePicker';
@@ -29,16 +29,14 @@ const ContactHomeComponent = (props) => {
   const [ImagesAVT, setImagesAVT] = useState(false);
 
   useEffect(() => {
-    
     props.navigation.addListener('focus', async () => {
       props.logoutCheckMailAction('');
 
-      
       props.getCityAction({city_id: '', country_id: ''});
       try {
         const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
         setUserID(jsonValue != null ? JSON.parse(jsonValue) : null);
-       
+
         props.infoUserAction({
           user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
           lang_code: '',
@@ -46,10 +44,10 @@ const ContactHomeComponent = (props) => {
           is_app_cv: 1,
         });
         const value = await AsyncStorage.getItem('@Images64');
-      if (value !== null) {
-        setPhotoBase64(value);
-      }
-        
+        if (value !== null) {
+          setPhotoBase64(value);
+        }
+
         // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
       } catch (e) {
         // error reading value
@@ -77,33 +75,11 @@ const ContactHomeComponent = (props) => {
             setCity(item.city);
           }
         });
-      } 
-      // else {
-      //   setTimeout(() => {
-      //     Alert.alert('Thông báo', props.messageUser);
-      //   }, 10);
-      // }
-    }
+      }
+     
+    } 
+    
   }, [props.statusUser]);
-  // const getData = async () => {
-  //   try {
-  //     const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
-  //     setUserID(jsonValue != null ? JSON.parse(jsonValue) : null);
-  //     props.infoUserAction({
-  //       user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-  //       lang_code: '',
-  //       emp_id: '',
-  //       is_app_cv: 1,
-  //     });
-  //     const value = await AsyncStorage.getItem('@Images64');
-  //     if (value !== null) {
-  //       setPhotoBase64(value);
-  //     }
-  //     // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
-  //   } catch (e) {
-  //     // error reading value
-  //   }
-  // };
 
   useEffect(() => {
     if (props.statusCity !== null) {
@@ -124,12 +100,13 @@ const ContactHomeComponent = (props) => {
 
         Alert.alert('Thông báo', props.messageEditInfo);
       }
-      //  else {
-      //   setTimeout(() => {
-      //     Alert.alert('Thông báo', props.messageEditInfo);
-      //   }, 10);
-      // }
-    }
+     
+    }  
+    // else {
+    //     setTimeout(() => {
+    //       Alert.alert('Thông báo', props.errorEditInfo);
+    //     }, 10);
+    //   }
   }, [props.statusEditInfo]);
 
   useEffect(() => {
@@ -463,10 +440,19 @@ const ContactHomeComponent = (props) => {
             Thông tin liên hệ
           </Text>
         </View>
-        <View style={{marginTop: 35}}>
+        <View
+          style={{
+            marginTop: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <TouchableOpacity
             onPress={() => modal1.current.open()}
-            style={{justifyContent: 'center', alignItems: 'center'}}>
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+            }}>
             {ImagesAVT === false ? (
               <Image
                 source={require('../res/image/img/avatar.png')}
@@ -497,12 +483,13 @@ const ContactHomeComponent = (props) => {
                 resizeMode: 'contain',
                 borderRadius: 100,
                 position: 'absolute',
-                right: 160,
-                top: 45,
+                left: 40,
+                top: 50,
               }}
             />
           </TouchableOpacity>
-
+        </View>
+        <View style={{marginTop: 30}}>
           <View
             style={{
               justifyContent: 'center',
@@ -937,7 +924,7 @@ const ContactHomeComponent = (props) => {
             />
           </TouchableOpacity>
         </View>
-        <BottomSheet
+        <BottomSheetCity
           chooseCity={(item) => onChooseCity(item)}
           ChooseCity_id={(id) => onChooseCity_id(id)}
           type="getCity"

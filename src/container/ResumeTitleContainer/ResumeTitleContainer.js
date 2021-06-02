@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ResumeTitleComponent from '../../component/ResumeTitleComponent';
-import { infoUserAction} from "../../redux/actions/Action"
+import { editCiviAction} from "../../redux/actions/Action"
 
 export class ResumeTitleContainer extends Component {
   render() {
@@ -11,18 +11,18 @@ export class ResumeTitleContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    statusUser: state.infoUserReducer.status,
-    dataUser: state.infoUserReducer.data,
-    loadingUser: state.infoUserReducer.loading,
-    messageUser: state.infoUserReducer.message,
-    errorUser: state.infoUserReducer.error,
+    statusEditCv: state.editCiviReducer.status,
+    dataEditCv: state.editCiviReducer.data,
+    loadingEditCv: state.editCiviReducer.loading,
+    messageEditCv: state.editCiviReducer.message,
+    errorEditCv: state.editCiviReducer.error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-   infoUserAction: (input) =>
-      dispatch(infoUserAction(input)),
+    editCiviAction: (input) =>
+      dispatch(editCiviAction(input)),
   };
 };
 

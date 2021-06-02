@@ -1,4 +1,3 @@
-
 import {
   View,
   Text,
@@ -12,7 +11,7 @@ import {set} from 'react-native-reanimated';
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
-import BottomSheet from './custom/BottomSheet';
+import BottomSheetCity from './custom/BottomSheetCity';
 import ButtonChoose from './custom/ButtonChoose';
 
 import DatetimePicker from './custom/DatetimePicker';
@@ -29,14 +28,21 @@ const ContactComponent = (props) => {
     props.getCityAction({city_id: '', country_id: ''});
   }, []);
   useEffect(() => {
-    // getData();
-
+    getData();
     props.navigation.addListener('focus', () => {
       props.logoutCheckMailAction();
       props.registerAction();
       props.logoutRegisterlAction();
     });
   }, []);
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@title');
+      setTitle(jsonValue != null ? JSON.parse(jsonValue) : null);
+    } catch (e) {
+      // error reading value
+    }
+  };
 
   useEffect(() => {
     if (props.statusCity !== null) {
@@ -90,7 +96,7 @@ const ContactComponent = (props) => {
   const [check, setCheck] = useState(false);
   const [Password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
-  const [birthDay, setBirthDay] = useState('');
+  const [birthDay, setBirthDay] = useState('Ngày sinh');
   const [emailKh, setEmailKh] = useState('');
   const [phone, setPhone] = useState('');
   const [City, setCity] = useState('Tỉnh/thành phố');
@@ -101,6 +107,7 @@ const ContactComponent = (props) => {
   const [DataRegister, setDataRegister] = useState('');
   const [id_User, setId_User] = useState('');
   const [showPassword, setShowPassword] = useState(true);
+  const [title, setTitle] = useState('');
 
   const [Photo, setPhoto] = useState([
     {title: 'Chụp ảnh', value: ''},
@@ -153,12 +160,12 @@ const ContactComponent = (props) => {
       cropping: true,
       includeBase64: true,
     }).then(async (image) => {
-      const Image64 = `data:${image.mime};base64,${image.data}`;
-      try {
-        await AsyncStorage.setItem('@Images64', Image64);
-      } catch (e) {
-        // saving error
-      }
+      // const Image64 = `data:${image.mime};base64,${image.data}`;
+      // try {
+      //   await AsyncStorage.setItem('@Images64', Image64);
+      // } catch (e) {
+      //   // saving error
+      // }
       // console.log(`data:${image.mime};base64,${image.data}`);
 
       setPhotoBase64(`data:${image.mime};base64,${image.data}`);
@@ -285,6 +292,7 @@ const ContactComponent = (props) => {
       userName.trim() === '' ||
       birthDay === null ||
       birthDay.trim() === '' ||
+      birthDay === 'Ngày sinh'||
       emailKh === null ||
       emailKh.trim() === '' ||
       !emailValidation(emailKh) ||
@@ -305,7 +313,7 @@ const ContactComponent = (props) => {
         setUserName('');
         setCheckHoTen(true);
       }
-      if (birthDay === null || birthDay.trim() === '') {
+      if (birthDay === null || birthDay.trim() === '' || birthDay === 'Ngày sinh') {
         setBirthDay('');
         setCheckBirthDay(true);
       }
@@ -387,10 +395,9 @@ const ContactComponent = (props) => {
   };
   //=========================================
   const onUpdate = async () => {
-   
     try {
-      const jsonValue = JSON.stringify(DataRegister.jobseeker_id)
-      await AsyncStorage.setItem('@jobseeker_id', jsonValue)
+      const jsonValue = JSON.stringify(DataRegister.jobseeker_id);
+      await AsyncStorage.setItem('@jobseeker_id', jsonValue);
     } catch (e) {
       // saving error
     }
@@ -398,11 +405,20 @@ const ContactComponent = (props) => {
       user_id: DataRegister !== null ? DataRegister.jobseeker_id : '',
       image: PhotoBase64,
     });
+    await props.editCiviAction({
+      user_id: DataRegister !== null ? DataRegister.jobseeker_id : '',
+      cv_tittle: title,
+      industry_id:'' ,
+      functional_role_id:'' ,
+      csalary: '',
+      is_hide_current_salary: '',
+      esalary: '',
+      is_negotiation: '',
+      level_group_id: '',
+      location_id: [],
+    });
     await props.navigation.navigate('Drawers');
-    
 
-    // console.log(DataRegister.jobseeker_id);
-    // console.log(PhotoBase64);
   };
   return (
     <View style={{flex: 1}}>
@@ -468,10 +484,20 @@ const ContactComponent = (props) => {
             Thông tin liên hệ
           </Text>
         </View>
-        <View style={{marginTop: 35}}>
+
+        <View
+          style={{
+            marginTop: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <TouchableOpacity
             onPress={() => modal1.current.open()}
-            style={{justifyContent: 'center', alignItems: 'center'}}>
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+            }}>
             {PhotoBase64 === '' ? (
               <Image
                 source={require('../res/image/img/avatar.png')}
@@ -502,11 +528,14 @@ const ContactComponent = (props) => {
                 resizeMode: 'contain',
                 borderRadius: 100,
                 position: 'absolute',
-                right: 160,
-                top: 45,
+                left: 40,
+                top: 50,
               }}
             />
           </TouchableOpacity>
+        </View>
+        <View style={{marginTop: 30}}>
+          
 
           <View
             style={{
@@ -584,7 +613,10 @@ const ContactComponent = (props) => {
           )}
         </View>
 
-        <DatetimePicker chooseDay={(item) => onChooseDate(item)} />
+        <DatetimePicker
+          title={birthDay}
+          chooseDay={(item) => onChooseDate(item)}
+        />
         <View
           style={{
             justifyContent: 'center',
@@ -702,7 +734,7 @@ const ContactComponent = (props) => {
               alignItems: 'center',
             }}>
             <Image
-              source={require('../res/image/img/padlock1.png')}
+              source={require('../res/image/img/padlock(6).png')}
               style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
             <TextInput
@@ -941,7 +973,7 @@ const ContactComponent = (props) => {
             marginTop: 20,
             justifyContent: 'center',
             alignItems: 'center',
-            marginBottom:30
+            marginBottom: 30,
           }}>
           {check === false ? (
             <TouchableOpacity
@@ -979,8 +1011,8 @@ const ContactComponent = (props) => {
             </TouchableOpacity>
           )}
         </View>
-        
-        <BottomSheet
+
+        <BottomSheetCity
           chooseCity={(item) => onChooseCity(item)}
           ChooseCity_id={(id) => onChooseCity_id(id)}
           type="getCity"

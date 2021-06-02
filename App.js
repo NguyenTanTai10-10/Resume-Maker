@@ -36,7 +36,7 @@ import ResumeTitleContainer from './src/container/ResumeTitleContainer/ResumeTit
 import ContactContainer from './src/container/ContactContainer/ContactContainer';
 import  ContactHomeContainer  from './src/container/ContactHomeContainer/ContactHomeContainer';
 import  ResumeHomeContainer  from './src/container/ResumeHomeContainer/ResumeHomeContainer';
-import  BasicInfoContainer  from './src/container/BasicInfoContainer/BasicInfoContainer';
+import  BasicsInfoContainer  from './src/container/BasicsInfoContainer/BasicsInfoContainer';
 
 
 
@@ -97,14 +97,13 @@ const App = () => {
             <Stack.Screen name="ListCVContainer" component={ListCVContainer} />
             <Stack.Screen name="ResumeTitleContainer" component={ResumeTitleContainer} />
             <Stack.Screen name="ContactContainer" component={ContactContainer} />
-            <Stack.Screen name="BasicInfoComponent" component={BasicInfoComponent} />
+            <Stack.Screen name="BasicsInfoContainer" component={BasicsInfoContainer} />
             <Stack.Screen name="LanguageComponent" component={LanguageComponent} />
             <Stack.Screen name="EducationComponent" component={EducationComponent} />
             <Stack.Screen name="ExperiencesComponent" component={ExperiencesComponent} />
             <Stack.Screen name="SkillsComponent" component={SkillsComponent} />
             <Stack.Screen name="ContactHomeContainer" component={ContactHomeContainer} />
             <Stack.Screen name="ResumeHomeContainer" component={ResumeHomeContainer} />
-            <Stack.Screen name="BasicInfoContainer" component={BasicInfoContainer} />
 
             {/* BasicInfoContainer */}
             {/* ResumeHomeContainer */}

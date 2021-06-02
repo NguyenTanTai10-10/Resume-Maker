@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import Images from '../res/image'
 import { screenHeight, screenWidth } from '../res/style/theme'
 import Sizes from '../utils/Sizes'
-import BottomSheet from './custom/BottomSheet'
+import BottomSheetCity from './custom/BottomSheetCity'
 import StatusBarView from './custom/StatusBarView'
 
 const LanguageComponent = (props) => {
@@ -153,14 +153,14 @@ const LanguageComponent = (props) => {
             />
           </TouchableOpacity>
         </View>
-                <BottomSheet
+                <BottomSheetCity
                     ref={modal}
                     title="Chọn ngôn ngữ"
                     data={[]}
                     modalHeight={screenHeight/2}
 
                 />
-                <BottomSheet
+                <BottomSheetCity
                     ref={modal1}
                     title="Chọn trình độ"
                     data={[]}

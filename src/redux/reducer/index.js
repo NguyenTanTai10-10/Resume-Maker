@@ -6,8 +6,11 @@ import listCVReducer from './ListCvReducer';
 import getCityReducer from './GetcityReducer';
 import registerReducer from './RegisterReducer';
 import editAvatarReducer from './EditAvatarReducer';
-import infoUserReducer from './InfoUserReducer';
+import userInfoReducer from './UserInfoReducer';
 import editInfoUserReducer from './EditInfoUserReducer';
+import editCiviReducer from './EditCiviReducer';
+import getIndustryReducer from './GetIndustryReducer';
+import getLeverReducer from './GetLeverReducer';
 
 
 
@@ -18,8 +21,11 @@ const allReducers = combineReducers({
    getCityReducer,
    registerReducer,
    editAvatarReducer,
-   infoUserReducer,
-   editInfoUserReducer
+   userInfoReducer,
+   editInfoUserReducer,
+   editCiviReducer,
+   getIndustryReducer,
+   getLeverReducer
 });
 
 export default allReducers;

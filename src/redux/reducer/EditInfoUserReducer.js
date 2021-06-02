@@ -7,7 +7,7 @@ const initState = {
   error: null,
 };
 const editInfoUserReducer = (state = initState, action) => {
-  // console.log('action===', action);
+
   switch (action.type) {
     case EDIT_INFO_USER:
       console.log('EDIT_INFO_USER');

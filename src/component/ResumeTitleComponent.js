@@ -14,11 +14,7 @@ const ResumeTitleComponent = (props) => {
     getData();
   }, []);
 
-
-  const getData = async () => {
-    
-  };
-  
+  const getData = async () => {};
 
   const [title, setTitle] = useState('');
   const [idCV, setIdCV] = useState('');
@@ -34,15 +30,14 @@ const ResumeTitleComponent = (props) => {
   };
 
   const onUpdate = async () => {
-    const jsonValue = JSON.stringify(title);
-    await AsyncStorage.setItem('@title', jsonValue);
-
     if (title === null || title.trim() === '') {
       if (title === null || title.trim() === '') {
         setCheck(false);
         setErrorTitle(true);
       }
     } else {
+      const jsonValue = JSON.stringify(title);
+      await AsyncStorage.setItem('@title', jsonValue);
       setCheck(true);
       setErrorTitle(false);
     }
@@ -189,8 +184,6 @@ const ResumeTitleComponent = (props) => {
 
             borderRadius: 13,
           }}></TouchableOpacity>
-
-        
       </View>
     </View>
   );

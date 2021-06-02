@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,21 +6,59 @@ import {
   Image,
   ScrollView,
   TextInput,
+  Alert,
 } from 'react-native';
 import Images from '../res/image';
 import Sizes from '../utils/Sizes';
 import StatusBarView from './custom/StatusBarView';
-import BottomSheet from './custom/BottomSheet';
+import BottomSheetCity from './custom/BottomSheetCity';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Button from './custom/Button';
+import BottomSheetIndustry from './custom/BottomSheetIndustry';
+import BottomSheetLever from './custom/BottomSheetLever';
 
 const BasicInfoComponent = (props) => {
+  const [dataIndustry, setDataIndustry] = useState('');
+  const [dataLever, setDataLever] = useState('');
+  useEffect(() => {
+    props.getIndustryAction({industry_id: ''});
+    props.getLeverAction({level_group_id: ''});
+  }, []);
+
+  useEffect(() => {
+    if (props.statusIndustry !== null) {
+      if (props.statusIndustry === 1) {
+        // console.log(props.dataIndustry);
+        setDataIndustry(props.dataIndustry);
+      } else {
+        setTimeout(() => {
+          Alert.alert('Thông báo', props.messageIndustry);
+        }, 10);
+      }
+    }
+  }, [props.statusIndustry]);
+  useEffect(() => {
+    if (props.statusLever !== null) {
+      if (props.statusLever === 1) {
+        
+        setDataLever(props.dataLever);
+      } else {
+        setTimeout(() => {
+          Alert.alert('Thông báo', props.messageLever);
+        }, 10);
+      }
+    }
+  }, [props.statusLever]);
+
   const [money, setMoney] = useState('');
+  const [industry, setIndustry] = useState('Lĩnh vực');
+  const [leverGroup, setLeverGroup] = useState('Vị trí');
   const [check, setCheck] = useState(false);
   const [checkShow, setCheckShow] = useState(false);
   const [checkShow1, setCheckShow1] = useState(false);
   const onChangeText = (text) => {
     // const kqc = formatMoney(text)
+    // console.log("===",kqc);
     setMoney(text);
   };
   const formatMoney = (x) => {
@@ -30,6 +68,21 @@ const BasicInfoComponent = (props) => {
   const modal = React.createRef();
   const modal1 = React.createRef();
   const modal2 = React.createRef();
+
+  const onChooseIndustry = (item) => {
+    setIndustry(item);
+    // console.log(item);
+  };
+  const onChooseIndustry_id = (item) => {
+    // console.log(item);
+  };
+  const onChooseLever = (item) => {
+    setLeverGroup(item);
+    console.log(item);
+  };
+  const onChooseLever_id = (item) => {
+    // console.log(item);
+  };
   return (
     <View style={{flex: 1}}>
       <StatusBarView />
@@ -68,7 +121,15 @@ const BasicInfoComponent = (props) => {
                 resizeMode: 'contain',
               }}
             />
-            <Text style={{paddingHorizontal: Sizes.h32}}>{}</Text>
+            <TouchableOpacity
+              style={{
+                flex: 0.1,
+                left: 0,
+                height: Sizes.h95,
+                paddingHorizontal: Sizes.h32,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}></TouchableOpacity>
           </View>
         </View>
         <View
@@ -97,7 +158,14 @@ const BasicInfoComponent = (props) => {
             source={require('../res/image/img/iconskill.png')}
             style={{height: 35, width: 35, resizeMode: 'contain'}}
           />
-          <Text style={{marginLeft: 15, color: '#BFBFBF'}}>Lĩnh vực</Text>
+
+          <Text
+            style={{
+              marginLeft: 15,
+              color: industry === 'Lĩnh vực' ? '#BFBFBF' : 'black',
+            }}>
+            {industry}
+          </Text>
         </TouchableOpacity>
         <View
           style={{
@@ -126,7 +194,7 @@ const BasicInfoComponent = (props) => {
           <TextInput
             placeholder="Lương hiện tại"
             style={{width: '70%', marginLeft: 15}}></TextInput>
-          <Text style={{alignSelf: 'flex-end'}}>VND</Text>
+          <Text style={{}}>VND</Text>
         </View>
         <TouchableOpacity
           onPress={() => {
@@ -185,7 +253,7 @@ const BasicInfoComponent = (props) => {
             onChange={(text) => onChangeText(text)}
             placeholder="Lương mong muốn"
             style={{width: '70%', marginLeft: 15}}></TextInput>
-          <Text style={{alignSelf: 'flex-end'}}>VND</Text>
+          <Text style={{}}>VND</Text>
         </View>
         <TouchableOpacity
           onPress={() => {
@@ -239,7 +307,13 @@ const BasicInfoComponent = (props) => {
             source={require('../res/image/img/iconformofwork.png')}
             style={{height: 35, width: 35, resizeMode: 'contain'}}
           />
-          <Text style={{marginLeft: 15, color: '#BFBFBF'}}>Vị trí</Text>
+          <Text
+            style={{
+              marginLeft: 15,
+              color: leverGroup === 'Vị trí' ? '#BFBFBF' : 'black',
+            }}>
+            {leverGroup}
+          </Text>
         </TouchableOpacity>
         <View
           style={{
@@ -276,7 +350,6 @@ const BasicInfoComponent = (props) => {
             marginTop: 20,
             justifyContent: 'center',
             alignItems: 'center',
-            
           }}>
           {check === false ? (
             <TouchableOpacity
@@ -323,7 +396,6 @@ const BasicInfoComponent = (props) => {
           <TouchableOpacity
             onPress={() => {
               props.navigation.goBack();
-              
             }}
             style={{
               justifyContent: 'center',
@@ -359,19 +431,31 @@ const BasicInfoComponent = (props) => {
             />
           </TouchableOpacity>
         </View>
-        <BottomSheet
+        <BottomSheetIndustry
+          OnChooseIndustry={(item) => {
+            onChooseIndustry(item);
+          }}
+          OnChooseIndustry_id={(item) => {
+            onChooseIndustry_id(item);
+          }}
           ref={modal}
           title="Chọn lĩnh vực"
-          data={[]}
+          data={dataIndustry}
           modalHeight={screenHeight / 2}
         />
-        <BottomSheet
+        <BottomSheetLever
+          OnChooseLever={(item) => {
+            onChooseLever(item);
+          }}
+          OnChooseLever_id={(item) => {
+            onChooseLever_id(item);
+          }}
           ref={modal1}
           title="Chọn vị trí"
-          data={[]}
+          data={dataLever}
           modalHeight={screenHeight / 2}
         />
-        <BottomSheet
+        <BottomSheetIndustry
           ref={modal2}
           title="Chọn khu vực"
           data={[]}

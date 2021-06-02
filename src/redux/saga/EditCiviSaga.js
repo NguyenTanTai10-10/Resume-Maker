@@ -1,32 +1,31 @@
-import {LOGIN, LOGIN_SUCCESS, LOGIN_ERROR} from '../actions/Action';
+import {EDIT_CIVI,EDIT_CIVI_SUCCESS,EDIT_CIVI_ERROR} from '../actions/Action';
 
 import { call, takeEvery, put } from 'redux-saga/effects';
 import { API } from '../api/API';
 
 
-function* LoginFlow(action) {
-
+function* EditCiviFlow(action) {
     try {
-		const response = yield API.LoginUser(action.input);
+		const response = yield API.EditCivi(action.input);
 		// console.log('response - updateCheckListApi: ', response)
 
 		if (response !== null && response !== undefined) {
-			yield put({ type: LOGIN_SUCCESS, data: response
+			yield put({ type: EDIT_CIVI_SUCCESS, data: response
 			});
 		} else {
 			yield put({
-				type: LOGIN_ERROR,
+				type: EDIT_CIVI_ERROR,
 				error: "Lỗi Sever"
 			});
 		}
 	} catch (error) {
 		yield put({
-			type: LOGIN_ERROR,
+			type: EDIT_CIVI_ERROR,
 			error: "Lỗi Sever"
 		});
 	}
 }
 
-export function* watchLogin() {
-    yield takeEvery(LOGIN, LoginFlow);
+export function* watchEditCivi() {
+    yield takeEvery(EDIT_CIVI, EditCiviFlow);
 }

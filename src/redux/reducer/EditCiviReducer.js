@@ -1,4 +1,4 @@
-import {EDIT_AVATAR,EDIT_AVATAR_SUCCESS,EDIT_AVATAR_ERROR} from '../actions/Action';
+import {EDIT_CIVI,EDIT_CIVI_SUCCESS,EDIT_CIVI_ERROR} from '../actions/Action';
 const initState = {
   status: null,
   data: null,
@@ -6,11 +6,11 @@ const initState = {
   message: null,
   error: null,
 };
-const editAvatarReducer = (state = initState, action) => {
+const editCiviReducer = (state = initState, action) => {
   // console.log('action===', action);
   switch (action.type) {
-    case EDIT_AVATAR:
-      console.log('EDIT_AVATAR');
+    case EDIT_CIVI:
+      console.log('EDIT_INFO_EDIT_CIVIUSER');
       return {
         // ...state,
         status: null,
@@ -19,19 +19,19 @@ const editAvatarReducer = (state = initState, action) => {
         error: null,
       };
 
-    case EDIT_AVATAR_SUCCESS:
-      console.log('EDIT_AVATAR_SUCCESS');
+    case EDIT_CIVI_SUCCESS:
+      console.log('EDIT_CIVI_SUCCESS');
       return {
         // ...state,
         status: action.data.result_code,
         loading: false,
         data: action.data.result_data,
         error: null,
-        message: '',
+        message: action.data.result_code===1?'Cập nhật thông tin thành công':'',
       };
 
-    case EDIT_AVATAR_ERROR:
-      console.log('EDIT_AVATAR_ERROR');
+    case EDIT_CIVI_ERROR:
+      console.log('EDIT_CIVI_ERROR');
       return {
         // ...state,
         status: null,
@@ -45,4 +45,4 @@ const editAvatarReducer = (state = initState, action) => {
       return state;
   }
 };
-export default editAvatarReducer;
+export default editCiviReducer;

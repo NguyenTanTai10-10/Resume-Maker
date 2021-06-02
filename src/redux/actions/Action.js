@@ -69,13 +69,14 @@ export const logoutRegisterlAction = () => {
   };
 };
 //===================================================================================
-export const EDITAVATAR = 'EDITAVATAR';
-export const EDITAVATAR_SUCCESS = 'EDITAVATAR_SUCCESS';
-export const EDITAVATAR_ERROR = 'GEDITAVATAR_ERROR';
+
+export const EDIT_AVATAR = 'EDIT_AVATAR';
+export const EDIT_AVATAR_SUCCESS = 'EDIT_AVATAR_SUCCESS';
+export const EDIT_AVATAR_ERROR = 'EDIT_AVATAR_ERROR';
 export const editAvatarAction = (input) => {
-  console.log(input);
+
   return {
-    type: EDITAVATAR,
+    type: EDIT_AVATAR,
     input: input,
   };
 };
@@ -84,6 +85,7 @@ export const INFO_USER = 'INFO_USER';
 export const INFO_USER_SUCCESS = 'INFO_USER_SUCCESS';
 export const INFO_USER_ERROR = 'INFO_USER_ERROR';
 export const  infoUserAction = (input) => {
+  console.log("actions==",input);
   return {
     type: INFO_USER,
     input: input,
@@ -94,11 +96,44 @@ export const EDIT_INFO_USER = 'EDIT_INFO_USER';
 export const EDIT_INFO_USER_SUCCESS = 'EDIT_INFO_USER_SUCCESS';
 export const EDIT_INFO_USER_ERROR = 'EDIT_INFO_USER_ERROR';
 export const  editInfoUserAction = (input) => {
+
   return {
     type: EDIT_INFO_USER,
     input: input,
   };
 };
+//===================================================================================
+export const EDIT_CIVI = 'EDIT_CIVI';
+export const EDIT_CIVI_SUCCESS = 'EDIT_CIVI_SUCCESS';
+export const EDIT_CIVI_ERROR = 'EDIT_CIVI_ERROR';
+export const  editCiviAction = (input) => {
+  return {
+    type: EDIT_CIVI,
+    input: input,
+  };
+};
+//===================================================================================
+export const  GET_INDUSTRY = 'GET_INDUSTRY';
+export const GET_INDUSTRY_SUCCESS = 'GET_INDUSTRY_SUCCESS';
+export const GET_INDUSTRY_ERROR = 'GET_INDUSTRY_ERROR';
+export const  getIndustryAction = (input) => {
+  return {
+    type: GET_INDUSTRY,
+    input: input,
+  };
+};
+//===================================================================================
+export const  GET_LEVER = 'GET_LEVER';
+export const GET_LEVER_SUCCESS = 'GET_LEVER_SUCCESS';
+export const GET_LEVER_ERROR = 'GET_LEVER_ERROR';
+export const  getLeverAction = (input) => {
+  return {
+    type: GET_LEVER,
+    input: input,
+  };
+};
+
+
 
 
 

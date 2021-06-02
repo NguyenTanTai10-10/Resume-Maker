@@ -1,4 +1,4 @@
-import {INFO_USER,INFO_USER_SUCCESS,INFO_USER_ERROR} from '../actions/Action';
+import {GET_LEVER, GET_LEVER_SUCCESS,GET_LEVER_ERROR} from '../actions/Action';
 const initState = {
   status: null,
   data: null,
@@ -6,11 +6,11 @@ const initState = {
   message: null,
   error: null,
 };
-const infoUserReducer = (state = initState, action) => {
-  // console.log('action===', action);
+const getLeverReducer = (state = initState, action) => {
+
   switch (action.type) {
-    case INFO_USER:
-      console.log('INFO_USER');
+    case GET_LEVER:
+      console.log('GET_LEVER');
       return {
         // ...state,
         status: null,
@@ -19,8 +19,8 @@ const infoUserReducer = (state = initState, action) => {
         error: null,
       };
 
-    case INFO_USER_SUCCESS:
-      console.log('INFO_USER_SUCCESS');
+    case GET_LEVER_SUCCESS:
+      console.log('GET_LEVER_SUCCESS');
       return {
         // ...state,
         status: action.data.result_code,
@@ -30,8 +30,8 @@ const infoUserReducer = (state = initState, action) => {
         message: '',
       };
 
-    case INFO_USER_ERROR:
-      console.log('INFO_USER_ERROR');
+    case GET_LEVER_ERROR:
+      console.log('GET_LEVER_ERROR');
       return {
         // ...state,
         status: null,
@@ -45,4 +45,4 @@ const infoUserReducer = (state = initState, action) => {
       return state;
   }
 };
-export default infoUserReducer;
+export default getLeverReducer;

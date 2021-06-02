@@ -142,7 +142,7 @@ function* EditAvatar(input) {
 }
 //========================================================
 function* InforUser(input) {
-  console.log(input);
+  // console.log('API===', input);
   let temp;
   yield axios
     .post(urlSever, {
@@ -156,6 +156,7 @@ function* InforUser(input) {
       },
     })
     .then(function (response) {
+      // console.log("response.data==",response.data);
       temp = response.data;
     })
     .catch(function (error) {
@@ -166,6 +167,7 @@ function* InforUser(input) {
 }
 //========================================================
 function* EditInfoUser(input) {
+  console.log('API++++++++++', input);
   let temp;
   yield axios
     .post(urlSever, {
@@ -194,6 +196,68 @@ function* EditInfoUser(input) {
 
   return temp;
 }
+function* EditCivi(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'edit_cv',
+      version: 2,
+      params: {
+        cv_tittle: input.cv_tittle,
+        industry_id: input.industry_id,
+        functional_role_id: input.functional_role_id,
+        csalary: input.csalary,
+        is_hide_current_salary: input.is_hide_current_salary,
+        esalary: input.esalary,
+        is_negotiation: input.is_negotiation,
+        level_group_id: input.level_group_id,
+        location_id: [],
+        user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* GetIndustry(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_industry',
+      version: Ver,
+      params: {industry_id: input.industry_id, lang_code: language},
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* GetLever(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_level_group',
+      version: Ver,
+      params: {level_group_id: input.level_group_id, lang_code: language},
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
 export const API = {
   LoginUser,
   CheckEmail,
@@ -202,5 +266,8 @@ export const API = {
   Register,
   EditAvatar,
   InforUser,
-  EditInfoUser
+  EditInfoUser,
+  EditCivi,
+  GetIndustry,
+  GetLever,
 };
