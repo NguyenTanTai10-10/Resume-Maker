@@ -16,20 +16,113 @@ import {screenHeight, screenWidth} from '../res/style/theme';
 import Button from './custom/Button';
 import BottomSheetIndustry from './custom/BottomSheetIndustry';
 import BottomSheetLever from './custom/BottomSheetLever';
+import BottomSheetListCity from './custom/BottomSheetListCity';
+import {set} from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {LOGIN} from '../redux/actions/Action';
 
 const BasicInfoComponent = (props) => {
-  const [dataIndustry, setDataIndustry] = useState('');
-  const [dataLever, setDataLever] = useState('');
+  const [dataIndustry, setDataIndustry] = useState([]);
+  const [dataLever, setDataLever] = useState([]);
+  const [dataCity, setDataCity] = useState([]);
+  const [getDataCity, setGetDataCity] = useState([]);
   useEffect(() => {
+    getdata();
+    console.log('123333');
     props.getIndustryAction({industry_id: ''});
     props.getLeverAction({level_group_id: ''});
+    props.getCityAction({city_id: '', country_id: ''});
   }, []);
+  const getdata = async () => {
+    console.log('123333');
+    // props.navigation.addListener('focus', async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      setUserId(jsonValue != null ? JSON.parse(jsonValue) : null);
+
+      await props.infoUserAction({
+        user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
+        lang_code: '',
+        emp_id: '',
+        is_app_cv: 1,
+      });
+    } catch (e) {
+      // error reading value
+    }
+    // });
+  };
+
+  useEffect(() => {
+    if (props.statusUser !== null) {
+      if (props.statusUser === 1) {
+        setFuncRole(props.dataUser.industry);
+        setMoneyNow(props.dataUser.current_annual_salary.toLocaleString());
+        setHideMoneyNow(props.dataUser.is_hide_current_salary);
+        setMoneyNew(props.dataUser.expected_annual_salary.toLocaleString());
+        setHideMoneyNew(props.dataUser.is_negotiation);
+        dataIndustry.map((item) => {
+          if (item.industry_id === props.dataUser.industry_id) {
+            setIndustry(item.industry);
+            setFuncRole(item.industry_id);
+          }
+        });
+        dataLever.map((item) => {
+          if (item.level_group === props.dataUser.levelGroup) {
+            setLeverGroup(item.level_group);
+            setLeverGroupId(item.level_group_id);
+          }
+        });
+        if (props.dataUser.is_hide_current_salary === 1) {
+          setCheckShow(true);
+          setHideMoneyNow(1);
+        } else {
+          setCheckShow(false);
+          setHideMoneyNow(0);
+        }
+        if (props.dataUser.is_negotiation === 1) {
+          setCheckShow1(true);
+          setHideMoneyNew(1);
+        } else {
+          setCheckShow1(false);
+          setHideMoneyNew(0);
+        }
+        // dataCity.map((item) => {
+        //   if (item.level_group === props.dataUser.levelGroup) {
+        //     setLeverGroup(item.level_group);
+        //     setLeverGroupId(item.level_group_id);
+        //   }
+        // });
+
+        const kq = '1,2';
+        const kqc = kq.split(',');
+        console.log('====================================');
+        console.log(
+          dataCity.sort(function (a, b) {
+            return a.id - b.id;
+          }),
+        );
+        console.log('====================================');
+
+        dataCity.map((item) => {
+          const data = {};
+          data[`city_id`] = item;
+          getDataCity.push(data);
+          const x = Array.from(new Set(getDataCity.map(JSON.stringify))).map(
+            JSON.parse,
+          );
+          // setGetDataCity(x)
+          // for(let i = 0; i < dataCity.length; i++){
+          //   if(dataCity.id[i]===)
+          // }
+        });
+      }
+    }
+  }, [props.statusUser]);
 
   useEffect(() => {
     if (props.statusIndustry !== null) {
       if (props.statusIndustry === 1) {
-        // console.log(props.dataIndustry);
-        setDataIndustry(props.dataIndustry);
+        setDataIndustry(props.dataIndustrys);
       } else {
         setTimeout(() => {
           Alert.alert('Thông báo', props.messageIndustry);
@@ -38,9 +131,19 @@ const BasicInfoComponent = (props) => {
     }
   }, [props.statusIndustry]);
   useEffect(() => {
+    if (props.statusCity !== null) {
+      if (props.statusCity === 1) {
+        setDataCity(props.dataCity);
+      } else {
+        setTimeout(() => {
+          Alert.alert('Thông báo', props.messageCity);
+        }, 10);
+      }
+    }
+  }, [props.statusCity]);
+  useEffect(() => {
     if (props.statusLever !== null) {
       if (props.statusLever === 1) {
-        
         setDataLever(props.dataLever);
       } else {
         setTimeout(() => {
@@ -50,39 +153,189 @@ const BasicInfoComponent = (props) => {
     }
   }, [props.statusLever]);
 
-  const [money, setMoney] = useState('');
-  const [industry, setIndustry] = useState('Lĩnh vực');
-  const [leverGroup, setLeverGroup] = useState('Vị trí');
+  const [cityName, setCityName] = useState([]);
+  const [city, setCity] = useState([]);
+  const [cityName_Id, setCityName_Id] = useState([]);
+  const [city_Id, setCity_Id] = useState([]);
+  const [checkCity, setCheckCity] = useState(false);
   const [check, setCheck] = useState(false);
   const [checkShow, setCheckShow] = useState(false);
   const [checkShow1, setCheckShow1] = useState(false);
-  const onChangeText = (text) => {
-    // const kqc = formatMoney(text)
-    // console.log("===",kqc);
-    setMoney(text);
+  const [checkFuncRole, setCheckFuncRole] = useState(false);
+  const [checkOnFuncRole, setCheckOnFuncRole] = useState(false);
+  const [checkMoneyNow, setCheckMoneyNow] = useState(false);
+  const [checkOnMoneyNow, setCheckOnMoneyNow] = useState(false);
+  const [checkMoneyNew, setCheckMoneyNew] = useState(false);
+  const [checkOnMoneyNew, setCheckOnMoneyNew] = useState(false);
+  const [checkLever, setCheckLever] = useState(false);
+  const [checkOnLever, setCheckOnLever] = useState(false);
+  const [checkCityError, setCheckCityError] = useState(false);
+
+  //================================================
+  const [funcRole, setFuncRole] = useState('');
+  const [userId, setUserId] = useState('');
+  const [moneyNow, setMoneyNow] = useState('');
+  const [moneyNew, setMoneyNew] = useState('');
+  const [industry, setIndustry] = useState('Lĩnh vực');
+  const [leverGroup, setLeverGroup] = useState('Vị trí');
+  const [leverGroupId, setLeverGroupId] = useState('Vị trí');
+  const [hideMoneyNow, setHideMoneyNow] = useState(0);
+  const [hideMoneyNew, setHideMoneyNew] = useState(0);
+
+  //================================================
+
+  const textMoneyNow = (text) => {
+    const kq = text.replace(/^0+/, '');
+    setMoneyNow(kq);
+    setCheckMoneyNow(false);
+    setCheckOnMoneyNow(true);
   };
-  const formatMoney = (x) => {
-    const kq = x.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
-    return kq;
+  const textMoneyNew = (text) => {
+    const kq = text.replace(/^0+/, '');
+
+    setMoneyNew(kq);
+    setCheckMoneyNew(false);
+    setCheckOnMoneyNew(true);
   };
+
   const modal = React.createRef();
   const modal1 = React.createRef();
   const modal2 = React.createRef();
 
   const onChooseIndustry = (item) => {
     setIndustry(item);
-    // console.log(item);
   };
   const onChooseIndustry_id = (item) => {
-    // console.log(item);
+    setCheckFuncRole(false);
+    setCheckOnFuncRole(true);
+    setFuncRole(item);
   };
   const onChooseLever = (item) => {
     setLeverGroup(item);
-    console.log(item);
   };
   const onChooseLever_id = (item) => {
-    // console.log(item);
+    setCheckLever(false);
+    setCheckOnLever(true);
+    setLeverGroupId(item);
   };
+  const onChooseCity = async (item) => {
+    setCheckCityError(false);
+    setCheckCity(true);
+    city.push(item);
+    var x = Array.from(new Set(city.map(JSON.stringify))).map(JSON.parse);
+    setCityName(x);
+  };
+  const onChooseCity_id = (item) => {
+    console.log(item);
+    const kq = {};
+    kq['city_id'] = item;
+    city_Id.push(kq);
+    var x = Array.from(new Set(city_Id.map(JSON.stringify))).map(JSON.parse);
+    setCityName_Id(x);
+  };
+  //===========================================
+
+  const onSubmit = () => {
+    if (
+      industry === null ||
+      industry === 'Lĩnh vực' ||
+      moneyNow === null ||
+      moneyNow.trim() === '' ||
+      moneyNew === null ||
+      moneyNew.trim() === '' ||
+      leverGroup === null ||
+      leverGroup === 'Vị trí' ||
+      cityName.length === 0
+    ) {
+      if (industry === null || industry === 'Lĩnh vực') {
+        setCheckFuncRole(true);
+        setFuncRole('');
+        setCheckOnFuncRole(false);
+      }
+      if (moneyNow === null || moneyNow.trim() === '') {
+        setCheckMoneyNow(true);
+        setMoneyNow('');
+        setCheckOnMoneyNow(false);
+      }
+      if (moneyNew === null || moneyNew.trim() === '') {
+        setCheckMoneyNew(true);
+        setMoneyNew('');
+        setCheckOnMoneyNew(false);
+      }
+      if (leverGroup === null || leverGroup === 'Vị trí') {
+        setCheckLever(true);
+        setLeverGroup('Vị trí');
+        setCheckOnLever(false);
+      }
+      if (cityName.length === 0) {
+        setCheckCityError(true);
+      }
+    } else {
+      console.log('====================================');
+      console.log('hideMoneyNow===', hideMoneyNow);
+      console.log('hideMoneyNew===', hideMoneyNew);
+      console.log('funcRole==', funcRole);
+      console.log('moneyNow==', moneyNow);
+      console.log('moneyNew==', moneyNew);
+      console.log('leverGroupId==', leverGroupId);
+      console.log('cityName_Id==', cityName_Id);
+      console.log('====================================');
+    }
+  };
+  //===============================
+  const onDeleteCity = (items) => {
+    const new_arr = cityName.filter((item) => item !== items);
+    setCityName(new_arr);
+    setCity(new_arr);
+    if (new_arr.length === 0) {
+      setCheckCity(false);
+    }
+  };
+  const onDeleteCity_Id = (items) => {
+    const new_arr = cityName_Id.filter((item) => item.city_id !== items);
+    setCityName_Id(new_arr);
+    setCity_Id(new_arr);
+  };
+
+  //=======================================
+
+  const onFuncRole = (items) => {
+    setCheckOnFuncRole(false);
+    setIndustry('Lĩnh vực');
+    setFuncRole('');
+  };
+  const onLever = (items) => {
+    setCheckOnLever(false);
+    setLeverGroup('Vị trí');
+    setLeverGroupId('');
+  };
+  const onMoneyNow = (items) => {
+    setCheckOnMoneyNow(false);
+    setMoneyNow('');
+  };
+  const onHideMoneyNow = (items) => {
+    if (checkShow === false) {
+      setCheckShow(!checkShow);
+      setHideMoneyNow(1);
+    } else {
+      setCheckShow(!checkShow);
+      setHideMoneyNow(0);
+    }
+  };
+  const onMoneyNew = (items) => {
+    setCheckOnMoneyNew(false);
+    setMoneyNew('');
+  };
+  const onHideMoneyNew = (items) => {
+    if (checkShow1 === false) {
+      setCheckShow1(!checkShow1);
+      setHideMoneyNew(1);
+    } else {
+      setCheckShow1(!checkShow1);
+      setHideMoneyNew(0);
+    }
+  };
+
   return (
     <View style={{flex: 1}}>
       <StatusBarView />
@@ -142,30 +395,64 @@ const BasicInfoComponent = (props) => {
             Thông tin xin việc
           </Text>
         </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          {checkFuncRole && (
+            <Text style={{color: 'red'}}>* Vui lòng chọn lĩnh vực</Text>
+          )}
+        </View>
 
         <TouchableOpacity
           onPress={() => modal.current.open()}
           style={{
             flexDirection: 'row',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomColor: '#FA8C16',
             borderBottomWidth: 2,
             marginHorizontal: 80,
-            marginTop: 30,
           }}>
-          <Image
-            source={require('../res/image/img/iconskill.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
-          />
-
-          <Text
+          <View
             style={{
-              marginLeft: 15,
-              color: industry === 'Lĩnh vực' ? '#BFBFBF' : 'black',
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
             }}>
-            {industry}
-          </Text>
+            <Image
+              source={require('../res/image/img/iconskill.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+
+            <Text
+              style={{
+                width: '70%',
+                marginLeft: 15,
+                color: industry === 'Lĩnh vực' ? '#BFBFBF' : 'black',
+              }}>
+              {industry}
+            </Text>
+          </View>
+          {checkOnFuncRole && (
+            <TouchableOpacity
+              onPress={() => {
+                onFuncRole();
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          )}
         </TouchableOpacity>
         <View
           style={{
@@ -173,13 +460,12 @@ const BasicInfoComponent = (props) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {/* <Text style={{ color: 'red' }}>
-                    * Vui lòng chọn địa chỉ
-                </Text> */}
+          {checkMoneyNow && (
+            <Text style={{color: 'red'}}>* Vui lòng nhập lương hiện tại</Text>
+          )}
         </View>
         <View
           style={{
-            marginTop: 10,
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
@@ -192,13 +478,36 @@ const BasicInfoComponent = (props) => {
             style={{height: 35, width: 35, resizeMode: 'contain'}}
           />
           <TextInput
+            defaultValue={moneyNow}
+            onChangeText={(text) => {
+              textMoneyNow(text);
+            }}
+            keyboardType="number-pad"
             placeholder="Lương hiện tại"
-            style={{width: '70%', marginLeft: 15}}></TextInput>
+            style={{width: '58%', marginLeft: 15}}></TextInput>
+
           <Text style={{}}>VND</Text>
+          {checkOnMoneyNow && (
+            <TouchableOpacity
+              onPress={() => {
+                onMoneyNow();
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          )}
         </View>
         <TouchableOpacity
           onPress={() => {
-            setCheckShow(!checkShow);
+            onHideMoneyNow();
           }}
           style={{
             flexDirection: 'row',
@@ -230,13 +539,12 @@ const BasicInfoComponent = (props) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {/* <Text style={{ color: 'red' }}>
-                    * Vui lòng chọn địa chỉ
-                </Text> */}
+          {checkMoneyNew && (
+            <Text style={{color: 'red'}}>* Vui lòng nhập lương mong muốn</Text>
+          )}
         </View>
         <View
           style={{
-            marginTop: 10,
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
@@ -249,15 +557,34 @@ const BasicInfoComponent = (props) => {
             style={{height: 35, width: 35, resizeMode: 'contain'}}
           />
           <TextInput
-            keyboardType="numbers-and-punctuation"
-            onChange={(text) => onChangeText(text)}
+            defaultValue={moneyNew}
+            keyboardType="number-pad"
+            onChangeText={(text) => textMoneyNew(text)}
             placeholder="Lương mong muốn"
-            style={{width: '70%', marginLeft: 15}}></TextInput>
+            style={{width: '58%', marginLeft: 15}}></TextInput>
+
           <Text style={{}}>VND</Text>
+          {checkOnMoneyNew && (
+            <TouchableOpacity
+              onPress={() => {
+                onMoneyNew();
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          )}
         </View>
         <TouchableOpacity
           onPress={() => {
-            setCheckShow1(!checkShow1);
+            onHideMoneyNew();
           }}
           style={{
             flexDirection: 'row',
@@ -288,32 +615,55 @@ const BasicInfoComponent = (props) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {/* <Text style={{ color: 'red' }}>
-                    * Vui lòng chọn địa chỉ
-                </Text> */}
+          {checkLever && (
+            <Text style={{color: 'red'}}>* Vui lòng chọn vị trí</Text>
+          )}
         </View>
         <TouchableOpacity
           onPress={() => modal1.current.open()}
           style={{
-            marginTop: 10,
             flexDirection: 'row',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomColor: '#FA8C16',
             borderBottomWidth: 2,
             marginHorizontal: 80,
           }}>
-          <Image
-            source={require('../res/image/img/iconformofwork.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
-          />
-          <Text
+          <View
             style={{
-              marginLeft: 15,
-              color: leverGroup === 'Vị trí' ? '#BFBFBF' : 'black',
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
             }}>
-            {leverGroup}
-          </Text>
+            <Image
+              source={require('../res/image/img/iconformofwork.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <Text
+              style={{
+                marginLeft: 15,
+                color: leverGroup === 'Vị trí' ? '#BFBFBF' : 'black',
+              }}>
+              {leverGroup}
+            </Text>
+          </View>
+          {checkOnLever && (
+            <TouchableOpacity
+              onPress={() => {
+                onLever();
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          )}
         </TouchableOpacity>
         <View
           style={{
@@ -321,29 +671,85 @@ const BasicInfoComponent = (props) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {/* <Text style={{ color: 'red' }}>
-                    * Vui lòng chọn địa chỉ
-                </Text> */}
+          {checkCityError && (
+            <Text style={{color: 'red'}}>* Vui lòng chọn khu vực</Text>
+          )}
         </View>
-        <TouchableOpacity
+
+        <View
           onPress={() => modal2.current.open()}
           style={{
             marginTop: 10,
             flexDirection: 'row',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomColor: '#FA8C16',
             borderBottomWidth: 2,
             marginHorizontal: 80,
           }}>
-          <Image
-            source={require('../res/image/img/iconlocation.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
-          />
-          <Text style={{marginLeft: 15, color: '#BFBFBF'}}>
-            Khu vực bạn muốn làm việc
-          </Text>
-        </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              width: '85%',
+            }}>
+            <TouchableOpacity onPress={() => modal2.current.open()}>
+              <Image
+                source={require('../res/image/img/iconlocation.png')}
+                style={{height: 35, width: 35, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+
+            {checkCity === false ? (
+              <Text style={{color: '#BFBFBF', marginLeft: 15}}>
+                Khu vực bạn muốn
+              </Text>
+            ) : (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={{}}>
+                {cityName.map((item, index) => {
+                  return (
+                    <View
+                      key={item.id}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        backgroundColor: '#E6E7E9',
+                        marginLeft: 10,
+                      }}>
+                      <Text>{item.city}</Text>
+                      <TouchableOpacity
+                        onPress={async () => {
+                          onDeleteCity(item);
+                          onDeleteCity_Id(item.id);
+                        }}>
+                        <Image
+                          source={require('../res/image/img/icon_close.png')}
+                          style={{
+                            height: 15,
+                            width: 15,
+                            resizeMode: 'contain',
+                            marginHorizontal: 6,
+                          }}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            )}
+          </View>
+
+          <TouchableOpacity onPress={() => modal2.current.open()}>
+            <Image
+              source={require('../res/image/img/list.png')}
+              style={{height: 30, width: 30, resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>
+        </View>
 
         <View
           style={{
@@ -353,6 +759,7 @@ const BasicInfoComponent = (props) => {
           }}>
           {check === false ? (
             <TouchableOpacity
+              onPress={() => onSubmit()}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -455,10 +862,16 @@ const BasicInfoComponent = (props) => {
           data={dataLever}
           modalHeight={screenHeight / 2}
         />
-        <BottomSheetIndustry
+        <BottomSheetListCity
+          OnChooseCity={(item) => {
+            onChooseCity(item);
+          }}
+          OnChooseCity_id={(item) => {
+            onChooseCity_id(item);
+          }}
           ref={modal2}
           title="Chọn khu vực"
-          data={[]}
+          data={dataCity}
           modalHeight={screenHeight / 2}
         />
       </ScrollView>

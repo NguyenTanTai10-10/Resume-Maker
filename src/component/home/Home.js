@@ -200,7 +200,7 @@ const Home = (props) => {
                       backgroundColor: '#E8E8E8',
                     }}>
                     <Text
-                      numberOfLines={4}
+                      numberOfLines={3}
                       style={{
                         alignSelf: 'flex-start',
                         paddingHorizontal: 5,

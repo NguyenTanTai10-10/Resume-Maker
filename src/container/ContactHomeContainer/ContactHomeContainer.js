@@ -18,7 +18,7 @@ export class ContactHomeContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state.infoUserReducer",state.userInfoReducer);
+  // console.log("state.infoUserReducer",state.userInfoReducer);
 
   return {
     statusCity: state.getCityReducer.status,

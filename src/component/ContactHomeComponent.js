@@ -65,13 +65,11 @@ const ContactHomeComponent = (props) => {
         setEmailKh(props.dataUser.email);
         setPhone(props.dataUser.phone);
         setAdress(props.dataUser.address);
-
         setCity_id(props.dataUser.city_id);
         setPhotoBase64(props.dataUser.profile_image);
 
         DataCity.map((item) => {
-          if (item.id === props.dataUser.city_id) {
-            console.log(item.city);
+          if (item.id === props.dataUser.city_id) {           
             setCity(item.city);
           }
         });
