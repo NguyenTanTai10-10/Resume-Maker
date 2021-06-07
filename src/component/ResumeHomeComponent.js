@@ -26,11 +26,13 @@ const ResumeHomeComponent = (props) => {
     if (props.statusUser !== null) {
       if (props.statusUser === 1) {
         setData(props.dataUser);
-      } else {
-        setTimeout(() => {
-          Alert.alert('Thông báo', props.messageUser);
-        }, 10);
-      }
+        setTitle(props.dataUser.resume_title)
+      } 
+      // else {
+      //   setTimeout(() => {
+      //     Alert.alert('Thông báo', props.messageUser);
+      //   }, 10);
+      // }
     }
   }, [props.statusUser]);
   const getData = async () => {
@@ -161,7 +163,7 @@ const ResumeHomeComponent = (props) => {
             style={{right: 15, height: 35, width: 35, resizeMode: 'contain'}}
           />
           <TextInput
-            defaultValue={data.resume_title}
+            defaultValue={title}
             onChangeText={(text) => {
               onChangeText(text);
             }}
@@ -192,7 +194,7 @@ const ResumeHomeComponent = (props) => {
         ) : (
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('ContactContainer');
+              props.navigation.navigate('ContactHomeContainer');
             }}
             style={{
               justifyContent: 'center',

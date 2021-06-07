@@ -8,7 +8,8 @@ import {
   editInfoUserAction,
   logoutCheckMailAction,
   editAvatarAction,
-  infoUserAction
+  infoUserAction,
+  logoutEditInfoUserAction
 } from '../../redux/actions/Action';
 
 export class ContactHomeContainer extends Component {
@@ -61,6 +62,9 @@ const mapDispatchToProps = (dispatch) => {
     logoutCheckMailAction: (input) => dispatch(logoutCheckMailAction(input)),
     infoUserAction: (input) => dispatch(infoUserAction(input)),
     editAvatarAction: (input) => dispatch(editAvatarAction(input)),
+    logoutEditInfoUserAction: (input) => dispatch(logoutEditInfoUserAction(input)),
+    
+    
   };
 };
 

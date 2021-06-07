@@ -69,14 +69,14 @@ const ContactHomeComponent = (props) => {
         setPhotoBase64(props.dataUser.profile_image);
 
         DataCity.map((item) => {
-          if (item.id === props.dataUser.city_id) {           
+          if (item.id === props.dataUser.city_id) {
             setCity(item.city);
           }
         });
       }
-     
-    } 
-    
+    } else if (props.errorUser !== null) {
+      Alert.alert('Thông báo', props.errorUser);
+    }
   }, [props.statusUser]);
 
   useEffect(() => {
@@ -98,8 +98,7 @@ const ContactHomeComponent = (props) => {
 
         Alert.alert('Thông báo', props.messageEditInfo);
       }
-     
-    }  
+    }
     // else {
     //     setTimeout(() => {
     //       Alert.alert('Thông báo', props.errorEditInfo);
@@ -399,6 +398,7 @@ const ContactHomeComponent = (props) => {
               onPress={() => {
                 props.navigation.goBack();
                 props.logoutCheckMailAction();
+                props.logoutEditInfoUserAction()
               }}>
               <Image
                 source={Images.arrow}
@@ -903,9 +903,10 @@ const ContactHomeComponent = (props) => {
 
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('BasicInfoContainer');
+              props.navigation.navigate('BasicsInfoContainer');
             }}
             style={{
+
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'row',

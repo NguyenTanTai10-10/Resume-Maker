@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
+  Alert,
 } from 'react-native';
 import Images from '../../res/image';
 import {screenWidth} from '../../res/style/theme';
 import Header from '../custom/Header';
+import LoadingView from '../custom/LoadingView';
 import Slider from '../custom/Slider';
 // import Slider from '../custom/Slider'
 
@@ -41,17 +43,28 @@ const Home = (props) => {
           Alert.alert('Thông báo', props.messageUser);
         }, 10);
       }
+    } else if (props.errorUser !== null) {
+      Alert.alert('Thông báo', props.errorUser);
     }
   }, [props.statusUser]);
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      props.navigation.addListener('focus', async () => {
+        props.infoUserAction({
+          user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
+          lang_code: '',
+          emp_id: '',
+          is_app_cv: 1,
+        });
+      });
       props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
         lang_code: '',
         emp_id: '',
         is_app_cv: 1,
       });
+
       // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
     } catch (e) {
       // error reading value
@@ -60,6 +73,8 @@ const Home = (props) => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+      {props.loadingUser && <LoadingView />}
+
       <Header
         isShowMenu
         onPressMenu={() => props.navigation.openDrawer()}
@@ -150,17 +165,17 @@ const Home = (props) => {
                   style={{
                     fontSize: 17,
                     alignSelf: 'center',
-                    textAlign:'center',
-                    
+                    textAlign: 'center',
+
                     color: '#FA8C16',
                     width: '40%',
                   }}>
                   {data.resume_title}
                 </Text>
                 <TouchableOpacity
-                style={{}}
+                  style={{}}
                   onPress={() => {
-                    console.log("123");
+                    console.log('123');
                     Linking.openURL(data.link_web);
                   }}>
                   <Image

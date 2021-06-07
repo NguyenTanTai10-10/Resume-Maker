@@ -102,6 +102,12 @@ export const  editInfoUserAction = (input) => {
     input: input,
   };
 };
+export const LOGOUT_EDIT_INFO_USER = 'LOGOUT_EDIT_INFO_USER';
+export const logoutEditInfoUserAction = () => {
+  return {
+    type: LOGOUT_EDIT_INFO_USER,
+  };
+};
 //===================================================================================
 export const EDIT_CIVI = 'EDIT_CIVI';
 export const EDIT_CIVI_SUCCESS = 'EDIT_CIVI_SUCCESS';

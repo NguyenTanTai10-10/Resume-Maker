@@ -36,9 +36,10 @@ const userInfoReducer = (state = initState, action) => {
       return {
         // ...state,
         status: null,
+        error:'Lối sever',
         loading: false,
         data: null,
-        message: 'Lối sever',
+        message: ''
       };
 
     default:

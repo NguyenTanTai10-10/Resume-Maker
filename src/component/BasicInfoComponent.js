@@ -20,21 +20,22 @@ import BottomSheetListCity from './custom/BottomSheetListCity';
 import {set} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LOGIN} from '../redux/actions/Action';
+import LoadingView from './custom/LoadingView';
 
 const BasicInfoComponent = (props) => {
   const [dataIndustry, setDataIndustry] = useState([]);
   const [dataLever, setDataLever] = useState([]);
   const [dataCity, setDataCity] = useState([]);
   const [getDataCity, setGetDataCity] = useState([]);
+  const [totalCity, setTotalCity] = useState([]);
   useEffect(() => {
     getdata();
-    console.log('123333');
+
     props.getIndustryAction({industry_id: ''});
     props.getLeverAction({level_group_id: ''});
     props.getCityAction({city_id: '', country_id: ''});
   }, []);
   const getdata = async () => {
-    console.log('123333');
     // props.navigation.addListener('focus', async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
@@ -60,8 +61,9 @@ const BasicInfoComponent = (props) => {
         setHideMoneyNow(props.dataUser.is_hide_current_salary);
         setMoneyNew(props.dataUser.expected_annual_salary.toLocaleString());
         setHideMoneyNew(props.dataUser.is_negotiation);
+        setResumeTitle(props.dataUser.resume_title);
         dataIndustry.map((item) => {
-          if (item.industry_id === props.dataUser.industry_id) {
+          if (item.industry_id === props.dataUser.functional_role_id) {
             setIndustry(item.industry);
             setFuncRole(item.industry_id);
           }
@@ -86,38 +88,66 @@ const BasicInfoComponent = (props) => {
           setCheckShow1(false);
           setHideMoneyNew(0);
         }
-        // dataCity.map((item) => {
-        //   if (item.level_group === props.dataUser.levelGroup) {
-        //     setLeverGroup(item.level_group);
-        //     setLeverGroupId(item.level_group_id);
-        //   }
-        // });
 
-        const kq = '1,2';
-        const kqc = kq.split(',');
-        console.log('====================================');
-        console.log(
-          dataCity.sort(function (a, b) {
-            return a.id - b.id;
-          }),
-        );
-        console.log('====================================');
+        if (props.dataUser.location_id === '') {
+          console.log('flase1');
+        } else if (props.dataUser.location_id !== '') {
+          // console.log("props.dataUser.location_id",props.dataUser.location_id);
+          const kq = props.dataUser.location_id;
+          const kqc = kq.split(',');
+          kqc.map((item) => {
+            const data = {};
+            data[`city_id`] = item;
+            getDataCity.push(data);
 
-        dataCity.map((item) => {
-          const data = {};
-          data[`city_id`] = item;
-          getDataCity.push(data);
-          const x = Array.from(new Set(getDataCity.map(JSON.stringify))).map(
-            JSON.parse,
-          );
-          // setGetDataCity(x)
-          // for(let i = 0; i < dataCity.length; i++){
-          //   if(dataCity.id[i]===)
-          // }
-        });
+            const x = Array.from(new Set(getDataCity.map(JSON.stringify))).map(
+              JSON.parse,
+            );
+            const arrMin = x.sort(function (a, b) {
+              return a.city_id - b.city_id;
+            });
+            setCityName_Id(arrMin);
+            setGetDataCity(arrMin);
+            const arrMaxc = dataCity.sort(function (a, b) {
+              return a.city_id - b.city_id;
+            });
+            arrdataCity();
+          });
+        }
       }
+    } else if (props.errorUser !== null) {
+      Alert.alert('Thông báo', props.errorUser);
     }
   }, [props.statusUser]);
+
+  const arrdataCity = () => {
+    const arrmin = Array.from(new Set(getDataCity.map(JSON.stringify))).map(
+      JSON.parse,
+    );
+    // console.log("arrmin",arrmin);
+    const arrMaxc = dataCity.sort(function (a, b) {
+      return a.id - b.id;
+    });
+    // console.log(arrMaxc);
+
+    for (let i = 0; i < arrmin.length; i++) {
+      const parseInts = parseInt(arrmin[i].city_id);
+
+      arrMaxc.map((item) => {
+        // console.log(typeof(parseInts));
+        // console.log(typeof(item.id));
+        if (parseInts === item.id) {
+          totalCity.push(item);
+          const xyz = Array.from(new Set(totalCity.map(JSON.stringify))).map(
+            JSON.parse,
+          );
+          
+          setCityName(xyz);
+          setCheckCity(true)
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     if (props.statusIndustry !== null) {
@@ -130,6 +160,7 @@ const BasicInfoComponent = (props) => {
       }
     }
   }, [props.statusIndustry]);
+
   useEffect(() => {
     if (props.statusCity !== null) {
       if (props.statusCity === 1) {
@@ -152,6 +183,15 @@ const BasicInfoComponent = (props) => {
       }
     }
   }, [props.statusLever]);
+  useEffect(() => {
+    if (props.statusEditCv !== null) {
+      if (props.statusEditCv === 1) {
+        Alert.alert('Thông báo', props.messageEditCv);
+      }
+    } else if (props.errorEditCv !== null) {
+      Alert.alert('Thông báo', props.errorEditCv);
+    }
+  }, [props.errorEditCv]);
 
   const [cityName, setCityName] = useState([]);
   const [city, setCity] = useState([]);
@@ -181,6 +221,7 @@ const BasicInfoComponent = (props) => {
   const [leverGroupId, setLeverGroupId] = useState('Vị trí');
   const [hideMoneyNow, setHideMoneyNow] = useState(0);
   const [hideMoneyNew, setHideMoneyNew] = useState(0);
+  const [resumeTitle, setResumeTitle] = useState('');
 
   //================================================
 
@@ -235,7 +276,7 @@ const BasicInfoComponent = (props) => {
   };
   //===========================================
 
-  const onSubmit = () => {
+  const onSubmit = async() => {
     if (
       industry === null ||
       industry === 'Lĩnh vực' ||
@@ -272,6 +313,8 @@ const BasicInfoComponent = (props) => {
       }
     } else {
       console.log('====================================');
+
+      console.log('resumeTitle===', resumeTitle);
       console.log('hideMoneyNow===', hideMoneyNow);
       console.log('hideMoneyNew===', hideMoneyNew);
       console.log('funcRole==', funcRole);
@@ -279,7 +322,23 @@ const BasicInfoComponent = (props) => {
       console.log('moneyNew==', moneyNew);
       console.log('leverGroupId==', leverGroupId);
       console.log('cityName_Id==', cityName_Id);
+      console.log('cityName==', cityName);
+      console.log('userId==', userId);
+
+      await props.editCiviAction({
+        cv_tittle: resumeTitle,
+        industry_id: '',
+        functional_role_id: funcRole,
+        csalary: moneyNow,
+        is_hide_current_salary: hideMoneyNow,
+        esalary: moneyNew,
+        is_negotiation: hideMoneyNew,
+        level_group_id: leverGroupId,
+        location_id: cityName_Id,
+        user_id: userId,
+      });
       console.log('====================================');
+      await setCheck(true)
     }
   };
   //===============================
@@ -292,7 +351,10 @@ const BasicInfoComponent = (props) => {
     }
   };
   const onDeleteCity_Id = (items) => {
-    const new_arr = cityName_Id.filter((item) => item.city_id !== items);
+    const new_arr = cityName_Id.filter(
+      (item) => item.city_id !== items.toLocaleString(),
+    );
+    console.log('new_arr', new_arr);
     setCityName_Id(new_arr);
     setCity_Id(new_arr);
   };
@@ -338,6 +400,9 @@ const BasicInfoComponent = (props) => {
 
   return (
     <View style={{flex: 1}}>
+      {props.loadingUser && <LoadingView />}
+      {props.loadingEditCv && <LoadingView />}
+
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -711,6 +776,7 @@ const BasicInfoComponent = (props) => {
                 showsHorizontalScrollIndicator={false}
                 style={{}}>
                 {cityName.map((item, index) => {
+                  
                   return (
                     <View
                       key={item.id}

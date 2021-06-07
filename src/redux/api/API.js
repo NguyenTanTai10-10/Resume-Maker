@@ -197,6 +197,7 @@ function* EditInfoUser(input) {
   return temp;
 }
 function* EditCivi(input) {
+
   let temp;
   yield axios
     .post(urlSever, {
@@ -211,7 +212,7 @@ function* EditCivi(input) {
         esalary: input.esalary,
         is_negotiation: input.is_negotiation,
         level_group_id: input.level_group_id,
-        location_id: [],
+        location_id: input.location_id,
         user_id: input.user_id,
       },
     })
