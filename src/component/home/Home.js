@@ -22,6 +22,7 @@ const Home = (props) => {
 
   const [widthPercent, setWidthPercent] = useState();
   const [widthNoPercent, setWidthNoPercent] = useState();
+  const [dataEducation, setDataEducation] = useState('');
   useEffect(() => {
     getData();
   }, []);
@@ -38,6 +39,7 @@ const Home = (props) => {
 
         const kq2 = 140 - (props.dataUser.percent_cv * 140) / 100;
         setWidthNoPercent(kq2);
+        setDataEducation(props.dataUser.qualifications);
       } else {
         setTimeout(() => {
           Alert.alert('Thông báo', props.messageUser);
@@ -68,6 +70,15 @@ const Home = (props) => {
       // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
     } catch (e) {
       // error reading value
+    }
+  };
+
+  //========================
+  const onEducation = () => {
+    if (dataEducation.length === 0) {
+      props.navigation.navigate('AddEducationContainer');
+    } else if (dataEducation.length > 0) {
+      props.navigation.navigate('ListEducationContainer');
     }
   };
 
@@ -351,7 +362,7 @@ const Home = (props) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => props.navigation.navigate('EducationComponent')}
+            onPress={() => onEducation()}
             style={{
               flexDirection: 'row',
               borderBottomWidth: 1,

@@ -192,6 +192,7 @@ const ContactHomeComponent = (props) => {
       cropping: true,
       includeBase64: true,
     }).then(async (image) => {
+      setCheck(false)
       const Image64 = `data:${image.mime};base64,${image.data}`;
       try {
         await AsyncStorage.setItem('@Images64', Image64);
@@ -205,11 +206,13 @@ const ContactHomeComponent = (props) => {
   };
 
   const onUserName = (text) => {
+    setCheck(false)
     setUserName(text);
     setCheckHoTen(false);
     setClearHoTen(true);
   };
   const onGmail = (text) => {
+    setCheck(false)
     const kq = text;
 
     if (emailValidation(kq)) {
@@ -222,53 +225,64 @@ const ContactHomeComponent = (props) => {
     setCheckEmaiExit(false);
   };
   const onChooseDate = (item) => {
+    setCheck(false)
     setBirthDay(item);
     setCheckBirthDay(false);
     setClearBirthDay(true);
   };
   const onChooseCity = (item) => {
+    setCheck(false)
     // console.log(item);
     setCity(item);
     setCheckCity(false);
     setClearCity(true);
   };
   const onChooseCity_id = (item) => {
+    setCheck(false)
     setCity_id(item);
   };
   const onPhone = (item) => {
+    setCheck(false)
     setPhone(item);
     setCheckPhone(false);
     setCheckPhoneHL(false);
     setClearPhone(true);
   };
   const onAdress = (text) => {
+    setCheck(false)
     setAdress(text);
     setCheckAdress(false);
     setClearAdress(true);
   };
   const onGender = (text) => {
+    setCheck(false)
     setGender(text);
   };
   //=========================================================
   const onClearHoTen = () => {
+    setCheck(false)
     setUserName('');
     setClearHoTen(false);
   };
 
   const onClearEmail = () => {
+    setCheck(false)
     setEmailKh('');
     setClearEmail(false);
     setCheckEmaiExit(false);
   };
   const onClearCity = () => {
+    setCheck(false)
     setCity('Tỉnh/thành phố');
     setClearCity(false);
   };
   const onClearPhone = () => {
+    setCheck(false)
     setPhone('');
     setClearPhone(false);
   };
   const onClearAdress = () => {
+    setCheck(false)
     setAdress('');
     setClearAdress(false);
   };
@@ -369,7 +383,7 @@ const ContactHomeComponent = (props) => {
     //   user_id: DataRegister !== null ? DataRegister.jobseeker_id : '',
     //   image: PhotoBase64,
     // });
-    await props.navigation.navigate('BasicInfoContainer');
+    await props.navigation.navigate('BasicsInfoContainer');
 
     // console.log(DataRegister.jobseeker_id);
     // console.log(PhotoBase64);
@@ -884,6 +898,7 @@ const ContactHomeComponent = (props) => {
             onPress={() => {
               props.navigation.goBack();
               props.logoutCheckMailAction();
+              props.logoutEditInfoUserAction()
             }}
             style={{
               justifyContent: 'center',

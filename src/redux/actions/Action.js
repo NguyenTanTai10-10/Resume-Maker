@@ -118,6 +118,12 @@ export const  editCiviAction = (input) => {
     input: input,
   };
 };
+export const LOGOUT_EDIT_CIVI = 'LOGOUT_EDIT_CIVI';
+export const logoutEditCiviAction = () => {
+  return {
+    type: LOGOUT_EDIT_CIVI,
+  };
+};
 //===================================================================================
 export const  GET_INDUSTRY = 'GET_INDUSTRY';
 export const GET_INDUSTRY_SUCCESS = 'GET_INDUSTRY_SUCCESS';
@@ -135,6 +141,26 @@ export const GET_LEVER_ERROR = 'GET_LEVER_ERROR';
 export const  getLeverAction = (input) => {
   return {
     type: GET_LEVER,
+    input: input,
+  };
+};
+//===================================================================================
+export const  GET_QUALITIFICATIONS = 'GET_QUALITIFICATIONS';
+export const GET_QUALITIFICATIONS_SUCCESS = 'GET_QUALITIFICATIONS_SUCCESS';
+export const GET_QUALITIFICATIONS_ERROR = 'GET_QUALITIFICATIONS_ERROR';
+export const  getQualitificationrAction = (input) => {
+  return {
+    type: GET_QUALITIFICATIONS,
+    input: input,
+  };
+};
+//===================================================================================
+export const  GET_FUNCTIONS_ROLE = 'GET_FUNCTIONS_ROLE';
+export const GET_FUNCTIONS_ROLE_SUCCESS = 'GET_FUNCTIONS_ROLE_SUCCESS';
+export const GET_FUNCTIONS_ROLE_ERROR = 'GET_FUNCTIONS_ROLE_ERROR';
+export const  getFunctionRoleAction = (input) => {
+  return {
+    type: GET_FUNCTIONS_ROLE,
     input: input,
   };
 };

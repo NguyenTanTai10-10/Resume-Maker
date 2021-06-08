@@ -8,6 +8,7 @@ import {
   editCiviAction,
   infoUserAction,
   editInfoUserAction,
+  logoutEditCiviAction
   
 } from '../../redux/actions/Action';
 
@@ -18,7 +19,7 @@ export class BasicsInfoContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state.getIndustryReducer",state.editCiviReducer);
+
   return {
     statusIndustry: state.getIndustryReducer.status,
     dataIndustrys: state.getIndustryReducer.data,
@@ -61,6 +62,8 @@ const mapDispatchToProps = (dispatch) => {
     editCiviAction: (input) => dispatch(editCiviAction(input)),
     infoUserAction: (input) => dispatch(infoUserAction(input)),
     editInfoUserAction: (input) => dispatch(editInfoUserAction(input)),
+    logoutEditCiviAction: (input) => dispatch(logoutEditCiviAction(input)),
+    
     
   };
 };

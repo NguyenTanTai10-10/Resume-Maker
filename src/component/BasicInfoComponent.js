@@ -141,9 +141,9 @@ const BasicInfoComponent = (props) => {
           const xyz = Array.from(new Set(totalCity.map(JSON.stringify))).map(
             JSON.parse,
           );
-          
+
           setCityName(xyz);
-          setCheckCity(true)
+          setCheckCity(true);
         }
       });
     }
@@ -191,7 +191,7 @@ const BasicInfoComponent = (props) => {
     } else if (props.errorEditCv !== null) {
       Alert.alert('Thông báo', props.errorEditCv);
     }
-  }, [props.errorEditCv]);
+  }, [props.statusEditCv]);
 
   const [cityName, setCityName] = useState([]);
   const [city, setCity] = useState([]);
@@ -226,12 +226,14 @@ const BasicInfoComponent = (props) => {
   //================================================
 
   const textMoneyNow = (text) => {
+    setCheck(false)
     const kq = text.replace(/^0+/, '');
     setMoneyNow(kq);
     setCheckMoneyNow(false);
     setCheckOnMoneyNow(true);
   };
   const textMoneyNew = (text) => {
+    setCheck(false)
     const kq = text.replace(/^0+/, '');
 
     setMoneyNew(kq);
@@ -244,22 +246,27 @@ const BasicInfoComponent = (props) => {
   const modal2 = React.createRef();
 
   const onChooseIndustry = (item) => {
+    setCheck(false)
     setIndustry(item);
   };
   const onChooseIndustry_id = (item) => {
+    setCheck(false)
     setCheckFuncRole(false);
     setCheckOnFuncRole(true);
     setFuncRole(item);
   };
   const onChooseLever = (item) => {
+    setCheck(false)
     setLeverGroup(item);
   };
   const onChooseLever_id = (item) => {
+    setCheck(false)
     setCheckLever(false);
     setCheckOnLever(true);
     setLeverGroupId(item);
   };
   const onChooseCity = async (item) => {
+    setCheck(false)
     setCheckCityError(false);
     setCheckCity(true);
     city.push(item);
@@ -267,6 +274,7 @@ const BasicInfoComponent = (props) => {
     setCityName(x);
   };
   const onChooseCity_id = (item) => {
+    setCheck(false)
     console.log(item);
     const kq = {};
     kq['city_id'] = item;
@@ -276,7 +284,7 @@ const BasicInfoComponent = (props) => {
   };
   //===========================================
 
-  const onSubmit = async() => {
+  const onSubmit = async () => {
     if (
       industry === null ||
       industry === 'Lĩnh vực' ||
@@ -338,11 +346,12 @@ const BasicInfoComponent = (props) => {
         user_id: userId,
       });
       console.log('====================================');
-      await setCheck(true)
+      await setCheck(true);
     }
   };
   //===============================
   const onDeleteCity = (items) => {
+    setCheck(false)
     const new_arr = cityName.filter((item) => item !== items);
     setCityName(new_arr);
     setCity(new_arr);
@@ -351,10 +360,11 @@ const BasicInfoComponent = (props) => {
     }
   };
   const onDeleteCity_Id = (items) => {
+    setCheck(false)
     const new_arr = cityName_Id.filter(
       (item) => item.city_id !== items.toLocaleString(),
     );
-    console.log('new_arr', new_arr);
+    // console.log('new_arr', new_arr);
     setCityName_Id(new_arr);
     setCity_Id(new_arr);
   };
@@ -362,20 +372,24 @@ const BasicInfoComponent = (props) => {
   //=======================================
 
   const onFuncRole = (items) => {
+    setCheck(false)
     setCheckOnFuncRole(false);
     setIndustry('Lĩnh vực');
     setFuncRole('');
   };
   const onLever = (items) => {
+    setCheck(false)
     setCheckOnLever(false);
     setLeverGroup('Vị trí');
     setLeverGroupId('');
   };
   const onMoneyNow = (items) => {
+    setCheck(false)
     setCheckOnMoneyNow(false);
     setMoneyNow('');
   };
   const onHideMoneyNow = (items) => {
+    setCheck(false)
     if (checkShow === false) {
       setCheckShow(!checkShow);
       setHideMoneyNow(1);
@@ -385,10 +399,12 @@ const BasicInfoComponent = (props) => {
     }
   };
   const onMoneyNew = (items) => {
+    setCheck(false)
     setCheckOnMoneyNew(false);
     setMoneyNew('');
   };
   const onHideMoneyNew = (items) => {
+    setCheck(false)
     if (checkShow1 === false) {
       setCheckShow1(!checkShow1);
       setHideMoneyNew(1);
@@ -421,7 +437,10 @@ const BasicInfoComponent = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={() => props.navigation.goBack()}>
+              onPress={() => {
+                props.navigation.goBack();
+                props.logoutEditCiviAction();
+              }}>
               <Image
                 source={Images.arrow}
                 style={{
@@ -776,7 +795,6 @@ const BasicInfoComponent = (props) => {
                 showsHorizontalScrollIndicator={false}
                 style={{}}>
                 {cityName.map((item, index) => {
-                  
                   return (
                     <View
                       key={item.id}
@@ -869,6 +887,7 @@ const BasicInfoComponent = (props) => {
           <TouchableOpacity
             onPress={() => {
               props.navigation.goBack();
+              props.logoutEditCiviAction()
             }}
             style={{
               justifyContent: 'center',

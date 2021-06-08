@@ -12,24 +12,11 @@ import moment from 'moment';
 import {set} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DatetimePicker = (props) => {
+const DatetimePass = (props) => {
   useEffect(() => {
     setDateStart(props.title)
   
   }, [props.title])
-
-
-  // const getData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('@birthday');
-  //     if (value !== null) {
-  //       setDateStart(value);
-  //     }
-  //   } catch (e) {
-  //     // error reading value
-  //   }
-  // };
-
   const [date, setDate] = useState(new Date(2000, 1));
   const [color, setColor] = useState(false);
   const [ClearBirthday, setClearBirthday] = useState(false);
@@ -41,19 +28,14 @@ const DatetimePicker = (props) => {
   const [show, setShow] = useState(false);
 
   const onChange = async (event, selectedDate) => {
-    const DayStart = moment(selectedDate).format('L');
-    const kq = formatDate(DayStart);
+    const DayStarts = moment(selectedDate).format('L');
+    const kq = formatDate(DayStarts);
     setShow(Platform.OS === 'ios');
-    setDateStart(DayStart);
+    setDateStart(kq);
     setColor(true);
     setClearBirthday(true);
 
-    props.chooseDay(kq);
-    // try {
-    //   await AsyncStorage.setItem('@birthday', DayStart);
-    // } catch (e) {
-    //   // saving error
-    // }
+    props.OnChooseDayPass(kq);
   };
 
   const showMode = (currentMode) => {
@@ -65,23 +47,14 @@ const DatetimePicker = (props) => {
     showMode('');
   };
   const onPressDate = async() => {
-    setDateStart('Ngày sinh');
+    setDateStart('Năm học (từ)');
     setClearBirthday(false);
-    props.chooseDay('Ngày sinh');
-    // const deleteDate = 'Ngày sinh'
-    // try {
-    //   await AsyncStorage.setItem('@birthday', deleteDate);
-    // } catch (e) {
-    //   // saving error
-    // }
+    props.OnChooseDayPass('Năm học (từ)');
   };
   const formatDate = (dateChooose) => {
-    console.log('dateChooose===', dateChooose);
-
-    const y = `${dateChooose}`.slice(-4);
-    const d = `${dateChooose}`.slice(3, 5);
     const m = `${dateChooose}`.slice(0, 2);
-    return `${y}-${d}-${m}`;
+    const y = `${dateChooose}`.slice(6, 10);
+    return `${m}-${y}`;
   };
   return (
     <View>
@@ -108,7 +81,7 @@ const DatetimePicker = (props) => {
             source={require('../../res/image/img/iconbirthday.png')}
             style={{height: 35, width: 35, resizeMode: 'contain'}}
           />
-          {DateStart === 'Ngày sinh' ? (
+          {DateStart === 'Năm học (từ)' ? (
             <Text style={{marginLeft: 15, color: '#BFBFBF'}}>{DateStart}</Text>
           ) : (
             <Text style={{marginLeft: 15, color: 'black'}}>{DateStart}</Text>
@@ -148,4 +121,4 @@ const DatetimePicker = (props) => {
   );
 };
 
-export default DatetimePicker;
+export default DatetimePass;

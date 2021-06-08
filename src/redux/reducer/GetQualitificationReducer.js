@@ -1,8 +1,7 @@
 import {
-  EDIT_INFO_USER,
-  EDIT_INFO_USER_SUCCESS,
-  EDIT_INFO_USER_ERROR,
-  LOGOUT_EDIT_INFO_USER,
+  GET_QUALITIFICATIONS,
+  GET_QUALITIFICATIONS_SUCCESS,
+  GET_QUALITIFICATIONS_ERROR,
 } from '../actions/Action';
 const initState = {
   status: null,
@@ -11,10 +10,10 @@ const initState = {
   message: null,
   error: null,
 };
-const editInfoUserReducer = (state = initState, action) => {
+const getQualitificationUserReducer = (state = initState, action) => {
   switch (action.type) {
-    case EDIT_INFO_USER:
-      console.log('EDIT_INFO_USER');
+    case GET_QUALITIFICATIONS:
+      console.log('GET_QUALITIFICATIONS');
       return {
         // ...state,
         status: null,
@@ -23,20 +22,19 @@ const editInfoUserReducer = (state = initState, action) => {
         error: null,
       };
 
-    case EDIT_INFO_USER_SUCCESS:
-      console.log('EDIT_INFO_USER_SUCCESS');
+    case GET_QUALITIFICATIONS_SUCCESS:
+      console.log('GET_QUALITIFICATIONS_SUCCESS');
       return {
         // ...state,
         status: action.data.result_code,
         loading: false,
         data: action.data.result_data,
         error: null,
-        message:
-          action.data.result_code === 1 ? 'Cập nhật thông tin thành công' : '',
+        message: '',
       };
 
-    case EDIT_INFO_USER_ERROR:
-      console.log('EDIT_INFO_USER_ERROR');
+    case GET_QUALITIFICATIONS_ERROR:
+      console.log('GET_QUALITIFICATIONS_ERROR');
       return {
         // ...state,
         status: null,
@@ -45,13 +43,9 @@ const editInfoUserReducer = (state = initState, action) => {
 
         message: 'Lối sever',
       };
-    case LOGOUT_EDIT_INFO_USER:
-      console.log('LOGOUT_EDIT_INFO_USER');
-      return {
-        initState,
-      };
+
     default:
       return state;
   }
 };
-export default editInfoUserReducer;
+export default getQualitificationUserReducer;

@@ -21,12 +21,48 @@ const ResumeHomeComponent = (props) => {
   useEffect(() => {
     getData();
   }, []);
+  useEffect(() => {
+    if (props.statusEditCv !== null) {
+      if (props.statusEditCv === 1) {
+        Alert.alert('Thông báo', props.messageEditCv);
+      }
+    } else if (props.errorEditCv !== null) {
+      Alert.alert('Thông báo', props.errorEditCv);
+    }
+  }, [props.statusEditCv]);
 
   useEffect(() => {
     if (props.statusUser !== null) {
       if (props.statusUser === 1) {
-        setData(props.dataUser);
         setTitle(props.dataUser.resume_title)
+        setFuncRole(props.dataUser.functional_role_id)
+        setMoneyNow(props.dataUser.current_annual_salary)
+        setHideMoneyNow(props.dataUser.is_hide_current_salary)
+        setMoneyNew(props.dataUser.expected_annual_salary)
+        setHideMoneyNew(props.dataUser.is_negotiation)
+        setLeverGroupId(props.dataUser.levelGroupId)
+        if (props.dataUser.location_id === '') {
+          console.log('flase1');
+        } else if (props.dataUser.location_id !== '') {
+          const kq = props.dataUser.location_id;
+          const kqc = kq.split(',');
+          kqc.map((item) => {
+            const datas = {};
+            datas[`city_id`] = item;
+            getDataCity.push(datas);
+
+            const x = Array.from(new Set(getDataCity.map(JSON.stringify))).map(
+              JSON.parse,
+            );
+            const arrMin = x.sort(function (a, b) {
+              return a.city_id - b.city_id;
+            });
+            setCityName_Id(arrMin);
+            
+            
+          });
+        }
+
       } 
       // else {
       //   setTimeout(() => {
@@ -38,7 +74,8 @@ const ResumeHomeComponent = (props) => {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
-      console.log('123');
+      setUserId(jsonValue != null ? JSON.parse(jsonValue) : null)
+      
       props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
         lang_code: '',
@@ -62,11 +99,23 @@ const ResumeHomeComponent = (props) => {
   //  }, [])
 
   const [title, setTitle] = useState('');
+  const [funcRole, setFuncRole] = useState('');
+  const [moneyNow, setMoneyNow] = useState('');
+  const [hideMoneyNow, setHideMoneyNow] = useState('');
+  const [moneyNew, setMoneyNew] = useState('');
+  const [hideMoneyNew, setHideMoneyNew] = useState('');
+  const [leverGroupId, setLeverGroupId] = useState('');
+  const [cityName_Id, setCityName_Id] = useState('');
+  const [userId, setUserId] = useState('');
+  const [getDataCity, setGetDataCity] = useState([]);
+
   const [idCV, setIdCV] = useState('');
   const [check, setCheck] = useState(false);
   const [errorTitle, setErrorTitle] = useState(false);
 
   const onChangeText = (text) => {
+    setCheck(false)
+
     if (text.length === 0 || text.trim() === '') {
       setTitle('');
     } else {
@@ -83,14 +132,39 @@ const ResumeHomeComponent = (props) => {
         setErrorTitle(true);
       }
     } else {
+      console.log('====================================');
+      console.log(title);
+      console.log(funcRole);
+      console.log(moneyNow);
+      console.log(hideMoneyNow);
+      console.log(moneyNew);
+      console.log(hideMoneyNew);
+      console.log(leverGroupId);
+      console.log(cityName_Id);
+      console.log(userId);
+
+      console.log('====================================');
       setCheck(true);
       setErrorTitle(false);
+      await props.editCiviAction({
+        cv_tittle: title,
+        industry_id: '',
+        functional_role_id: funcRole,
+        csalary: moneyNow,
+        is_hide_current_salary: hideMoneyNow,
+        esalary: moneyNew,
+        is_negotiation: hideMoneyNew,
+        level_group_id: leverGroupId,
+        location_id: cityName_Id,
+        user_id: userId,
+      });
     }
   };
 
   return (
     <View style={{flex: 1}}>
       {props.loadingUser && <LoadingView />}
+      {props.loadingEditCv && <LoadingView />}
       <StatusBarView />
       <View style={{}}>
         <View
@@ -163,6 +237,7 @@ const ResumeHomeComponent = (props) => {
             style={{right: 15, height: 35, width: 35, resizeMode: 'contain'}}
           />
           <TextInput
+          numberOfLines={1}
             defaultValue={title}
             onChangeText={(text) => {
               onChangeText(text);

@@ -197,7 +197,6 @@ function* EditInfoUser(input) {
   return temp;
 }
 function* EditCivi(input) {
-
   let temp;
   yield axios
     .post(urlSever, {
@@ -259,6 +258,44 @@ function* GetLever(input) {
 
   return temp;
 }
+function* GetQualitification(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_qualifications',
+      version: Ver,
+      params: {qualifications_id: input.qualifications_id, lang_code: language},
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* GetFunctionRole(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_funcrole_role',
+      version: Ver,
+      params: {
+        funcrole_group_id: input.funcrole_group_id,
+        funcrole_role_id: input.funcrole_role_id,
+        lang_code: language,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
 export const API = {
   LoginUser,
   CheckEmail,
@@ -271,4 +308,6 @@ export const API = {
   EditCivi,
   GetIndustry,
   GetLever,
+  GetQualitification,
+  GetFunctionRole,
 };

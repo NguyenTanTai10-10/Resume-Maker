@@ -1,4 +1,9 @@
-import {EDIT_CIVI,EDIT_CIVI_SUCCESS,EDIT_CIVI_ERROR, LOGOUT_EDIT_INFO_USER} from '../actions/Action';
+import {
+  EDIT_CIVI,
+  EDIT_CIVI_SUCCESS,
+  EDIT_CIVI_ERROR,
+  LOGOUT_EDIT_CIVI,
+} from '../actions/Action';
 const initState = {
   status: null,
   data: null,
@@ -10,7 +15,7 @@ const editCiviReducer = (state = initState, action) => {
   // console.log('action===', action);
   switch (action.type) {
     case EDIT_CIVI:
-      console.log('EDIT_INFO_EDIT_CIVIUSER');
+      console.log('EDIT_CIVI');
       return {
         // ...state,
         status: null,
@@ -27,7 +32,10 @@ const editCiviReducer = (state = initState, action) => {
         loading: false,
         data: action.data.result_data,
         error: null,
-        message: action.data.result_code===1?'Cập nhật thông tin thành công':'Cập nhật không thành công',
+        message:
+          action.data.result_code === 1
+            ? 'Cập nhật thông tin thành công'
+            : 'Cập nhật không thành công',
       };
 
     case EDIT_CIVI_ERROR:
@@ -39,10 +47,10 @@ const editCiviReducer = (state = initState, action) => {
         data: null,
         error: 'Lối sever',
       };
-      case LOGOUT_EDIT_INFO_USER:
-      console.log('LOGOUT_EDIT_INFO_USER');
+    case LOGOUT_EDIT_CIVI:
+      console.log('LOGOUT_EDIT_CIVI');
       return {
-        initState
+        initState,
       };
     default:
       return state;

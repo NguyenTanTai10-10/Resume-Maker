@@ -11,6 +11,8 @@ import {watchLogin} from './LoginSaga';
 import {watchRegister} from './registerSaga';
 import { watchUserInfo } from './UserInfoSaga';
 import { watchGetLever } from './GetLeverReducer';
+import { watchGetQualitification } from './GetQualitificationSaga';
+import { watchGetFuncRole } from './GetFuncRoleSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -24,7 +26,9 @@ export default function* rootSaga() {
     watchEditCivi(),
     watchUserInfo(),
     watchGetIndustry(),
-    watchGetLever()
+    watchGetLever(),
+    watchGetQualitification(),
+    watchGetFuncRole()
 
   ]);
 }

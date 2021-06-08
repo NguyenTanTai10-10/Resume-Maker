@@ -11,6 +11,8 @@ import editInfoUserReducer from './EditInfoUserReducer';
 import editCiviReducer from './EditCiviReducer';
 import getIndustryReducer from './GetIndustryReducer';
 import getLeverReducer from './GetLeverReducer';
+import getQualitificationUserReducer from './GetQualitificationReducer';
+import getFuncRoleReducer from './GetFuncRoleReducer';
 
 
 
@@ -25,7 +27,9 @@ const allReducers = combineReducers({
    editInfoUserReducer,
    editCiviReducer,
    getIndustryReducer,
-   getLeverReducer
+   getLeverReducer,
+   getQualitificationUserReducer,
+   getFuncRoleReducer,
 });
 
 export default allReducers;
