@@ -20,8 +20,6 @@ import Images from '../../res/image';
 import Sizes from '../../utils/Sizes';
 
 const BottomSheetChoose = forwardRef((props, ref) => {
-  console.log('===', props.data);
-
   const [show, setShow] = useState(false);
   const [selectItem, setSelectItem] = useState('');
   const time = 0;
@@ -88,7 +86,7 @@ const BottomSheetChoose = forwardRef((props, ref) => {
                 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    props.onPressNavigation()
+                    props.onPressNavigation();
                   }}
                   style={{
                     padding: Sizes.h16,
@@ -113,7 +111,10 @@ const BottomSheetChoose = forwardRef((props, ref) => {
                   marginVertical: Sizes.h16,
                 }}>
                 <TouchableOpacity
-                  onPress={() => {}}
+                  onPress={async () => {
+                    await props.OnDelete();
+                    await onHide();
+                  }}
                   style={{
                     padding: Sizes.h16,
                     borderWidth: 1,
@@ -141,7 +142,7 @@ BottomSheetChoose.defaultProps = {
   modalHeight: Dimensions.get('window').height * 0.4,
   onPress: () => {},
   onPressNavigation: () => {},
-
+  OnDelete: () => {},
 };
 const styles = StyleSheet.create({
   container: {

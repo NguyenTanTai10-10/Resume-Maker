@@ -13,6 +13,10 @@ import { watchUserInfo } from './UserInfoSaga';
 import { watchGetLever } from './GetLeverReducer';
 import { watchGetQualitification } from './GetQualitificationSaga';
 import { watchGetFuncRole } from './GetFuncRoleSaga';
+import { watchInsertEducation } from './InsertEducationSaga';
+
+import { watchEditEducation } from './EditEducationSaga';
+import { watchDeleteEducation } from './DeleteEducationSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -28,7 +32,10 @@ export default function* rootSaga() {
     watchGetIndustry(),
     watchGetLever(),
     watchGetQualitification(),
-    watchGetFuncRole()
+    watchGetFuncRole(),
+    watchInsertEducation(),
+    watchEditEducation(),
+    watchDeleteEducation()
 
   ]);
 }

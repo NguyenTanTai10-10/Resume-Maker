@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState, useEffect} from 'react';
 import {
   View,
@@ -6,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Alert,
 } from 'react-native';
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
@@ -16,6 +18,7 @@ import BottomSheetQua from './custom/BottomSheetQua';
 import DatetimeEnd from './custom/DatetimeEnd';
 import DatetimePass from './custom/DatetimePass';
 import DatetimePicker from './custom/DatetimePicker';
+import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
 
 const EditEducationComponent = (props) => {
@@ -32,6 +35,8 @@ const EditEducationComponent = (props) => {
   const [monthEnd, setMonthEnd] = useState('');
   const [yearEnd, setYearEnd] = useState('');
   const [school, setSchool] = useState('');
+  const [userId, setUserId] = useState('');
+  const [education_id, setEducation_id] = useState('');
   //========================================
   const [checkQuaName, setCheckQuaName] = useState(false);
   const [deleteQuaName, setDeleteQuaName] = useState(false);
@@ -45,9 +50,34 @@ const EditEducationComponent = (props) => {
   const [deleteSchool, setDeleteSchool] = useState(false);
 
   useEffect(() => {
+    getData();
+    // console.log('props', props.route.params.eduction_Id);
     props.getQualitificationrAction({qualifications_id: ''});
     props.getFunctionRoleAction({funcrole_group_id: '', funcrole_role_id: ''});
   }, []);
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const kq = jsonValue != null ? JSON.parse(jsonValue) : null;
+      setUserId(kq);
+      const dataItem = props.route.params.eduction_Id;
+      setFuncName(dataItem.functional_role);
+      setFuncId(dataItem.functional_role_id);
+      setQuaName(dataItem.qualification);
+      setQuaId(dataItem.qualification_id);
+      const DataPass = `${dataItem.month_of_pass}-${dataItem.year_of_pass}`;
+      setDayPass(DataPass);
+      setMonthPass(dataItem.month_of_pass);
+      setYearPass(dataItem.year_of_pass);
+      const DataEnd = `${dataItem.month_of_end}-${dataItem.year_of_end}`;
+      setDayEnd(DataEnd);
+      setMonthEnd(dataItem.month_of_end);
+      setYearEnd(dataItem.year_of_end);
+      setSchool(dataItem.institute);
+      setEducation_id(dataItem.eduction_id);
+    } catch (e) {}
+  };
 
   //==================================================
   useEffect(() => {
@@ -66,6 +96,32 @@ const EditEducationComponent = (props) => {
       }
     }
   }, [props.statusFunc]);
+  useEffect(() => {
+    if (props.statusEditEdu !== null) {
+      if (props.statusEditEdu === 1) {
+        Alert.alert(
+          ' Xóa Thành Công',
+          '',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: async () => {
+                await props.logoutEditEduAction();
+                await props.navigation.navigate('ListEducationContainer');
+                
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+      }
+    }
+  }, [props.statusEditEdu]);
 
   //==============================================================================
   const [check, setCheck] = useState(false);
@@ -175,12 +231,27 @@ const EditEducationComponent = (props) => {
       console.log('monthEnd===', monthEnd);
       console.log('yearEnd===', yearEnd);
       console.log('school===', school);
+      console.log('education_id===', education_id);
       console.log('====================================');
+      props.editEducationAction({
+        education_id: education_id,
+        qualification_id: quaId,
+        functional_role_id: funcId,
+        institute: school,
+        month_of_pass: monthPass,
+        year_of_pass: yearPass,
+        month_of_end: monthEnd,
+        year_of_end: yearEnd,
+        user_id: userId,
+      });
     }
   };
 
   return (
     <View style={{flex: 1}}>
+      {props.loadingFunc && <LoadingView />}
+      {props.loadingQua && <LoadingView />}
+      {props.loadingEditEdu && <LoadingView />}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -199,7 +270,10 @@ const EditEducationComponent = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={() => props.navigation.goBack()}>
+              onPress={async () => {
+                props.navigation.goBack();
+                props.logoutEditEduAction();
+              }}>
               <Image
                 source={Images.arrow}
                 style={{
@@ -327,6 +401,7 @@ const EditEducationComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
+                width:'70%',
                 color: funcName === 'Chuyên ngành' ? '#BFBFBF' : 'black',
               }}>
               {funcName}
@@ -458,7 +533,7 @@ const EditEducationComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {check === false ? (
+          
             <TouchableOpacity
               onPress={() => {
                 onSubmit();
@@ -475,26 +550,9 @@ const EditEducationComponent = (props) => {
                 Cập nhập
               </Text>
             </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('');
-              }}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 50,
-                width: (screenWidth * 0.8) / 2,
-                backgroundColor: '#2EB553',
-                borderRadius: 13,
-              }}>
-              <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Tiếp tục
-              </Text>
-            </TouchableOpacity>
-          )}
+          
         </View>
-       
+
         <BottomSheetQua
           OnChooseQua_id={(item) => {
             onChooseQua_id(item);
@@ -525,5 +583,3 @@ const EditEducationComponent = (props) => {
 };
 
 export default EditEducationComponent;
-
-

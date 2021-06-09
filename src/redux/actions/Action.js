@@ -164,6 +164,66 @@ export const  getFunctionRoleAction = (input) => {
     input: input,
   };
 };
+//===================================================================================
+export const  INSERT_EDUCATION = 'INSERT_EDUCATION';
+export const INSERT_EDUCATION_SUCCESS = 'INSERT_EDUCATION_SUCCESS';
+export const INSERT_EDUCATION_ERROR = 'INSERT_EDUCATION_ERROR';
+export const  insertEducationAction = (input) => {
+  return {
+    type: INSERT_EDUCATION,
+    input: input,
+  };
+};
+export const LOGOUT_INSERT_EDUCATION = 'LOGOUT_INSERT_EDUCATION';
+export const logoutInsertEduAction = () => {
+  return {
+    type: LOGOUT_INSERT_EDUCATION,
+  };
+};
+//===================================================================================
+export const  GET_EDUCATION = 'GET_EDUCATION';
+export const GET_EDUCATION_SUCCESS = 'GET_EDUCATION_SUCCESS';
+export const GET_EDUCATION_ERROR = 'GET_EDUCATION_ERROR';
+export const  getEducationAction = (input) => {
+  return {
+    type: GET_EDUCATION,
+    input: input,
+  };
+};
+//===================================================================================
+export const  EDIT_EDUCATION = 'EDIT_EDUCATION';
+export const EDIT_EDUCATION_SUCCESS = 'EDIT_EDUCATION_SUCCESS';
+export const EDIT_EDUCATION_ERROR = 'EDIT_EDUCATION_ERROR';
+export const  editEducationAction = (input) => {
+  return {
+    type: EDIT_EDUCATION,
+    input: input,
+  };
+};
+export const LOGOUT_EDIT_EDUCATION = 'LOGOUT_EDIT_EDUCATION';
+export const logoutEditEduAction = () => {
+  return {
+    type: LOGOUT_EDIT_EDUCATION,
+  };
+};
+//===================================================================================
+export const  DELETE_EDUCATION = 'DELETE_EDUCATION';
+export const DELETE_EDUCATION_SUCCESS = 'DELETE_EDUCATION_SUCCESS';
+export const DELETE_EDUCATION_ERROR = 'DELETE_EDUCATION_ERROR';
+export const  deleteEducationAction = (input) => {
+  return {
+    type: DELETE_EDUCATION,
+    input: input,
+  };
+};
+export const LOGOUT_DELETE_EDUCATION = 'LOGOUT_DELETE_EDUCATION';
+export const logoutDeleteEduAction = () => {
+  return {
+    type: LOGOUT_DELETE_EDUCATION,
+  };
+};
+
+
 
 
 

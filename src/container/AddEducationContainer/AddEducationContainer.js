@@ -5,6 +5,8 @@ import AddEducationComponent from '../../component/AddEducationComponent';
 import {
   getQualitificationrAction,
   getFunctionRoleAction,
+  insertEducationAction,
+  logoutInsertEduAction
 } from '../../redux/actions/Action';
 
 export class AddEducationContainer extends Component {
@@ -26,6 +28,12 @@ const mapStateToProps = (state) => {
     loadingFunc: state.getFuncRoleReducer.loading,
     messageFunc: state.getFuncRoleReducer.message,
     errorFunc: state.getFuncRoleReducer.error,
+    //====================================================
+   statusInsert: state.insertEducationReducer.status,
+   dataInsert: state.insertEducationReducer.data,
+   loadingInsert: state.insertEducationReducer.loading,
+   messageInsert: state.insertEducationReducer.message,
+   errorInsert: state.insertEducationReducer.error,
 
   };
 };
@@ -35,6 +43,10 @@ const mapDispatchToProps = (dispatch) => {
     getQualitificationrAction: (input) =>
       dispatch(getQualitificationrAction(input)),
     getFunctionRoleAction: (input) => dispatch(getFunctionRoleAction(input)),
+    insertEducationAction: (input) => dispatch(insertEducationAction(input)),
+    logoutInsertEduAction: (input) => dispatch(logoutInsertEduAction(input)),
+    
+    
   };
 };
 

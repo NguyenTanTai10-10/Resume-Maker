@@ -296,6 +296,77 @@ function* GetFunctionRole(input) {
 
   return temp;
 }
+function* insertEducation(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'insert_education',
+      version: Ver,
+      params: {
+        qualification_id: input.qualification_id,
+        functional_role_id: input.functional_role_id,
+        institute: input.institute,
+        month_of_pass: input.month_of_pass,
+        year_of_pass: input.year_of_pass,
+        month_of_end: input.month_of_end,
+        year_of_end: input.year_of_end,
+        user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+
+function* editEducation(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'edit_education',
+      version: Ver,
+      params: {
+        education_id: input.education_id,
+        qualification_id: input.qualification_id,
+        functional_role_id: input.functional_role_id,
+        institute: input.institute,
+        month_of_pass: input.month_of_pass,
+        year_of_pass: input.year_of_pass,
+        month_of_end: input.month_of_end,
+        year_of_end: input.year_of_end,
+        user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* DeleteEducation(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'delete_education',
+      version: Ver,
+      params: {education_id: input.education_id, user_id: input.user_id},
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
 export const API = {
   LoginUser,
   CheckEmail,
@@ -310,4 +381,7 @@ export const API = {
   GetLever,
   GetQualitification,
   GetFunctionRole,
+  insertEducation,
+  editEducation,
+  DeleteEducation,
 };

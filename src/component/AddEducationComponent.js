@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState, useEffect} from 'react';
 import {
   View,
@@ -6,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Alert,
 } from 'react-native';
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
@@ -16,6 +18,7 @@ import BottomSheetQua from './custom/BottomSheetQua';
 import DatetimeEnd from './custom/DatetimeEnd';
 import DatetimePass from './custom/DatetimePass';
 import DatetimePicker from './custom/DatetimePicker';
+import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
 
 const AddEducationComponent = (props) => {
@@ -32,6 +35,7 @@ const AddEducationComponent = (props) => {
   const [monthEnd, setMonthEnd] = useState('');
   const [yearEnd, setYearEnd] = useState('');
   const [school, setSchool] = useState('');
+  const [userId, setUserId] = useState('');
   //========================================
   const [checkQuaName, setCheckQuaName] = useState(false);
   const [deleteQuaName, setDeleteQuaName] = useState(false);
@@ -45,9 +49,18 @@ const AddEducationComponent = (props) => {
   const [deleteSchool, setDeleteSchool] = useState(false);
 
   useEffect(() => {
+    getData();
     props.getQualitificationrAction({qualifications_id: ''});
     props.getFunctionRoleAction({funcrole_group_id: '', funcrole_role_id: ''});
   }, []);
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const kq = jsonValue != null ? JSON.parse(jsonValue) : null;
+      setUserId(kq);
+    } catch (e) {}
+  };
 
   //==================================================
   useEffect(() => {
@@ -66,21 +79,52 @@ const AddEducationComponent = (props) => {
       }
     }
   }, [props.statusFunc]);
+  useEffect(() => {
+    if (props.statusInsert !== null) {
+      if (props.statusInsert === 1) {
+        Alert.alert(
+          ' Xóa Thành Công',
+          '',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress:async () => {
+                await props.logoutInsertEduAction()
+                await props.navigation.navigate('ListEducationContainer')
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+        
+      }
+    } else if (props.errorInsert !== null) {
+      Alert.alert(props.errorInsert);
+    }
+  }, [props.statusInsert]);
 
   //==============================================================================
   const [check, setCheck] = useState(false);
   const modal = React.createRef();
   const modal1 = React.createRef();
   const onChooseQua = (item) => {
+    setCheck(false);
     setCheckQuaName(false);
     setDeleteQuaName(true);
     setQuaName(item);
   };
   const onChooseQua_id = (item) => {
+    setCheck(false);
     setCheckQuaName(false);
     setQuaId(item);
   };
   const onDeleteQua = (item) => {
+    setCheck(false);
     setDeleteQuaName(false);
     setQuaId('');
     setQuaName('Trình độ');
@@ -88,21 +132,25 @@ const AddEducationComponent = (props) => {
 
   //=====//
   const onChooseFunc = (item) => {
+    setCheck(false);
     setCheckFuncName(false);
     setDeleteFuncName(true);
     setFuncName(item);
   };
   const onChooseFunc_id = (item) => {
+    setCheck(false);
     setCheckFuncName(false);
     setFuncId(item);
   };
   const onDeleteFunc = (item) => {
+    setCheck(false);
     setDeleteFuncName(false);
     setFuncId('');
     setFuncName('Chuyên ngành');
   };
   const onChooseDayPass = (item) => {
-    console.log('item', item);
+    setCheck(false);
+    // console.log('item', item);
     const m = `${item}`.slice(0, 2);
     const Month = m.replace(/^0+/, '');
     const Year = `${item}`.slice(3, 8);
@@ -113,7 +161,8 @@ const AddEducationComponent = (props) => {
     setYearPass(Year);
   };
   const onChooseDayEnd = (item) => {
-    console.log('item', item);
+    setCheck(false);
+    // console.log('item', item);
     const m = `${item}`.slice(0, 2);
     const Month = m.replace(/^0+/, '');
     const Year = `${item}`.slice(3, 8);
@@ -126,17 +175,20 @@ const AddEducationComponent = (props) => {
     setYearEnd(Year);
   };
   const textSchool = (item) => {
+    setCheck(false);
     setSchool(item);
     setCheckSchool(false);
     setDeleteSchool(true);
   };
   const onDeleteSchool = (item) => {
+    setCheck(false);
     setDeleteSchool(false);
     setSchool('');
   };
 
   //==============================================================
   const onSubmit = (item) => {
+    console.log('vvvvvvvvv', userId);
     if (
       quaName === 'Trình độ' ||
       funcName === 'Chuyên ngành' ||
@@ -175,12 +227,26 @@ const AddEducationComponent = (props) => {
       console.log('monthEnd===', monthEnd);
       console.log('yearEnd===', yearEnd);
       console.log('school===', school);
+      console.log('userId===', userId);
       console.log('====================================');
+      props.insertEducationAction({
+        qualification_id: quaId,
+        functional_role_id: funcId,
+        institute: school,
+        month_of_pass: monthPass,
+        year_of_pass: yearPass,
+        month_of_end: monthEnd,
+        year_of_end: yearEnd,
+        user_id: userId,
+      });
     }
   };
 
   return (
     <View style={{flex: 1}}>
+      {props.loadingInsert && <LoadingView/>}
+      {props.loadingFunc && <LoadingView/>}
+      {props.loadingQua && <LoadingView/>}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -199,7 +265,10 @@ const AddEducationComponent = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={() => props.navigation.goBack()}>
+              onPress={async () => {
+               await props.logoutInsertEduAction();
+               await props.navigation.goBack();
+              }}>
               <Image
                 source={Images.arrow}
                 style={{
@@ -327,6 +396,7 @@ const AddEducationComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
+                width:'70%',
                 color: funcName === 'Chuyên ngành' ? '#BFBFBF' : 'black',
               }}>
               {funcName}
@@ -458,7 +528,7 @@ const AddEducationComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {check === false ? (
+         
             <TouchableOpacity
               onPress={() => {
                 onSubmit();
@@ -475,26 +545,9 @@ const AddEducationComponent = (props) => {
                 Cập nhập
               </Text>
             </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('');
-              }}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 50,
-                width: (screenWidth * 0.8) / 2,
-                backgroundColor: '#2EB553',
-                borderRadius: 13,
-              }}>
-              <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Tiếp tục
-              </Text>
-            </TouchableOpacity>
-          )}
+         
         </View>
-       
+
         <BottomSheetQua
           OnChooseQua_id={(item) => {
             onChooseQua_id(item);

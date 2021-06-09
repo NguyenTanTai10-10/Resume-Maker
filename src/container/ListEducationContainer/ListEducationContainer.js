@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ListEducationComponent from '../../component/ListEducationComponent';
-import { infoUserAction } from '../../redux/actions/Action';
+import { infoUserAction ,deleteEducationAction,logoutDeleteEduAction} from '../../redux/actions/Action';
 
 
 
@@ -20,12 +20,23 @@ const mapStateToProps = (state) => {
       loadingUser: state.userInfoReducer.loading,
       messageUser: state.userInfoReducer.message,
       errorUser: state.userInfoReducer.error,
+      //=========================================
+      statusDelete: state.deleteEducationReducer.status,
+      dataDelete: state.deleteEducationReducer.data,
+      loadingDelete: state.deleteEducationReducer.loading,
+      messageDeleter: state.deleteEducationReducer.message,
+      errorDelete: state.deleteEducationReducer.error,
+
    };
 };
 
 const mapDispatchToProps = (dispatch) => {
    return {
       infoUserAction: (input) => dispatch(infoUserAction(input)),
+      deleteEducationAction: (input) => dispatch(deleteEducationAction(input)),
+      logoutDeleteEduAction: (input) => dispatch(logoutDeleteEduAction(input)),
+      
+      
    };
 };
 

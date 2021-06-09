@@ -13,6 +13,9 @@ import getIndustryReducer from './GetIndustryReducer';
 import getLeverReducer from './GetLeverReducer';
 import getQualitificationUserReducer from './GetQualitificationReducer';
 import getFuncRoleReducer from './GetFuncRoleReducer';
+import insertEducationReducer from './InsertEducationReducer';
+import editEducationReducer from './EditEducationReducer';
+import deleteEducationReducer from './DeleteEducationReducer';
 
 
 
@@ -30,6 +33,9 @@ const allReducers = combineReducers({
    getLeverReducer,
    getQualitificationUserReducer,
    getFuncRoleReducer,
+   insertEducationReducer,
+   editEducationReducer,
+   deleteEducationReducer
 });
 
 export default allReducers;

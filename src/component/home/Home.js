@@ -127,6 +127,8 @@ const Home = (props) => {
                   width: 80,
                   resizeMode: 'cover',
                   borderRadius: 100,
+                  borderColor:"#FA8C16",
+                  borderWidth: 1,
 
                   bottom: '85%',
                   position: 'absolute',
@@ -141,6 +143,8 @@ const Home = (props) => {
                   width: 80,
                   resizeMode: 'cover',
                   borderRadius: 100,
+                  borderColor:"#FA8C16",
+                  borderWidth: 1,
 
                   bottom: '85%',
                   position: 'absolute',

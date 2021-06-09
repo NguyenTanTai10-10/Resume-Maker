@@ -17,7 +17,7 @@ const LoginHome = (props) => {
   const [Check, setCheck] = useState(false);
 
   const [username, setUsername] = useState('hotroviecoi@gmail.com');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('123456');
   const [userType, setUserType] = useState('1');
   const [registrationIds, setRegistrationIds] = useState('');
   const [FacebookId, setFacebookId] = useState('');

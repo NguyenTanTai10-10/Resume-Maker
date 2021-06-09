@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -6,16 +7,21 @@ import {
   Image,
   ScrollView,
   FlatList,
+  Alert,
 } from 'react-native';
+import {set} from 'react-native-reanimated';
 import Images from '../res/image';
-import { screenWidth } from '../res/style/theme';
+import {screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
 import BottomSheetChoose from './custom/BottomSheetChoose';
+import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
 
 const ListEducationComponent = (props) => {
   const [dataEducation, setDataEducation] = useState('');
   const [eductionId, setEductionId] = useState('');
+  const [eduction_Id, setEduction_Id] = useState('');
+  const [user_Id, setUser_Id] = useState('');
   const modal = React.createRef();
   useEffect(() => {
     getData();
@@ -33,9 +39,36 @@ const ListEducationComponent = (props) => {
       Alert.alert('Thông báo', props.errorUser);
     }
   }, [props.statusUser]);
+  useEffect(() => {
+    if (props.statusDelete !== null) {
+      if (props.statusDelete === 1) {
+        Alert.alert(
+          ' Xóa Thành Công',
+          '',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => {
+                getData();
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+      }
+    } else if (props.errorDelete !== null) {
+      Alert.alert('Thông báo', props.errorDelete);
+    }
+  }, [props.statusDelete]);
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      setUser_Id(jsonValue != null ? JSON.parse(jsonValue) : null);
       props.navigation.addListener('focus', async () => {
         props.infoUserAction({
           user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
@@ -57,8 +90,15 @@ const ListEducationComponent = (props) => {
     }
   };
 
+  const onDelete = () => {
+    props.deleteEducationAction({
+      education_id: eduction_Id,
+      user_id: user_Id,
+    });
+  };
+
   const renderItem = (item) => {
-    console.log(item);
+    // console.log(item);
     return (
       <View
         style={{
@@ -90,8 +130,9 @@ const ListEducationComponent = (props) => {
             </View>
             <TouchableOpacity
               onPress={async () => {
-                 setEductionId(item.item.eduction_id);
-                 modal.current.open();
+                setEductionId(item.item);
+                setEduction_Id(item.item.eduction_id);
+                modal.current.open();
               }}
               style={{
                 height: 30,
@@ -116,7 +157,9 @@ const ListEducationComponent = (props) => {
               style={{height: 25, width: 25, resizeMode: 'contain'}}
             />
             <Text>Chuyên ngành : </Text>
-            <Text style={{marginLeft: 10}}>{item.item.functional_role}</Text>
+            <Text style={{marginLeft: 10, width: '50%'}} numberOfLines={1}>
+              {item.item.functional_role}
+            </Text>
           </View>
           <View
             style={{
@@ -145,7 +188,9 @@ const ListEducationComponent = (props) => {
               style={{height: 25, width: 25, resizeMode: 'contain'}}
             />
             <Text>Trường : </Text>
-            <Text style={{marginLeft: 10}}>{item.item.institute}</Text>
+            <Text style={{marginLeft: 10, width: '60%'}} numberOfLines={1}>
+              {item.item.institute}
+            </Text>
           </View>
         </View>
       </View>
@@ -154,6 +199,9 @@ const ListEducationComponent = (props) => {
   //=====================
   return (
     <View style={{flex: 1}}>
+      {props.loadingUser && <LoadingView />}
+      {props.loadingDelete && <LoadingView />}
+
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -172,7 +220,10 @@ const ListEducationComponent = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={() => props.navigation.goBack()}>
+              onPress={async () => {
+                await props.logoutDeleteEduAction();
+                await props.navigation.goBack();
+              }}>
               <Image
                 source={Images.arrow}
                 style={{
@@ -229,6 +280,10 @@ const ListEducationComponent = (props) => {
             flexDirection: 'row',
           }}>
           <TouchableOpacity
+            onPress={async () => {
+              await props.logoutDeleteEduAction();
+              await props.navigation.goBack();
+            }}
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -265,12 +320,16 @@ const ListEducationComponent = (props) => {
         </View>
         <BottomSheetChoose
           onPressNavigation={() => {
-            props.navigation.navigate('EditEducationContainer');
+            props.navigation.navigate('EditEducationContainer', {
+              eduction_Id: eductionId,
+            });
           }}
-         
+          OnDelete={() => {
+            onDelete();
+          }}
           ref={modal}
           title="Chỉnh sửa thông tin"
-          data={eductionId}
+          // data={eductionId}
           modalHeight={200}
         />
       </ScrollView>
