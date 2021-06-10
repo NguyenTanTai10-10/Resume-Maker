@@ -18,7 +18,6 @@ import DrawerContainer from './src/container/DrawerContainer/DrawerContainer';
 import LoginHomeContainer from './src/container/LoginHomeContainer/LoginHomeContainer';
 import ListCVContainer from './src/container/ListCVContainer/ListCVContainer';
 import LanguageComponent from './src/component/LanguageComponent';
-import ExperiencesComponent from './src/component/ExperiencesComponent';
 import SkillsComponent from './src/component/SkillsComponent';
 import ResumeTitleContainer from './src/container/ResumeTitleContainer/ResumeTitleContainer';
 import ContactContainer from './src/container/ContactContainer/ContactContainer';
@@ -28,6 +27,10 @@ import BasicsInfoContainer from './src/container/BasicsInfoContainer/BasicsInfoC
 import ListEducationContainer from './src/container/ListEducationContainer/ListEducationContainer';
 import AddEducationContainer from './src/container/AddEducationContainer/AddEducationContainer';
 import  EditEducationContainer  from './src/container/EditEducationContainer/EditEducationContainer';
+import  ListExperienContainer  from './src/container/ListExperienContainer/ListExperienContainer';
+import  AddExperiencesContainer  from './src/container/AddExperiencesContainer/AddExperiencesContainer';
+import  EditSkillContainer  from './src/container/EditSkillContainer/EditSkillContainer';
+
 
 
 //Drawer navigation
@@ -72,10 +75,6 @@ const App = () => {
           component={BasicsInfoContainer}
         />
         <Stack.Screen name="LanguageComponent" component={LanguageComponent} />
-        <Stack.Screen
-          name="ExperiencesComponent"
-          component={ExperiencesComponent}
-        />
         <Stack.Screen name="SkillsComponent" component={SkillsComponent} />
         <Stack.Screen
           name="ContactHomeContainer"
@@ -97,6 +96,21 @@ const App = () => {
           name="EditEducationContainer"
           component={EditEducationContainer}
         />
+        <Stack.Screen
+          name="ListExperienContainer"
+          component={ListExperienContainer}
+        />
+        <Stack.Screen
+          name="AddExperiencesContainer"
+          component={AddExperiencesContainer}
+        />
+        <Stack.Screen
+          name="EditSkillContainer"
+          component={EditSkillContainer}
+        />
+        {/* EditSkillContainer */}
+        {/* AddExperiencesContainer */}
+        {/* ListExperienContainer */}
         {/* EditEducationContainer */}
         {/* ListEducationContainer */}
         {/* EducationContainer */}

@@ -441,6 +441,7 @@ const EditEducationComponent = (props) => {
             onChooseDayPass(item);
           }}
           title={dayPass}
+          type="0"
         />
         <View
           style={{
@@ -468,6 +469,7 @@ const EditEducationComponent = (props) => {
             onChooseDayEnd(item);
           }}
           title={dayEnd}
+          type="0"
         />
 
         <View

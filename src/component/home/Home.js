@@ -23,6 +23,7 @@ const Home = (props) => {
   const [widthPercent, setWidthPercent] = useState();
   const [widthNoPercent, setWidthNoPercent] = useState();
   const [dataEducation, setDataEducation] = useState('');
+  const [dataSkill, setDataSkill] = useState('');
   useEffect(() => {
     getData();
   }, []);
@@ -40,6 +41,7 @@ const Home = (props) => {
         const kq2 = 140 - (props.dataUser.percent_cv * 140) / 100;
         setWidthNoPercent(kq2);
         setDataEducation(props.dataUser.qualifications);
+        setDataSkill(props.dataUser.skills)
       } else {
         setTimeout(() => {
           Alert.alert('Thông báo', props.messageUser);
@@ -79,6 +81,13 @@ const Home = (props) => {
       props.navigation.navigate('AddEducationContainer');
     } else if (dataEducation.length > 0) {
       props.navigation.navigate('ListEducationContainer');
+    }
+  };
+   const onSkill = () => {
+    if (dataSkill.length === 0) {
+      props.navigation.navigate('AddExperiencesContainer');
+    } else if (dataEducation.length > 0) {
+      props.navigation.navigate('ListExperienContainer');
     }
   };
 
@@ -394,7 +403,7 @@ const Home = (props) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => props.navigation.navigate('ExperiencesComponent')}
+            onPress={() =>onSkill()}
             style={{
               flexDirection: 'row',
               paddingVertical: 15,

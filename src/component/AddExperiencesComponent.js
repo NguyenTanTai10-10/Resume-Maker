@@ -9,51 +9,30 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
+import {set} from 'react-native-reanimated';
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
-import BottomSheetCity from './custom/BottomSheetCity';
-import BottomSheetFunc from './custom/BottomSheetFunc';
-import BottomSheetQua from './custom/BottomSheetQua';
+import BottomSheetLeverSc6 from './custom/BottomSheetLeverSc6';
 import DatetimeEnd from './custom/DatetimeEnd';
 import DatetimePass from './custom/DatetimePass';
-import DatetimePicker from './custom/DatetimePicker';
 import LoadingView from './custom/LoadingView';
+
 import StatusBarView from './custom/StatusBarView';
 
-const AddEducationComponent = (props) => {
-  const [dataQua, setDataQua] = useState('');
-  const [quaName, setQuaName] = useState('Trình độ');
-  const [quaId, setQuaId] = useState('');
-  const [dataFunc, setDataFunc] = useState('');
-  const [funcName, setFuncName] = useState('Chuyên ngành');
-  const [funcId, setFuncId] = useState('');
-  const [dayPass, setDayPass] = useState('Năm học (từ)');
-  const [monthPass, setMonthPass] = useState('');
-  const [yearPass, setYearPass] = useState('');
-  const [dayEnd, setDayEnd] = useState('Năm học (đến)');
-  const [monthEnd, setMonthEnd] = useState('');
-  const [yearEnd, setYearEnd] = useState('');
-  const [school, setSchool] = useState('');
-  const [userId, setUserId] = useState('');
-  //========================================
-  const [checkQuaName, setCheckQuaName] = useState(false);
-  const [deleteQuaName, setDeleteQuaName] = useState(false);
-  const [checkFuncName, setCheckFuncName] = useState(false);
-  const [deleteFuncName, setDeleteFuncName] = useState(false);
-  const [checkDayPass, setCheckDayPass] = useState(false);
-  const [checkDayEnd, setCheckDayEnd] = useState(false);
-  const [checkDayEnd1, setCheckDayEnd1] = useState(false);
-  const [checkDayEnd2, setCheckDayEnd2] = useState(false);
-  const [checkSchool, setCheckSchool] = useState(false);
-  const [deleteSchool, setDeleteSchool] = useState(false);
-
+const AddExperiencesComponent = (props) => {
   useEffect(() => {
-    getData();
-    props.getQualitificationrAction({qualifications_id: ''});
-    props.getFunctionRoleAction({funcrole_group_id: '', funcrole_role_id: ''});
+    getData()
+    props.getLeverSr6Action({level_id: ''});
   }, []);
-
+  useEffect(() => {
+    if (props.statusLever !== null) {
+      if (props.statusLever === 1) {
+        // console.log(props.dataLever);
+        setDataLever(props.dataLever);
+      }
+    }
+  }, [props.statusLever]);
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
@@ -61,29 +40,11 @@ const AddEducationComponent = (props) => {
       setUserId(kq);
     } catch (e) {}
   };
-
-  //==================================================
-  useEffect(() => {
-    if (props.statusQua !== null) {
-      if (props.statusQua === 1) {
-        // console.log(props.dataQua);
-        setDataQua(props.dataQua);
-      }
-    }
-  }, [props.statusQua]);
-  useEffect(() => {
-    if (props.statusFunc !== null) {
-      if (props.statusFunc === 1) {
-        // console.log(props.dataFunc);
-        setDataFunc(props.dataFunc);
-      }
-    }
-  }, [props.statusFunc]);
   useEffect(() => {
     if (props.statusInsert !== null) {
       if (props.statusInsert === 1) {
         Alert.alert(
-          ' Xóa Thành Công',
+          ' Thêm Thành Công',
           '',
           [
             {
@@ -93,75 +54,80 @@ const AddEducationComponent = (props) => {
             },
             {
               text: 'OK',
-              onPress:async () => {
-                await props.logoutInsertEduAction()
-                await props.navigation.navigate('ListEducationContainer')
+              onPress: async () => {
+                await props.logoutInsertSkillAction();
+                await props.navigation.navigate('ListExperienContainer');
               },
             },
           ],
           {cancelable: false},
         );
-        
       }
     } else if (props.errorInsert !== null) {
       Alert.alert(props.errorInsert);
     }
   }, [props.statusInsert]);
 
-  //==============================================================================
-  const [check, setCheck] = useState(false);
-  const modal = React.createRef();
-  const modal1 = React.createRef();
-  const onChooseQua = (item) => {
-    setCheck(false);
-    setCheckQuaName(false);
-    setDeleteQuaName(true);
-    setQuaName(item);
-  };
-  const onChooseQua_id = (item) => {
-    setCheck(false);
-    setCheckQuaName(false);
-    setQuaId(item);
-  };
-  const onDeleteQua = (item) => {
-    setCheck(false);
-    setDeleteQuaName(false);
-    setQuaId('');
-    setQuaName('Trình độ');
-  };
+  //================================================
+  const [dataLever, setDataLever] = useState('');
+  const [exp, setExp] = useState('');
+  const [dayPass, setDayPass] = useState('Thời gian bắt đầu làm việc từ');
+  const [monthPass, setMonthPass] = useState('');
+  const [yearPass, setYearPass] = useState('');
+  const [dayEnd, setDayEnd] = useState('Thời gian nghỉ việc');
+  const [monthEnd, setMonthEnd] = useState('');
+  const [yearEnd, setYearEnd] = useState('');
+  const [nameCompany, setNameCompany] = useState('');
+  const [lever_Name, setLever_Name] = useState('Cấp bật');
+  const [lever_Id, setLever_Id] = useState('');
+  const [nowDate, setNowDate] = useState(0);
+  const [content, setContent] = useState('');
+  const [userId, setUserId] = useState('');
 
-  //=====//
-  const onChooseFunc = (item) => {
-    setCheck(false);
-    setCheckFuncName(false);
-    setDeleteFuncName(true);
-    setFuncName(item);
+  //================================================
+  const [check, setCheck] = useState(false);
+  const [checkExp, setCheckExp] = useState(false);
+  const [clearExp, setClearExp] = useState(false);
+  const [checkNameCom, setCheckNameCom] = useState(false);
+  const [clearNameCom, setClearNameCom] = useState(false);
+  const [checkDayPass, setCheckDayPass] = useState(false);
+  const [checkDayEnd, setCheckDayEnd] = useState(false);
+  const [checkDayEnd1, setCheckDayEnd1] = useState(false);
+  const [checkDayEnd2, setCheckDayEnd2] = useState(false);
+  const [checkLever, setCheckLever] = useState(false);
+  const [clearLever, setClearLever] = useState(false);
+  const modal = React.createRef();
+
+  //================================================
+  const textExp = (text) => {
+    setClearExp(true);
+    setExp(text);
+    setCheckExp(false);
   };
-  const onChooseFunc_id = (item) => {
-    setCheck(false);
-    setCheckFuncName(false);
-    setFuncId(item);
+  const onClearExp = (text) => {
+    setClearExp(false);
+    setExp('');
   };
-  const onDeleteFunc = (item) => {
-    setCheck(false);
-    setDeleteFuncName(false);
-    setFuncId('');
-    setFuncName('Chuyên ngành');
+  const textNameCom = (text) => {
+    setClearNameCom(true);
+    setNameCompany(text);
+    setCheckNameCom(false);
+  };
+  const onClearNameCom = (text) => {
+    setClearNameCom(false);
+    setNameCompany('');
   };
   const onChooseDayPass = (item) => {
-    setCheck(false);
-    // console.log('item', item);
+    console.log('item', item);
     const m = `${item}`.slice(0, 2);
     const Month = m.replace(/^0+/, '');
     const Year = `${item}`.slice(3, 8);
-
     setDayPass(item);
     setCheckDayPass(false);
     setMonthPass(Month);
     setYearPass(Year);
   };
   const onChooseDayEnd = (item) => {
-    setCheck(false);
     // console.log('item', item);
     const m = `${item}`.slice(0, 2);
     const Month = m.replace(/^0+/, '');
@@ -174,79 +140,96 @@ const AddEducationComponent = (props) => {
     setMonthEnd(Month);
     setYearEnd(Year);
   };
-  const textSchool = (item) => {
-    setCheck(false);
-    setSchool(item);
-    setCheckSchool(false);
-    setDeleteSchool(true);
+  const onChooseLever = (item) => {
+    setClearLever(true);
+    setCheckLever(false);
+    setLever_Name(item);
   };
-  const onDeleteSchool = (item) => {
-    setCheck(false);
-    setDeleteSchool(false);
-    setSchool('');
+  const onChooseLever_id = (item) => {
+    setLever_Id(item);
   };
-
-  //==============================================================
-  const onSubmit = (item) => {
-    console.log('vvvvvvvvv', userId);
+  const onClearLever = (text) => {
+    setClearLever(false);
+    setClearNameCom(false);
+    setLever_Name('Cấp bật');
+    setLever_Id('');
+  };
+  const onNowDate = (text) => {
+    if (text === true) {
+      setNowDate(1);
+    } else if (text === false) {
+      setNowDate(0);
+    }
+  };
+  const textContent = (text) => {
+    setContent(text);
+  };
+  //==================================================
+  const onSubmit = () => {
     if (
-      quaName === 'Trình độ' ||
-      funcName === 'Chuyên ngành' ||
-      dayPass === 'Năm học (từ)' ||
-      dayEnd === 'Năm học (đến)' ||
+      exp === null ||
+      exp.trim() === '' ||
+      nameCompany === null ||
+      nameCompany.trim() === '' ||
+      dayPass === 'Thời gian bắt đầu làm việc từ' ||
+      dayEnd === 'Thời gian nghỉ việc' ||
       (monthEnd < monthPass && yearPass === yearEnd) ||
       yearPass > yearEnd ||
-      school === '' ||
-      school.trim() === ''
+      lever_Name === 'Cấp bật'
     ) {
-      if (quaName === 'Trình độ') {
-        setCheckQuaName(true);
+      if (exp === null || exp.trim() === '') {
+        setNameCompany('');
+        setCheckExp(true);
       }
-      if (funcName === 'Chuyên ngành') {
-        setCheckFuncName(true);
+      if (nameCompany === null || nameCompany.trim() === '') {
+        setExp('');
+        setCheckNameCom(true);
       }
-      if (dayPass === 'Năm học (từ)') {
+      if (dayPass === 'Thời gian bắt đầu làm việc từ') {
         setCheckDayPass(true);
       }
-      if (dayEnd === 'Năm học (đến)') {
+      if (dayEnd === 'Thời gian nghỉ việc') {
         setCheckDayEnd(true);
       } else if (monthEnd < monthPass && yearPass === yearEnd) {
         setCheckDayEnd1(true);
       } else if (yearPass > yearEnd) {
         setCheckDayEnd2(true);
       }
-      if (school === '' || school.trim() === '') {
-        setCheckSchool(true);
+      if (lever_Name === 'Cấp bật') {
+        setCheckLever(true);
       }
     } else {
       console.log('====================================');
-      console.log('quaId===', quaId);
-      console.log('funcId===', funcId);
+      console.log('exp===', exp);
+      console.log('nameCompany===', nameCompany);
       console.log('monthPass===', monthPass);
       console.log('yearPass===', yearPass);
       console.log('monthEnd===', monthEnd);
       console.log('yearEnd===', yearEnd);
-      console.log('school===', school);
+      console.log('lever_Id===', lever_Id);
+      console.log('nowDate===', nowDate);
+      console.log('content===', content);
       console.log('userId===', userId);
       console.log('====================================');
-      props.insertEducationAction({
-        qualification_id: quaId,
-        functional_role_id: funcId,
-        institute: school,
-        month_of_pass: monthPass,
-        year_of_pass: yearPass,
-        month_of_end: monthEnd,
-        year_of_end: yearEnd,
-        user_id: userId,
+      props.insertSkillAction({
+        skill_name: exp,
+        company_name: nameCompany,
+        main_job: content,
+        experience_month_begin: monthPass,
+        experience_year_begin: yearPass,
+        experience_month_end: monthEnd,
+        experience_year_end: yearEnd,
+        is_now: nowDate,
+        level_id: lever_Id,
+        user_id: userId
       });
     }
   };
 
   return (
     <View style={{flex: 1}}>
-      {props.loadingInsert && <LoadingView/>}
-      {props.loadingFunc && <LoadingView/>}
-      {props.loadingQua && <LoadingView/>}
+      {props.loadingInsert && <LoadingView />}
+      {props.loadingLever && <LoadingView/>}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -265,10 +248,7 @@ const AddEducationComponent = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={async () => {
-               await props.logoutInsertEduAction();
-               await props.navigation.goBack();
-              }}>
+              onPress={() => props.navigation.goBack()}>
               <Image
                 source={Images.arrow}
                 style={{
@@ -279,7 +259,7 @@ const AddEducationComponent = (props) => {
             </TouchableOpacity>
 
             <Image
-              source={require('../res/image/img/iconnumber05.png')}
+              source={require('../res/image/img/iconnumber06.png')}
               style={{
                 width: Sizes.s140,
                 height: Sizes.s140,
@@ -303,7 +283,9 @@ const AddEducationComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 20, color: '#2EB553'}}>Trình độ học vấn</Text>
+          <Text style={{fontSize: 20, color: '#2EB553'}}>
+            Kinh nghiệm làm việc
+          </Text>
         </View>
         <View
           style={{
@@ -311,14 +293,207 @@ const AddEducationComponent = (props) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {checkQuaName && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn trình độ</Text>
+          {checkExp && (
+            <Text style={{color: 'red'}}>* Vui lòng nhập kinh nghiệm</Text>
+          )}
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderBottomColor: '#FA8C16',
+            borderBottomWidth: 2,
+            marginHorizontal: 80,
+            marginTop: 10,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/iconskill.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <TextInput
+              defaultValue={exp}
+              onChangeText={(text) => {
+                textExp(text);
+              }}
+              placeholder="Kinh nghiệm"
+              style={{width: '70%', marginLeft: 15}}></TextInput>
+          </View>
+          {clearExp && (
+            <TouchableOpacity
+              onPress={() => {
+                onClearExp();
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          {checkNameCom && (
+            <Text style={{color: 'red'}}>* Vui lòng nhập tên công ty</Text>
+          )}
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderBottomColor: '#FA8C16',
+            borderBottomWidth: 2,
+            marginHorizontal: 80,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/iconnamecompany.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <TextInput
+              defaultValue={nameCompany}
+              placeholder="Tên công ty"
+              onChangeText={(text) => {
+                textNameCom(text);
+              }}
+              style={{width: '70%', marginLeft: 15}}></TextInput>
+          </View>
+          {clearNameCom && (
+            <TouchableOpacity
+              onPress={() => {
+                onClearNameCom();
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}></View>
+        <View
+          style={{
+            borderBottomColor: '#FA8C16',
+            borderBottomWidth: 2,
+            marginHorizontal: 80,
+            paddingVertical: 10,
+          }}>
+          <Text>Công việc chính</Text>
+          <TextInput
+            onChangeText={(text) => {
+              textContent(text);
+            }}
+            placeholder="Nhận thông tin..."
+            numberOfLines={5}
+            multiline={true}
+            style={{
+              textAlignVertical: 'top',
+
+              height: 100,
+              borderColor: '#D9D9D9',
+              borderWidth: 1,
+              paddingVertical: 10,
+              borderRadius: 10,
+            }}></TextInput>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          {checkDayPass && (
+            <Text style={{color: 'red'}}>
+              * Vui lòng chọn thời gian bắt đầu làm việc
+            </Text>
+          )}
+        </View>
+
+        <DatetimePass
+          OnChooseDayPass={(item) => {
+            onChooseDayPass(item);
+          }}
+          title={dayPass}
+          type="1"
+        />
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          {checkDayEnd && (
+            <Text style={{color: 'red'}}>* Vui lòng chọn thời gian nghỉ </Text>
+          )}
+          {checkDayEnd1 && (
+            <Text style={{color: 'red'}}>
+              * Vui lòng chọn thời gian nghỉ lớn hơn
+            </Text>
+          )}
+          {checkDayEnd2 && (
+            <Text style={{color: 'red'}}>
+              * Vui lòng chọn thời gian nghỉ lớn hơn
+            </Text>
+          )}
+        </View>
+
+        <DatetimeEnd
+          OnChooseDayEnd={(item) => {
+            onChooseDayEnd(item);
+          }}
+          OnNowDate={(item) => {
+            onNowDate(item);
+          }}
+          title={dayEnd}
+          type="1"
+        />
+
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          {checkLever && (
+            <Text style={{color: 'red'}}>* Vui lòng chọn cấp bậc</Text>
           )}
         </View>
         <TouchableOpacity
           onPress={() => modal.current.open()}
           style={{
-            marginTop: 10,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -339,15 +514,15 @@ const AddEducationComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                color: quaName === 'Trình độ' ? '#BFBFBF' : 'black',
+                color: lever_Name === 'Cấp bật' ? '#BFBFBF' : 'black',
               }}>
-              {quaName}
+              {lever_Name}
             </Text>
           </View>
-          {deleteQuaName && (
+          {clearLever && (
             <TouchableOpacity
               onPress={() => {
-                onDeleteQua();
+                onClearLever();
               }}
               style={{
                 height: 30,
@@ -362,216 +537,42 @@ const AddEducationComponent = (props) => {
             </TouchableOpacity>
           )}
         </TouchableOpacity>
+
         <View
           style={{
+            marginTop: 20,
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 20,
+            marginBottom: 30,
           }}>
-          {checkFuncName && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn chuyên ngành</Text>
-          )}
-        </View>
-        <TouchableOpacity
-          onPress={() => modal1.current.open()}
-          style={{
-            marginTop: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomColor: '#FA8C16',
-            borderBottomWidth: 2,
-            marginHorizontal: 80,
-          }}>
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              onSubmit();
+            }}
             style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
+              justifyContent: 'center',
               alignItems: 'center',
+              height: 50,
+              width: (screenWidth * 0.8) / 2,
+              backgroundColor: '#FA8C16',
+              borderRadius: 13,
             }}>
-            <Image
-              source={require('../res/image/img/iconspeci.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <Text
-              style={{
-                marginLeft: 15,
-                width:'70%',
-                color: funcName === 'Chuyên ngành' ? '#BFBFBF' : 'black',
-              }}>
-              {funcName}
+            <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
+              Cập nhập
             </Text>
-          </View>
-          {deleteFuncName && (
-            <TouchableOpacity
-              onPress={() => {
-                onDeleteFunc();
-              }}
-              style={{
-                height: 30,
-                width: 30,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../res/image/img/icon_close.png')}
-                style={{height: 15, width: 15, resizeMode: 'contain'}}
-              />
-            </TouchableOpacity>
-          )}
-        </TouchableOpacity>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkDayPass && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (từ)</Text>
-          )}
+          </TouchableOpacity>
         </View>
 
-        <DatetimePass
-          OnChooseDayPass={(item) => {
-            onChooseDayPass(item);
+        <BottomSheetLeverSc6
+          OnChooseLever_id={(item) => {
+            onChooseLever_id(item);
           }}
-          title={dayPass}
-          type="0"
-        />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkDayEnd && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (đến)</Text>
-          )}
-          {checkDayEnd1 && (
-            <Text style={{color: 'red'}}>
-              * Vui lòng chọn năm học (đến) lớn hơn
-            </Text>
-          )}
-          {checkDayEnd2 && (
-            <Text style={{color: 'red'}}>
-              * Vui lòng chọn năm học (đến) lớn hơn
-            </Text>
-          )}
-        </View>
-
-        <DatetimeEnd
-          OnChooseDayEnd={(item) => {
-            onChooseDayEnd(item);
-          }}
-          title={dayEnd}
-          type="0"
-        />
-
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkSchool && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập trường</Text>
-          )}
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomColor: '#FA8C16',
-            borderBottomWidth: 2,
-            marginHorizontal: 80,
-            marginTop: 10,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/iconshool.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <TextInput
-              onChangeText={(text) => textSchool(text)}
-              defaultValue={school}
-              placeholder="Trường"
-              style={{width: '70%', marginLeft: 15}}
-            />
-          </View>
-          {deleteSchool && (
-            <TouchableOpacity
-              onPress={() => {
-                onDeleteSchool();
-              }}
-              style={{
-                height: 30,
-                width: 30,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../res/image/img/icon_close.png')}
-                style={{height: 15, width: 15, resizeMode: 'contain'}}
-              />
-            </TouchableOpacity>
-          )}
-        </View>
-
-        <View
-          style={{
-            marginTop: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-         
-            <TouchableOpacity
-              onPress={() => {
-                onSubmit();
-              }}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 50,
-                width: (screenWidth * 0.8) / 2,
-                backgroundColor: '#FA8C16',
-                borderRadius: 13,
-              }}>
-              <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Cập nhập
-              </Text>
-            </TouchableOpacity>
-         
-        </View>
-
-        <BottomSheetQua
-          OnChooseQua_id={(item) => {
-            onChooseQua_id(item);
-          }}
-          OnChooseQua={(item) => {
-            onChooseQua(item);
+          OnChooseLever={(item) => {
+            onChooseLever(item);
           }}
           ref={modal}
-          title="Chọn trình độ"
-          data={dataQua}
-          modalHeight={screenHeight / 2}
-        />
-        <BottomSheetFunc
-          OnChooseFunc_id={(item) => {
-            onChooseFunc_id(item);
-          }}
-          OnChooseFunc={(item) => {
-            onChooseFunc(item);
-          }}
-          ref={modal1}
-          title="Chọn chuyên ngành"
-          data={dataFunc}
+          title="Cấp bậc"
+          data={dataLever}
           modalHeight={screenHeight / 2}
         />
       </ScrollView>
@@ -579,4 +580,4 @@ const AddEducationComponent = (props) => {
   );
 };
 
-export default AddEducationComponent;
+export default AddExperiencesComponent;

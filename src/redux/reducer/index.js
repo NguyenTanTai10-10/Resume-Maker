@@ -16,6 +16,10 @@ import getFuncRoleReducer from './GetFuncRoleReducer';
 import insertEducationReducer from './InsertEducationReducer';
 import editEducationReducer from './EditEducationReducer';
 import deleteEducationReducer from './DeleteEducationReducer';
+import getLeverSc6Reducer from './GetLeverSc6Reducer';
+import insertSkillReducer from './InsertSkillReducer';
+import editSkillReducer from './EditSkillReducer';
+import deleteSkillReducer from './DeleteSkillReducer';
 
 
 
@@ -35,7 +39,11 @@ const allReducers = combineReducers({
    getFuncRoleReducer,
    insertEducationReducer,
    editEducationReducer,
-   deleteEducationReducer
+   deleteEducationReducer,
+   getLeverSc6Reducer,
+   insertSkillReducer,
+   editSkillReducer,
+   deleteSkillReducer
 });
 
 export default allReducers;

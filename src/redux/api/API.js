@@ -367,6 +367,103 @@ function* DeleteEducation(input) {
 
   return temp;
 }
+function* GetLeverSc6(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_level',
+      version: Ver,
+      params: {level_id: input.level_id, lang_code: language},
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+
+function* insertSkill(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'insert_skill',
+      version: Ver,
+      params: {
+        skill_name: input.skill_name,
+        company_name: input.company_name,
+        main_job: input.main_job,
+        experience_month_begin: input.experience_month_begin,
+        experience_year_begin: input.experience_year_begin,
+        experience_month_end: input.experience_month_end,
+        experience_year_end: input.experience_year_end,
+        is_now:input.is_now,
+        level_id:input.level_id,
+        user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* editSkill(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'edit_skill',
+      version: Ver,
+      params: {
+        skill_id:input.skill_id,
+        skill_name: input.skill_name,
+        company_name: input.company_name,
+        main_job: input.main_job,
+        experience_month_begin: input.experience_month_begin,
+        experience_year_begin: input.experience_year_begin,
+        experience_month_end: input.experience_month_end,
+        experience_year_end: input.experience_year_end,
+        is_now:input.is_now,
+        level_id:input.level_id,
+        user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* deleteSkill(input) {
+  console.log(input);
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'delete_skill',
+      version: Ver,
+      params: {
+        skill_id:input.education_id,
+        user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+
 export const API = {
   LoginUser,
   CheckEmail,
@@ -384,4 +481,8 @@ export const API = {
   insertEducation,
   editEducation,
   DeleteEducation,
+  GetLeverSc6,
+  insertSkill,
+  editSkill,
+  deleteSkill
 };

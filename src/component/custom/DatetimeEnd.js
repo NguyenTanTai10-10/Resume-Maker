@@ -14,18 +14,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DatetimeEnd = (props) => {
   useEffect(() => {
-    setDateStart(props.title)
-  
-  }, [props.title])
+    setTypes(chosseType(props.type));
+  }, []);
+  useEffect(() => {
+    setDateStart(props.title);
+  }, [props.title]);
+  const chosseType = (item) => {
+    switch (item) {
+      case '0':
+        return 'Năm học (đến)';
+        break;
+      case '1':
+        return 'Thời gian nghỉ việc';
+        break;
+    }
+  };
   const [date, setDate] = useState(new Date(2000, 1));
   const [color, setColor] = useState(false);
   const [ClearBirthday, setClearBirthday] = useState(false);
   const [minDate, setMinDate] = useState(new Date());
 
   const [DateStart, setDateStart] = useState('');
+  const [types, setTypes] = useState('');
 
   const [mode, setMode] = useState('');
   const [show, setShow] = useState(false);
+  const [checkNowDate, setCheckNowDate] = useState(false);
 
   const onChange = async (event, selectedDate) => {
     const DayStarts = moment(selectedDate).format('L');
@@ -46,15 +60,27 @@ const DatetimeEnd = (props) => {
   const showDatepicker = () => {
     showMode('');
   };
-  const onPressDate = async() => {
-    setDateStart('Năm học (đến)');
+  const onPressDate = async () => {
+    setDateStart(types);
     setClearBirthday(false);
-    props.OnChooseDayEnd('Năm học (đến)');
+    props.OnChooseDayEnd(types);
   };
   const formatDate = (dateChooose) => {
     const m = `${dateChooose}`.slice(0, 2);
     const y = `${dateChooose}`.slice(6, 10);
     return `${m}-${y}`;
+  };
+  const onNowDate = async () => {
+    if (checkNowDate === true) {
+      props.OnChooseDayEnd('Thời gian nghỉ việc');
+      props.OnNowDate(false)
+    } else if (checkNowDate === false) {
+      setClearBirthday(true)
+      const x = moment(new Date()).format('L');
+
+      props.OnChooseDayEnd(formatDate(x));
+      props.OnNowDate(true)
+    }
   };
   return (
     <View>
@@ -81,7 +107,7 @@ const DatetimeEnd = (props) => {
             source={require('../../res/image/img/iconbirthday.png')}
             style={{height: 35, width: 35, resizeMode: 'contain'}}
           />
-          {DateStart === 'Năm học (đến)' ? (
+          {DateStart === types ? (
             <Text style={{marginLeft: 15, color: '#BFBFBF'}}>{DateStart}</Text>
           ) : (
             <Text style={{marginLeft: 15, color: 'black'}}>{DateStart}</Text>
@@ -90,7 +116,7 @@ const DatetimeEnd = (props) => {
         {ClearBirthday && (
           <TouchableOpacity
             onPress={() => {
-              onPressDate()
+              onPressDate();
             }}
             style={{
               height: 30,
@@ -107,7 +133,6 @@ const DatetimeEnd = (props) => {
       </TouchableOpacity>
       {show && (
         <DateTimePicker
-        
           maximumDate={new Date()}
           testID="dateTimePicker"
           value={date}
@@ -117,6 +142,33 @@ const DatetimeEnd = (props) => {
           onChange={onChange}
         />
       )}
+      {props.type ==="1" && <TouchableOpacity
+        onPress={async () => {
+          await setCheckNowDate(!checkNowDate);
+          await  onNowDate();
+        }}
+        style={{
+          marginTop: 10,
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          marginHorizontal: 80,
+        }}>
+        {checkNowDate === false ? (
+          <Image
+            source={require('../../res/image/img/stop.png')}
+            style={{height: 17, width: 17, resizeMode: 'contain'}}
+          />
+        ) : (
+          <Image
+            source={require('../../res/image/img/check.png')}
+            style={{height: 17, width: 17, resizeMode: 'contain'}}
+          />
+        )}
+
+        <Text style={{alignSelf: 'center', marginLeft: 15}}>Hiện nay</Text>
+      </TouchableOpacity>}
+      
     </View>
   );
 };

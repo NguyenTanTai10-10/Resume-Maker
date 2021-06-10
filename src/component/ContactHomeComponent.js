@@ -141,6 +141,7 @@ const ContactHomeComponent = (props) => {
   const [emailExit, setEmailExits] = useState('');
   const [Gender, setGender] = useState('1');
   const [DataRegister, setDataRegister] = useState('');
+  const [dataPhoto, setDataPhoto] = useState('');
 
   const [Photo, setPhoto] = useState([
     {title: 'Chụp ảnh', value: ''},
@@ -202,6 +203,7 @@ const ContactHomeComponent = (props) => {
       // console.log(`data:${image.mime};base64,${image.data}`);
 
       setPhotoBase64(`data:${image.mime};base64,${image.data}`);
+      setDataPhoto(image.data)
     });
   };
 
@@ -373,7 +375,7 @@ const ContactHomeComponent = (props) => {
         gender: Gender,
         skype: '',
       });
-      props.editAvatarAction({user_id: userID, image: PhotoBase64});
+      props.editAvatarAction({user_id: userID, image: dataPhoto});
     }
   };
   //=========================================
@@ -483,6 +485,8 @@ const ContactHomeComponent = (props) => {
                   width: 70,
                   resizeMode: 'cover',
                   borderRadius: 9999,
+                  borderWidth:1,
+                  borderColor:"#FA8C16"
                 }}
               />
             )}

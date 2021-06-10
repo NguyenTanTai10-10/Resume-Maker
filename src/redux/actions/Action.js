@@ -222,6 +222,67 @@ export const logoutDeleteEduAction = () => {
     type: LOGOUT_DELETE_EDUCATION,
   };
 };
+//===================================================================================
+export const  GET_LEVER_SC6 = 'GET_LEVER_SC6';
+export const GET_LEVER_SC6_SUCCESS = 'GET_LEVER_SC6_SUCCESS';
+export const GET_LEVER_SC6_ERROR = 'GET_LEVER_SC6_ERROR';
+export const  getLeverSr6Action = (input) => {
+  return {
+    type: GET_LEVER_SC6,
+    input: input,
+  };
+};
+//===================================================================================
+export const  INSERT_SKILL = 'INSERT_SKILL';
+export const INSERT_SKILL_SUCCESS = 'INSERT_SKILL_SUCCESS';
+export const INSERT_SKILL_ERROR = 'INSERT_SKILL_ERROR';
+export const  insertSkillAction = (input) => {
+  return {
+    type: INSERT_SKILL,
+    input: input,
+  };
+};
+export const LOGOUT_INSERT_SKILL = 'LOGOUT_INSERT_SKILL';
+export const logoutInsertSkillAction = () => {
+  return {
+    type: LOGOUT_INSERT_SKILL,
+  };
+};
+//===================================================================================
+export const  EDIT_SKILL = 'EDIT_SKILL';
+export const EDIT_SKILL_SUCCESS = 'EDIT_SKILL_SUCCESS';
+export const EDIT_SKILL_ERROR = 'EDIT_SKILL_ERROR';
+export const  editSkillAction = (input) => {
+  return {
+    type: EDIT_SKILL,
+    input: input,
+  };
+};
+export const LOGOUT_EDIT_SKILL = 'LOGOUT_EDIT_SKILL';
+export const logoutSkillAction = () => {
+  return {
+    type: LOGOUT_EDIT_SKILL,
+  };
+};
+//===================================================================================
+export const  DELETE_SKILL = 'DELETE_SKILL';
+export const DELETE_SKILL_SUCCESS = 'DELETE_SKILL_SUCCESS';
+export const DELETE_SKILL_ERROR = 'DELETE_SKILL_ERROR';
+export const  deleteSkillAction = (input) => {
+  
+  return {
+    type: DELETE_SKILL,
+    input: input,
+  };
+};
+export const LOGOUT_DELETE_SKILL = 'LOGOUT_DELETE_SKILL';
+export const logoutDeleteSkillAction = () => {
+  return {
+    type: LOGOUT_DELETE_SKILL,
+  };
+};
+
+
 
 
 

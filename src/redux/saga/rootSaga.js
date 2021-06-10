@@ -17,6 +17,10 @@ import { watchInsertEducation } from './InsertEducationSaga';
 
 import { watchEditEducation } from './EditEducationSaga';
 import { watchDeleteEducation } from './DeleteEducationSaga';
+import { watchGetLeverSc6 } from './GetleverSc6Saga';
+import { watchInsertSkill } from './InsertSkillSaga';
+import { watchEditSkill } from './EditSkillSaga';
+import { watchDeleteSkill } from './DeleteSkillSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -35,7 +39,11 @@ export default function* rootSaga() {
     watchGetFuncRole(),
     watchInsertEducation(),
     watchEditEducation(),
-    watchDeleteEducation()
+    watchDeleteEducation(),
+    watchGetLeverSc6(),
+    watchInsertSkill(),
+    watchEditSkill(),
+    watchDeleteSkill()
 
   ]);
 }

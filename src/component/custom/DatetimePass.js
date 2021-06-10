@@ -14,15 +14,29 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DatetimePass = (props) => {
   useEffect(() => {
-    setDateStart(props.title)
-  
-  }, [props.title])
+    setTypes(chosseType(props.type));
+  }, []);
+
+  useEffect(() => {
+    setDateStart(props.title);
+  }, [props.title]);
+  const chosseType = (item) => {
+    switch (item) {
+      case '0':
+        return 'Năm học (từ)';
+        break;
+      case '1':
+        return 'Thời gian bắt đầu làm việc từ';
+        break;
+    }
+  };
   const [date, setDate] = useState(new Date(2000, 1));
   const [color, setColor] = useState(false);
   const [ClearBirthday, setClearBirthday] = useState(false);
   const [minDate, setMinDate] = useState(new Date());
 
   const [DateStart, setDateStart] = useState('');
+  const [types, setTypes] = useState('');
 
   const [mode, setMode] = useState('');
   const [show, setShow] = useState(false);
@@ -46,10 +60,10 @@ const DatetimePass = (props) => {
   const showDatepicker = () => {
     showMode('');
   };
-  const onPressDate = async() => {
-    setDateStart('Năm học (từ)');
+  const onPressDate = async () => {
+    setDateStart(types);
     setClearBirthday(false);
-    props.OnChooseDayPass('Năm học (từ)');
+    props.OnChooseDayPass(types);
   };
   const formatDate = (dateChooose) => {
     const m = `${dateChooose}`.slice(0, 2);
@@ -81,16 +95,16 @@ const DatetimePass = (props) => {
             source={require('../../res/image/img/iconbirthday.png')}
             style={{height: 35, width: 35, resizeMode: 'contain'}}
           />
-          {DateStart === 'Năm học (từ)' ? (
-            <Text style={{marginLeft: 15, color: '#BFBFBF'}}>{DateStart}</Text>
+          {DateStart === types ? (
+            <Text style={{marginLeft: 18, color: '#BFBFBF'}}>{DateStart}</Text>
           ) : (
-            <Text style={{marginLeft: 15, color: 'black'}}>{DateStart}</Text>
+            <Text style={{marginLeft: 18, color: 'black'}}>{DateStart}</Text>
           )}
         </View>
         {ClearBirthday && (
           <TouchableOpacity
             onPress={() => {
-              onPressDate()
+              onPressDate();
             }}
             style={{
               height: 30,
@@ -107,7 +121,6 @@ const DatetimePass = (props) => {
       </TouchableOpacity>
       {show && (
         <DateTimePicker
-        
           maximumDate={new Date()}
           testID="dateTimePicker"
           value={date}
