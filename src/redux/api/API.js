@@ -399,8 +399,8 @@ function* insertSkill(input) {
         experience_year_begin: input.experience_year_begin,
         experience_month_end: input.experience_month_end,
         experience_year_end: input.experience_year_end,
-        is_now:input.is_now,
-        level_id:input.level_id,
+        is_now: input.is_now,
+        level_id: input.level_id,
         user_id: input.user_id,
       },
     })
@@ -420,7 +420,7 @@ function* editSkill(input) {
       method: 'edit_skill',
       version: Ver,
       params: {
-        skill_id:input.skill_id,
+        skill_id: input.skill_id,
         skill_name: input.skill_name,
         company_name: input.company_name,
         main_job: input.main_job,
@@ -428,8 +428,8 @@ function* editSkill(input) {
         experience_year_begin: input.experience_year_begin,
         experience_month_end: input.experience_month_end,
         experience_year_end: input.experience_year_end,
-        is_now:input.is_now,
-        level_id:input.level_id,
+        is_now: input.is_now,
+        level_id: input.level_id,
         user_id: input.user_id,
       },
     })
@@ -450,7 +450,7 @@ function* deleteSkill(input) {
       method: 'delete_skill',
       version: Ver,
       params: {
-        skill_id:input.education_id,
+        skill_id: input.education_id,
         user_id: input.user_id,
       },
     })
@@ -463,7 +463,114 @@ function* deleteSkill(input) {
 
   return temp;
 }
+function* AddLanguage(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_language_add',
+      version: Ver,
+      params: {
+        user_id: input.user_id,
+        lang_code: language,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
+  return temp;
+}
+function* InsertLanguage(input) {
+  // console.log(input);
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'insert_language',
+      version: Ver,
+      params: {
+        language_id: input.language_id,
+        degree: input.degree,
+        user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* GetEditLang(input) {
+  // console.log(input);
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_language_edit',
+      version: Ver,
+      params: {
+        lang_id: input.langs_id,
+        user_id: input.users_id,
+        lang_code: language,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* EditLang(input) {
+  // console.log(input);
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'edit_language',
+      version: Ver,
+      params: {
+        lang_id: input.lang_id,
+        user_id: input.user_id,
+        degree:input.degree,
+        language_id: input.language_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* DeleteLang(input) {
+  console.log(input);
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'delete_language',
+      version: Ver,
+      params: {
+        lang_id: input.lang_id,
+        user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
 export const API = {
   LoginUser,
   CheckEmail,
@@ -484,5 +591,10 @@ export const API = {
   GetLeverSc6,
   insertSkill,
   editSkill,
-  deleteSkill
+  deleteSkill,
+  AddLanguage,
+  InsertLanguage,
+  GetEditLang,
+  EditLang,
+  DeleteLang
 };

@@ -21,6 +21,11 @@ import { watchGetLeverSc6 } from './GetleverSc6Saga';
 import { watchInsertSkill } from './InsertSkillSaga';
 import { watchEditSkill } from './EditSkillSaga';
 import { watchDeleteSkill } from './DeleteSkillSaga';
+import { watchAddLanguage } from './AddLanguageSaga';
+import { watchInsertLanguage } from './InsertLanguageSaga';
+import { watchGetEditLang } from './GetEditLangSaga';
+import { watchEditLang } from './EditLangSaga';
+import { watchDeleteLang } from './DeleteLangSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -43,7 +48,12 @@ export default function* rootSaga() {
     watchGetLeverSc6(),
     watchInsertSkill(),
     watchEditSkill(),
-    watchDeleteSkill()
+    watchDeleteSkill(),
+    watchAddLanguage(),
+    watchInsertLanguage(),
+    watchGetEditLang(),
+    watchEditLang(),
+    watchDeleteLang()
 
   ]);
 }

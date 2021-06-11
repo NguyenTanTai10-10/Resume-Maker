@@ -20,6 +20,11 @@ import getLeverSc6Reducer from './GetLeverSc6Reducer';
 import insertSkillReducer from './InsertSkillReducer';
 import editSkillReducer from './EditSkillReducer';
 import deleteSkillReducer from './DeleteSkillReducer';
+import addLanguageReducer from './AddLanguageReducer';
+import insertLanguageReducer from './InsertLanguageReducer';
+import getEditLangReducer from './GetEditLangReducer';
+import editLangReducer from './EditLangReducer';
+import deleteLangReducer from './DeleteLangReducer';
 
 
 
@@ -43,7 +48,12 @@ const allReducers = combineReducers({
    getLeverSc6Reducer,
    insertSkillReducer,
    editSkillReducer,
-   deleteSkillReducer
+   deleteSkillReducer,
+   addLanguageReducer,
+   insertLanguageReducer,
+   getEditLangReducer,
+   editLangReducer,
+   deleteLangReducer
 });
 
 export default allReducers;

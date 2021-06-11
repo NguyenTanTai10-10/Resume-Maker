@@ -83,7 +83,7 @@ const AddEducationComponent = (props) => {
     if (props.statusInsert !== null) {
       if (props.statusInsert === 1) {
         Alert.alert(
-          ' Xóa Thành Công',
+          ' Thêm Thành Công',
           '',
           [
             {

@@ -347,7 +347,7 @@ const Home = (props) => {
           </TouchableOpacity>
           <TouchableOpacity
             // LanguageComponent
-            onPress={() => props.navigation.navigate('LanguageComponent')}
+            onPress={() => props.navigation.navigate('ListLanguageContainer')}
             style={{
               flexDirection: 'row',
               paddingVertical: 15,

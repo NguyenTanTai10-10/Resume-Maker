@@ -100,7 +100,7 @@ const EditEducationComponent = (props) => {
     if (props.statusEditEdu !== null) {
       if (props.statusEditEdu === 1) {
         Alert.alert(
-          ' Xóa Thành Công',
+          ' Sửa Thành Công',
           '',
           [
             {

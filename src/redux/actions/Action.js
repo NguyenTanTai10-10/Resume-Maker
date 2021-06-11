@@ -74,7 +74,6 @@ export const EDIT_AVATAR = 'EDIT_AVATAR';
 export const EDIT_AVATAR_SUCCESS = 'EDIT_AVATAR_SUCCESS';
 export const EDIT_AVATAR_ERROR = 'EDIT_AVATAR_ERROR';
 export const editAvatarAction = (input) => {
-
   return {
     type: EDIT_AVATAR,
     input: input,
@@ -84,8 +83,8 @@ export const editAvatarAction = (input) => {
 export const INFO_USER = 'INFO_USER';
 export const INFO_USER_SUCCESS = 'INFO_USER_SUCCESS';
 export const INFO_USER_ERROR = 'INFO_USER_ERROR';
-export const  infoUserAction = (input) => {
-  console.log("actions==",input);
+export const infoUserAction = (input) => {
+  console.log('actions==', input);
   return {
     type: INFO_USER,
     input: input,
@@ -95,8 +94,7 @@ export const  infoUserAction = (input) => {
 export const EDIT_INFO_USER = 'EDIT_INFO_USER';
 export const EDIT_INFO_USER_SUCCESS = 'EDIT_INFO_USER_SUCCESS';
 export const EDIT_INFO_USER_ERROR = 'EDIT_INFO_USER_ERROR';
-export const  editInfoUserAction = (input) => {
-
+export const editInfoUserAction = (input) => {
   return {
     type: EDIT_INFO_USER,
     input: input,
@@ -112,7 +110,7 @@ export const logoutEditInfoUserAction = () => {
 export const EDIT_CIVI = 'EDIT_CIVI';
 export const EDIT_CIVI_SUCCESS = 'EDIT_CIVI_SUCCESS';
 export const EDIT_CIVI_ERROR = 'EDIT_CIVI_ERROR';
-export const  editCiviAction = (input) => {
+export const editCiviAction = (input) => {
   return {
     type: EDIT_CIVI,
     input: input,
@@ -125,50 +123,50 @@ export const logoutEditCiviAction = () => {
   };
 };
 //===================================================================================
-export const  GET_INDUSTRY = 'GET_INDUSTRY';
+export const GET_INDUSTRY = 'GET_INDUSTRY';
 export const GET_INDUSTRY_SUCCESS = 'GET_INDUSTRY_SUCCESS';
 export const GET_INDUSTRY_ERROR = 'GET_INDUSTRY_ERROR';
-export const  getIndustryAction = (input) => {
+export const getIndustryAction = (input) => {
   return {
     type: GET_INDUSTRY,
     input: input,
   };
 };
 //===================================================================================
-export const  GET_LEVER = 'GET_LEVER';
+export const GET_LEVER = 'GET_LEVER';
 export const GET_LEVER_SUCCESS = 'GET_LEVER_SUCCESS';
 export const GET_LEVER_ERROR = 'GET_LEVER_ERROR';
-export const  getLeverAction = (input) => {
+export const getLeverAction = (input) => {
   return {
     type: GET_LEVER,
     input: input,
   };
 };
 //===================================================================================
-export const  GET_QUALITIFICATIONS = 'GET_QUALITIFICATIONS';
+export const GET_QUALITIFICATIONS = 'GET_QUALITIFICATIONS';
 export const GET_QUALITIFICATIONS_SUCCESS = 'GET_QUALITIFICATIONS_SUCCESS';
 export const GET_QUALITIFICATIONS_ERROR = 'GET_QUALITIFICATIONS_ERROR';
-export const  getQualitificationrAction = (input) => {
+export const getQualitificationrAction = (input) => {
   return {
     type: GET_QUALITIFICATIONS,
     input: input,
   };
 };
 //===================================================================================
-export const  GET_FUNCTIONS_ROLE = 'GET_FUNCTIONS_ROLE';
+export const GET_FUNCTIONS_ROLE = 'GET_FUNCTIONS_ROLE';
 export const GET_FUNCTIONS_ROLE_SUCCESS = 'GET_FUNCTIONS_ROLE_SUCCESS';
 export const GET_FUNCTIONS_ROLE_ERROR = 'GET_FUNCTIONS_ROLE_ERROR';
-export const  getFunctionRoleAction = (input) => {
+export const getFunctionRoleAction = (input) => {
   return {
     type: GET_FUNCTIONS_ROLE,
     input: input,
   };
 };
 //===================================================================================
-export const  INSERT_EDUCATION = 'INSERT_EDUCATION';
+export const INSERT_EDUCATION = 'INSERT_EDUCATION';
 export const INSERT_EDUCATION_SUCCESS = 'INSERT_EDUCATION_SUCCESS';
 export const INSERT_EDUCATION_ERROR = 'INSERT_EDUCATION_ERROR';
-export const  insertEducationAction = (input) => {
+export const insertEducationAction = (input) => {
   return {
     type: INSERT_EDUCATION,
     input: input,
@@ -181,20 +179,20 @@ export const logoutInsertEduAction = () => {
   };
 };
 //===================================================================================
-export const  GET_EDUCATION = 'GET_EDUCATION';
+export const GET_EDUCATION = 'GET_EDUCATION';
 export const GET_EDUCATION_SUCCESS = 'GET_EDUCATION_SUCCESS';
 export const GET_EDUCATION_ERROR = 'GET_EDUCATION_ERROR';
-export const  getEducationAction = (input) => {
+export const getEducationAction = (input) => {
   return {
     type: GET_EDUCATION,
     input: input,
   };
 };
 //===================================================================================
-export const  EDIT_EDUCATION = 'EDIT_EDUCATION';
+export const EDIT_EDUCATION = 'EDIT_EDUCATION';
 export const EDIT_EDUCATION_SUCCESS = 'EDIT_EDUCATION_SUCCESS';
 export const EDIT_EDUCATION_ERROR = 'EDIT_EDUCATION_ERROR';
-export const  editEducationAction = (input) => {
+export const editEducationAction = (input) => {
   return {
     type: EDIT_EDUCATION,
     input: input,
@@ -207,10 +205,10 @@ export const logoutEditEduAction = () => {
   };
 };
 //===================================================================================
-export const  DELETE_EDUCATION = 'DELETE_EDUCATION';
+export const DELETE_EDUCATION = 'DELETE_EDUCATION';
 export const DELETE_EDUCATION_SUCCESS = 'DELETE_EDUCATION_SUCCESS';
 export const DELETE_EDUCATION_ERROR = 'DELETE_EDUCATION_ERROR';
-export const  deleteEducationAction = (input) => {
+export const deleteEducationAction = (input) => {
   return {
     type: DELETE_EDUCATION,
     input: input,
@@ -223,20 +221,20 @@ export const logoutDeleteEduAction = () => {
   };
 };
 //===================================================================================
-export const  GET_LEVER_SC6 = 'GET_LEVER_SC6';
+export const GET_LEVER_SC6 = 'GET_LEVER_SC6';
 export const GET_LEVER_SC6_SUCCESS = 'GET_LEVER_SC6_SUCCESS';
 export const GET_LEVER_SC6_ERROR = 'GET_LEVER_SC6_ERROR';
-export const  getLeverSr6Action = (input) => {
+export const getLeverSr6Action = (input) => {
   return {
     type: GET_LEVER_SC6,
     input: input,
   };
 };
 //===================================================================================
-export const  INSERT_SKILL = 'INSERT_SKILL';
+export const INSERT_SKILL = 'INSERT_SKILL';
 export const INSERT_SKILL_SUCCESS = 'INSERT_SKILL_SUCCESS';
 export const INSERT_SKILL_ERROR = 'INSERT_SKILL_ERROR';
-export const  insertSkillAction = (input) => {
+export const insertSkillAction = (input) => {
   return {
     type: INSERT_SKILL,
     input: input,
@@ -249,10 +247,10 @@ export const logoutInsertSkillAction = () => {
   };
 };
 //===================================================================================
-export const  EDIT_SKILL = 'EDIT_SKILL';
+export const EDIT_SKILL = 'EDIT_SKILL';
 export const EDIT_SKILL_SUCCESS = 'EDIT_SKILL_SUCCESS';
 export const EDIT_SKILL_ERROR = 'EDIT_SKILL_ERROR';
-export const  editSkillAction = (input) => {
+export const editSkillAction = (input) => {
   return {
     type: EDIT_SKILL,
     input: input,
@@ -265,11 +263,10 @@ export const logoutSkillAction = () => {
   };
 };
 //===================================================================================
-export const  DELETE_SKILL = 'DELETE_SKILL';
+export const DELETE_SKILL = 'DELETE_SKILL';
 export const DELETE_SKILL_SUCCESS = 'DELETE_SKILL_SUCCESS';
 export const DELETE_SKILL_ERROR = 'DELETE_SKILL_ERROR';
-export const  deleteSkillAction = (input) => {
-  
+export const deleteSkillAction = (input) => {
   return {
     type: DELETE_SKILL,
     input: input,
@@ -281,12 +278,73 @@ export const logoutDeleteSkillAction = () => {
     type: LOGOUT_DELETE_SKILL,
   };
 };
-
-
-
-
-
-
-
-
-
+//===================================================================================
+export const ADD_LANGUAGE = 'ADD_LANGUAGE';
+export const ADD_LANGUAGE_SUCCESS = 'ADD_LANGUAGE_SUCCESS';
+export const ADD_LANGUAGE_ERROR = 'ADD_LANGUAGE_ERROR';
+export const addLanguageAction = (input) => {
+  return {
+    type: ADD_LANGUAGE,
+    input: input,
+  };
+};
+//===================================================================================
+export const INSERT_LANGUAGE = 'INSERT_LANGUAGE';
+export const INSERT_LANGUAGE_SUCCESS = 'INSERT_LANGUAGE_SUCCESS';
+export const INSERT_LANGUAGE_ERROR = 'INSERT_LANGUAGE_ERROR';
+export const insertLangAction = (input) => {
+  return {
+    type: INSERT_LANGUAGE,
+    input: input,
+  };
+};
+export const LOGOUT_INSERT_LANGUAGE = 'LOGOUT_INSERT_LANGUAGE';
+export const logoutInsertLangAction = () => {
+  return {
+    type: LOGOUT_INSERT_LANGUAGE,
+  };
+};
+//===================================================================================
+export const GET_EDIT_LANGUAGE = 'GET_EDIT_LANGUAGE';
+export const GET_EDIT_LANGUAGE_SUCCESS = 'GET_EDIT_LANGUAGE_SUCCESS';
+export const GET_EDIT_LANGUAGE_ERROR = 'GET_EDIT_LANGUAGE_ERROR';
+export const getEditlangAction = (input) => {
+  // console.log(input);
+  return {
+    type: GET_EDIT_LANGUAGE,
+    input: input,
+  };
+};
+//===================================================================================
+export const EDIT_LANGUAGE = 'EDIT_LANGUAGE';
+export const EDIT_LANGUAGE_SUCCESS = 'EDIT_LANGUAGE_SUCCESS';
+export const EDIT_LANGUAGE_ERROR = 'EDIT_LANGUAGE_ERROR';
+export const editLangAction = (input) => {
+  return {
+    type: EDIT_LANGUAGE,
+    input: input,
+  };
+};
+export const LOGOUT_EDIT_LANGUAGE = 'LOGOUT_EDIT_LANGUAGE';
+export const logoutEditLangAction = () => {
+  return {
+    type: LOGOUT_EDIT_LANGUAGE,
+  };
+};
+//===================================================================================
+export const DELETE_LANGUAGE = 'DELETE_LANGUAGE';
+export const DELETE_LANGUAGE_SUCCESS = 'DELETE_LANGUAGE_SUCCESS';
+export const DELETE_LANGUAGE_ERROR = 'DELETE_LANGUAGE_ERROR';
+export const deleteLangAction = (input) => {
+  console.log(input);
+  return {
+    type: DELETE_LANGUAGE,
+    input: input,
+  };
+};
+export const LOGOUT_DELETE_LANGUAGE = 'LOGOUT_DELETE_LANGUAGE';
+export const logoutDeleteLangAction = () => {
+  return {
+    type: LOGOUT_DELETE_LANGUAGE,
+  };
+};
