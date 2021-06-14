@@ -431,7 +431,7 @@ const Home = (props) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => props.navigation.navigate('SkillsComponent')}
+            onPress={() => props.navigation.navigate('SkillsContainer')}
             style={{
               flexDirection: 'row',
               borderBottomWidth: 1,

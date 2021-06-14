@@ -537,7 +537,7 @@ function* EditLang(input) {
       params: {
         lang_id: input.lang_id,
         user_id: input.user_id,
-        degree:input.degree,
+        degree: input.degree,
         language_id: input.language_id,
       },
     })
@@ -551,7 +551,6 @@ function* EditLang(input) {
   return temp;
 }
 function* DeleteLang(input) {
-  console.log(input);
   let temp;
   yield axios
     .post(urlSever, {
@@ -560,6 +559,27 @@ function* DeleteLang(input) {
       params: {
         lang_id: input.lang_id,
         user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
+function* getTechnique(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'get_tag_technique',
+      version: 2,
+      params: {
+        lang_code: language,
+        tag_technique_id: input.tag_technique_id,
+        type: '2',
       },
     })
     .then(function (response) {
@@ -596,5 +616,6 @@ export const API = {
   InsertLanguage,
   GetEditLang,
   EditLang,
-  DeleteLang
+  DeleteLang,
+  getTechnique,
 };

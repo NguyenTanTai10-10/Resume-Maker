@@ -33,6 +33,7 @@ import  EditSkillContainer  from './src/container/EditSkillContainer/EditSkillCo
 import  AddLanguageContainer  from './src/container/AddLanguageContainer/AddLanguageContainer';
 import  ListLanguageContainer  from './src/container/ListLanguageContainer/ListLanguageContainer';
 import  EditLanguageContainer  from './src/container/EditLanguageContainer/EditLanguageContainer';
+import  SkillsContainer  from './src/container/SkillsContainer/SkillsContainer';
 
 
 
@@ -122,6 +123,11 @@ const App = () => {
           name="EditLanguageContainer"
           component={EditLanguageContainer}
         />
+        <Stack.Screen
+          name="SkillsContainer"
+          component={SkillsContainer}
+        />
+        
         {/* EditLanguageContainer */}
         {/* ListLanguageContainer */}
         {/* EditSkillContainer */}

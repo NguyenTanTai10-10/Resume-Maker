@@ -1,34 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Home from '../../component/home/Home';
+import SkillsComponent from '../../component/SkillsComponent';
+import { getTechniqueAction } from '../../redux/actions/Action';
+
 
 
 
 
 export class SkillsContainer extends Component {
    render() {
-      return <Home {...this.props} />;
+      return <SkillsComponent {...this.props} />;
    }
 }
 
 const mapStateToProps = (state) => {
-//    return {
-//       status: state.loginReducer.status,
-//       data: state.loginReducer.data,
-//       loading: state.loginReducer.loading,
-//       message: state.loginReducer.message,
-//       error: state.loginReducer.error,
-//    };
+   return {
+      statusTech: state.getTechniqueReducer.status,
+      dataTech: state.getTechniqueReducer.data,
+      loadingTech: state.getTechniqueReducer.loading,
+      messageTech: state.getTechniqueReducer.message,
+      errorTech: state.getTechniqueReducer.error,
+   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-//    return {
-//       loginAction: (username, password) => dispatch(loginAction(username, password)),
-//    };
+   return {
+      getTechniqueAction: (input) => dispatch(getTechniqueAction(input)),
+   };
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
-export default SkillsContainer 
+export default connect(mapStateToProps, mapDispatchToProps)(SkillsContainer);
+
 
 
 

@@ -336,7 +336,7 @@ export const DELETE_LANGUAGE = 'DELETE_LANGUAGE';
 export const DELETE_LANGUAGE_SUCCESS = 'DELETE_LANGUAGE_SUCCESS';
 export const DELETE_LANGUAGE_ERROR = 'DELETE_LANGUAGE_ERROR';
 export const deleteLangAction = (input) => {
-  console.log(input);
+
   return {
     type: DELETE_LANGUAGE,
     input: input,
@@ -346,5 +346,16 @@ export const LOGOUT_DELETE_LANGUAGE = 'LOGOUT_DELETE_LANGUAGE';
 export const logoutDeleteLangAction = () => {
   return {
     type: LOGOUT_DELETE_LANGUAGE,
+  };
+};
+//===================================================================================
+export const GET_TECHNIQUE = 'GET_TECHNIQUE';
+export const GET_TECHNIQUE_SUCCESS = 'GET_TECHNIQUE_SUCCESS';
+export const GET_TECHNIQUE_ERROR = 'GET_TECHNIQUE_ERROR';
+export const getTechniqueAction = (input) => {
+
+  return {
+    type: GET_TECHNIQUE,
+    input: input,
   };
 };
