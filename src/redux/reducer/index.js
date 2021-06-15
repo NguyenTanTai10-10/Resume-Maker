@@ -26,6 +26,7 @@ import getEditLangReducer from './GetEditLangReducer';
 import editLangReducer from './EditLangReducer';
 import deleteLangReducer from './DeleteLangReducer';
 import getTechniqueReducer from './GetTechniqueReducer';
+import updateTechReducer from './UpdatetechReducer';
 
 
 
@@ -55,7 +56,8 @@ const allReducers = combineReducers({
    getEditLangReducer,
    editLangReducer,
    deleteLangReducer,
-   getTechniqueReducer
+   getTechniqueReducer,
+   updateTechReducer
 });
 
 export default allReducers;

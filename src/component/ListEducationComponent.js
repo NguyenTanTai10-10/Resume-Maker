@@ -48,7 +48,7 @@ const ListEducationComponent = (props) => {
           [
             {
               text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
+              onPress: () => getData(),
               style: 'cancel',
             },
             {
@@ -90,15 +90,39 @@ const ListEducationComponent = (props) => {
     }
   };
 
-  const onDelete = () => {
-    props.deleteEducationAction({
-      education_id: eduction_Id,
-      user_id: user_Id,
-    });
+  const onDelete = (item) => {
+    Alert.alert(
+      'Bạn có muốn xóa không',
+      '',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            props.deleteEducationAction({
+              education_id: item,
+              user_id: user_Id,
+            });
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+  const OnNavigate = (item) => {
+    setTimeout(() => {
+      props.navigation.navigate('EditEducationContainer', {
+        eduction_Id: item,
+      });
+    }, 300);
   };
 
   const renderItem = (item) => {
-    // console.log(item);
+    console.log("====",item);
     return (
       <View
         style={{
@@ -121,14 +145,45 @@ const ListEducationComponent = (props) => {
                 justifyContent: 'flex-start',
                 alignItems: 'center',
               }}>
-              <Image
-                source={require('../res/image/img/icondegree.png')}
-                style={{height: 25, width: 25, resizeMode: 'contain'}}
-              />
-              <Text>Trình độ : </Text>
-              <Text style={{marginLeft: 10}}>{item.item.qualification}</Text>
+              
+              <Text style={{marginLeft: 10 ,fontSize: 17, color: 'gray', fontWeight: '700'}}>{item.item.functional_role}</Text>
+              {/* item.item.qualification */}
             </View>
-            <TouchableOpacity
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={async () => {
+                  OnNavigate(item.item);
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/edit.png')}
+                  style={{height: 20, width: 20, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  //  setSkill_Id(item.item);
+                  // await setEduction_Id(item.item.skill_id);
+                  onDelete(item.item.eduction_id);
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/trash.png')}
+                  style={{height: 20, width: 20, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+            </View>
+            {/* <TouchableOpacity
               onPress={async () => {
                 setEductionId(item.item);
                 setEduction_Id(item.item.eduction_id);
@@ -144,7 +199,7 @@ const ListEducationComponent = (props) => {
                 source={require('../res/image/img/more(1).png')}
                 style={{height: 25, width: 25, resizeMode: 'contain'}}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <View
             style={{
@@ -152,46 +207,25 @@ const ListEducationComponent = (props) => {
               justifyContent: 'flex-start',
               alignItems: 'center',
             }}>
-            <Image
-              source={require('../res/image/img/iconspeci.png')}
-              style={{height: 25, width: 25, resizeMode: 'contain'}}
-            />
-            <Text>Chuyên ngành : </Text>
-            <Text style={{marginLeft: 10, width: '50%'}} numberOfLines={1}>
-              {item.item.functional_role}
+           
+            <Text style={{marginLeft: 10, width: '70%',color: '#FFC069'}} numberOfLines={1}>
+              {item.item.qualification} - {item.item.institute}
             </Text>
           </View>
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
             }}>
-            <Image
-              source={require('../res/image/img/iconbirthday.png')}
-              style={{height: 25, width: 25, resizeMode: 'contain'}}
-            />
-            <Text>Thời gian : </Text>
+           
             <Text
               style={{
                 marginLeft: 10,
+                color: '#FFA39E'
               }}>{`${item.item.month_of_pass}/${item.item.year_of_pass} - ${item.item.month_of_end}/${item.item.year_of_end}`}</Text>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/iconshool.png')}
-              style={{height: 25, width: 25, resizeMode: 'contain'}}
-            />
-            <Text>Trường : </Text>
-            <Text style={{marginLeft: 10, width: '60%'}} numberOfLines={1}>
-              {item.item.institute}
-            </Text>
-          </View>
+        
         </View>
       </View>
     );
@@ -295,7 +329,7 @@ const ListEducationComponent = (props) => {
             }}>
             <Image
               source={require('../res/image/img/left-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
+              style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
             <Text style={{color: 'black'}}>Trở về</Text>
           </TouchableOpacity>
@@ -314,7 +348,7 @@ const ListEducationComponent = (props) => {
             <Text style={{color: 'black'}}>Tiếp tục</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
+              style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>

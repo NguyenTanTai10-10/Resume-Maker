@@ -431,53 +431,6 @@ const EditEducationComponent = (props) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          {checkDayPass && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (từ)</Text>
-          )}
-        </View>
-
-        <DatetimePass
-          OnChooseDayPass={(item) => {
-            onChooseDayPass(item);
-          }}
-          title={dayPass}
-          type="0"
-        />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkDayEnd && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (đến)</Text>
-          )}
-          {checkDayEnd1 && (
-            <Text style={{color: 'red'}}>
-              * Vui lòng chọn năm học (đến) lớn hơn
-            </Text>
-          )}
-          {checkDayEnd2 && (
-            <Text style={{color: 'red'}}>
-              * Vui lòng chọn năm học (đến) lớn hơn
-            </Text>
-          )}
-        </View>
-
-        <DatetimeEnd
-          OnChooseDayEnd={(item) => {
-            onChooseDayEnd(item);
-          }}
-          title={dayEnd}
-          type="0"
-        />
-
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
           {checkSchool && (
             <Text style={{color: 'red'}}>* Vui lòng nhập trường</Text>
           )}
@@ -528,6 +481,54 @@ const EditEducationComponent = (props) => {
             </TouchableOpacity>
           )}
         </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          {checkDayPass && (
+            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (từ)</Text>
+          )}
+        </View>
+
+        <DatetimePass
+          OnChooseDayPass={(item) => {
+            onChooseDayPass(item);
+          }}
+          title={dayPass}
+          type="0"
+        />
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          {checkDayEnd && (
+            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (đến)</Text>
+          )}
+          {checkDayEnd1 && (
+            <Text style={{color: 'red'}}>
+              * Vui lòng chọn năm học (đến) lớn hơn
+            </Text>
+          )}
+          {checkDayEnd2 && (
+            <Text style={{color: 'red'}}>
+              * Vui lòng chọn năm học (đến) lớn hơn
+            </Text>
+          )}
+        </View>
+
+        <DatetimeEnd
+          OnChooseDayEnd={(item) => {
+            onChooseDayEnd(item);
+          }}
+          title={dayEnd}
+          type="0"
+        />
+
+       
 
         <View
           style={{

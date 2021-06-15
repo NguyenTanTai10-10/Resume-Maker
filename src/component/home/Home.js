@@ -8,6 +8,7 @@ import {
   ScrollView,
   Linking,
   Alert,
+  Share,
 } from 'react-native';
 import Images from '../../res/image';
 import {screenWidth} from '../../res/style/theme';
@@ -41,7 +42,7 @@ const Home = (props) => {
         const kq2 = 140 - (props.dataUser.percent_cv * 140) / 100;
         setWidthNoPercent(kq2);
         setDataEducation(props.dataUser.qualifications);
-        setDataSkill(props.dataUser.skills)
+        setDataSkill(props.dataUser.skills);
       } else {
         setTimeout(() => {
           Alert.alert('Thông báo', props.messageUser);
@@ -83,11 +84,31 @@ const Home = (props) => {
       props.navigation.navigate('ListEducationContainer');
     }
   };
-   const onSkill = () => {
+  const onSkill = () => {
     if (dataSkill.length === 0) {
       props.navigation.navigate('AddExperiencesContainer');
     } else if (dataEducation.length > 0) {
       props.navigation.navigate('ListExperienContainer');
+    }
+  };
+
+  //==========================
+  const onShare = async (item) => {
+    try {
+      const result = await Share.share({
+        message: item,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
     }
   };
 
@@ -136,7 +157,7 @@ const Home = (props) => {
                   width: 80,
                   resizeMode: 'cover',
                   borderRadius: 100,
-                  borderColor:"#FA8C16",
+                  borderColor: '#FA8C16',
                   borderWidth: 1,
 
                   bottom: '85%',
@@ -152,7 +173,7 @@ const Home = (props) => {
                   width: 80,
                   resizeMode: 'cover',
                   borderRadius: 100,
-                  borderColor:"#FA8C16",
+                  borderColor: '#FA8C16',
                   borderWidth: 1,
 
                   bottom: '85%',
@@ -208,7 +229,7 @@ const Home = (props) => {
                   />
                 </TouchableOpacity>
               </View>
-              <Text style={{marginTop: 10}}>Muc do hoan thien CV : 100%</Text>
+              <Text style={{marginTop: 10}}>Mức độ hoàn thiện CiVi : 100%</Text>
               <Slider
                 kq1={widthPercent === undefined ? 0 : widthPercent}
                 kq2={widthPercent === undefined ? 140 : widthNoPercent}
@@ -248,7 +269,10 @@ const Home = (props) => {
                       {data.link_web}
                     </Text>
                   </View>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      onShare(data.link_web);
+                    }}>
                     <Image
                       style={{height: 30, width: 30}}
                       source={require('../../res/image/img/new_icon_yourr_resume_link.png')}
@@ -403,7 +427,7 @@ const Home = (props) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() =>onSkill()}
+            onPress={() => onSkill()}
             style={{
               flexDirection: 'row',
               paddingVertical: 15,

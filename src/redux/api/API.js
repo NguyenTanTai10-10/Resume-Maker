@@ -591,6 +591,26 @@ function* getTechnique(input) {
 
   return temp;
 }
+function* updateTech(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'update_technique',
+      version: Ver,
+      params: {
+        technique_ids:input.technique_ids ,
+        user_id: input.user_id,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
 export const API = {
   LoginUser,
   CheckEmail,
@@ -618,4 +638,5 @@ export const API = {
   EditLang,
   DeleteLang,
   getTechnique,
+  updateTech,
 };

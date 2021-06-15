@@ -48,7 +48,7 @@ const ListExperienComponent = (props) => {
           [
             {
               text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
+              onPress: () => getData(),
               style: 'cancel',
             },
             {
@@ -90,19 +90,35 @@ const ListExperienComponent = (props) => {
     }
   };
 
-  const onDelete = () => {
-    props.deleteSkillAction({
-      education_id: eduction_Id,
-      user_id: user_Id,
-    });
+  const onDelete = (item) => {
+    Alert.alert(
+      'Bạn có muốn xóa không',
+      '',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            props.deleteSkillAction({
+              education_id: item,
+              user_id: user_Id,
+            });
+          },
+        },
+      ],
+      {cancelable: false},
+    );
   };
-  const OnNavigate = () => {
+  const OnNavigate = (item) => {
     setTimeout(() => {
-       props.navigation.navigate('EditSkillContainer', {
-      Skill_Id: skill_Id,
-    });
+      props.navigation.navigate('EditExpContainer', {
+        Skill_Id: item,
+      });
     }, 300);
-   
   };
 
   const renderItem = (item) => {
@@ -129,30 +145,50 @@ const ListExperienComponent = (props) => {
                 justifyContent: 'flex-start',
                 alignItems: 'center',
               }}>
-              <Image
-                source={require('../res/image/img/iconskill.png')}
-                style={{height: 23, width: 23, resizeMode: 'contain'}}
-              />
-              <Text>Kinh nghiệm : </Text>
-              <Text style={{marginLeft: 10}}>{item.item.skill}</Text>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  fontSize: 17,
+                  fontWeight: '700',
+                  color: 'gray',
+                }}>
+                {item.item.skill}
+              </Text>
             </View>
-            <TouchableOpacity
-              onPress={async () => {
-                setSkill_Id(item.item);
-                setEduction_Id(item.item.skill_id);
-                modal.current.open();
-              }}
-              style={{
-                height: 30,
-                width: 30,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../res/image/img/more(1).png')}
-                style={{height: 25, width: 25, resizeMode: 'contain'}}
-              />
-            </TouchableOpacity>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={async () => {
+                  OnNavigate(item.item);
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/edit.png')}
+                  style={{height: 20, width: 20, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  //  setSkill_Id(item.item);
+                  // await setEduction_Id(item.item.skill_id);
+                  onDelete(item.item.skill_id);
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/trash.png')}
+                  style={{height: 20, width: 20, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
           <View
             style={{
@@ -160,52 +196,17 @@ const ListExperienComponent = (props) => {
               justifyContent: 'flex-start',
               alignItems: 'center',
             }}>
-            <Image
-              source={require('../res/image/img/iconnamecompany.png')}
-              style={{height: 25, width: 25, resizeMode: 'contain'}}
-            />
-            <Text>Tên công ty : </Text>
-            <Text style={{marginLeft: 10, width: '50%'}} numberOfLines={1}>
-              {item.item.company_name}
+            <Text
+              style={{marginLeft: 10, width: '50%', color: '#FFA39E'}}
+              numberOfLines={1}>
+              {item.item.company_name} -{' '}
+              {`${item.item.working_time_month_begin}/${item.item.working_time_year_begin} - ${item.item.working_time_month_end}/${item.item.working_time_year_end}`}
             </Text>
           </View>
-          <Text>Công việc chính</Text>
-          <View style={{borderWidth:1, borderRadius:10, borderColor:'#D9D9D9'}}>
-              <Text numberOfLines={3} style={{marginHorizontal:4, marginVertical:4}}>
-                  {item.item.main_job}
 
-              </Text>
-
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/iconbirthday.png')}
-              style={{height: 25, width: 25, resizeMode: 'contain'}}
-            />
-            <Text>Thời gian : </Text>
-            <Text
-              style={{
-                marginLeft: 10,
-              }}>{`${item.item.working_time_month_begin}/${item.item.working_time_year_begin} - ${item.item.working_time_month_end}/${item.item.working_time_year_end}`}</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/icondegree.png')}
-              style={{height: 25, width: 25, resizeMode: 'contain'}}
-            />
-            <Text>Cấp bậc : </Text>
-            <Text style={{marginLeft: 10, width: '60%'}} numberOfLines={1}>
-              {item.item.level}
+          <View style={{borderRadius: 10, borderColor: '#D9D9D9'}}>
+            <Text numberOfLines={3} style={{marginLeft: 10, color: '#FFC069'}}>
+              Công việc chính : {item.item.main_job}
             </Text>
           </View>
         </View>
@@ -311,7 +312,7 @@ const ListExperienComponent = (props) => {
             }}>
             <Image
               source={require('../res/image/img/left-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
+              style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
             <Text style={{color: 'black'}}>Trở về</Text>
           </TouchableOpacity>
@@ -330,11 +331,11 @@ const ListExperienComponent = (props) => {
             <Text style={{color: 'black'}}>Tiếp tục</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
+              style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>
-        <BottomSheetChoose
+        {/* <BottomSheetChoose
           onPressNavigation={() => {
             OnNavigate()
           }}
@@ -345,7 +346,7 @@ const ListExperienComponent = (props) => {
           title="Chỉnh sửa thông tin"
           // data={eductionId}
           modalHeight={200}
-        />
+        /> */}
       </ScrollView>
     </View>
   );

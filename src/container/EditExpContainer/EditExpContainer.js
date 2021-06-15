@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import EditSkillComponent from '../../component/EditSkillComponent';
+import EditExpComponent from '../../component/EditExpComponent';
 
 import {getLeverSr6Action, editSkillAction,logoutSkillAction} from '../../redux/actions/Action';
 
-export class EditSkillContainer extends Component {
+export class EditExpContainer extends Component {
   render() {
-    return <EditSkillComponent {...this.props} />;
+    return <EditExpComponent {...this.props} />;
   }
 }
 
@@ -35,4 +35,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditSkillContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(EditExpContainer);

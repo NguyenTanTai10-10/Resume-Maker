@@ -16,9 +16,9 @@ export class ListLanguageContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-   console.log('====================================');
-   console.log(state.editLangReducer);
-   console.log('====================================');
+   // console.log('====================================');
+   // console.log(state.editLangReducer);
+   // console.log('====================================');
    return {
       statusUser: state.userInfoReducer.status,
       dataUser: state.userInfoReducer.data,

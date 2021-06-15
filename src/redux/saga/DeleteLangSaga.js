@@ -7,7 +7,7 @@ import { API } from '../api/API';
 function* DeleteLangFlow(action) {
     try {
 		const response = yield API.DeleteLang(action.input);
-		console.log('response - updateCheckListApi: ', response)
+		// console.log('response - updateCheckListApi: ', response)
 
 		if (response !== null && response !== undefined) {
 			yield put({ type: DELETE_LANGUAGE_SUCCESS, data: response

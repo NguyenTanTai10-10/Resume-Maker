@@ -359,3 +359,20 @@ export const getTechniqueAction = (input) => {
     input: input,
   };
 };
+//===================================================================================
+export const UPDATE_TECHNIQUE = 'UPDATE_TECHNIQUE';
+export const UPDATE_TECHNIQUE_SUCCESS = 'UPDATE_TECHNIQUE_SUCCESS';
+export const UPDATE_TECHNIQUE_ERROR = 'UPDATE_TECHNIQUE_ERROR';
+export const updateTechAction = (input) => {
+
+  return {
+    type: UPDATE_TECHNIQUE,
+    input: input,
+  };
+};
+export const LOGOUT_UPDATE_TECHNIQUE = 'LOGOUT_UPDATE_TECHNIQUE';
+export const logoutUpdateTechAction = () => {
+  return {
+    type: LOGOUT_UPDATE_TECHNIQUE,
+  };
+};

@@ -29,11 +29,12 @@ import AddEducationContainer from './src/container/AddEducationContainer/AddEduc
 import  EditEducationContainer  from './src/container/EditEducationContainer/EditEducationContainer';
 import  ListExperienContainer  from './src/container/ListExperienContainer/ListExperienContainer';
 import  AddExperiencesContainer  from './src/container/AddExperiencesContainer/AddExperiencesContainer';
-import  EditSkillContainer  from './src/container/EditSkillContainer/EditSkillContainer';
+
 import  AddLanguageContainer  from './src/container/AddLanguageContainer/AddLanguageContainer';
 import  ListLanguageContainer  from './src/container/ListLanguageContainer/ListLanguageContainer';
 import  EditLanguageContainer  from './src/container/EditLanguageContainer/EditLanguageContainer';
 import  SkillsContainer  from './src/container/SkillsContainer/SkillsContainer';
+import EditExpContainer from './src/container/EditExpContainer/EditExpContainer';
 
 
 
@@ -108,8 +109,8 @@ const App = () => {
           component={AddExperiencesContainer}
         />
         <Stack.Screen
-          name="EditSkillContainer"
-          component={EditSkillContainer}
+          name="EditExpContainer"
+          component={EditExpContainer}
         />
          <Stack.Screen
           name="AddLanguageContainer"

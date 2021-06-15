@@ -20,11 +20,11 @@ import LoadingView from './custom/LoadingView';
 
 import StatusBarView from './custom/StatusBarView';
 
-const EditSkillComponent = (props) => {
+const EditExpComponent = (props) => {
   useEffect(() => {
       const dataSkill = props.route.params.Skill_Id
       console.log('====================================');
-      console.log(props.route.params.Skill_Id);
+      console.log(props);
       console.log('====================================');
       setNameCompany(dataSkill.company_name)
       setExp(dataSkill.skill)
@@ -429,6 +429,62 @@ const EditSkillComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             marginTop: 20,
+          }}>
+          {checkLever && (
+            <Text style={{color: 'red'}}>* Vui lòng chọn cấp bậc</Text>
+          )}
+        </View>
+        <TouchableOpacity
+          onPress={() => modal.current.open()}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderBottomColor: '#FA8C16',
+            borderBottomWidth: 2,
+            marginHorizontal: 80,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../res/image/img/icondegree.png')}
+              style={{height: 35, width: 35, resizeMode: 'contain'}}
+            />
+            <Text
+              style={{
+                marginLeft: 15,
+                color: lever_Name === 'Cấp bật' ? '#BFBFBF' : 'black',
+              }}>
+              {lever_Name}
+            </Text>
+          </View>
+          {clearLever && (
+            <TouchableOpacity
+              onPress={() => {
+                onClearLever();
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/icon_close.png')}
+                style={{height: 15, width: 15, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          )}
+        </TouchableOpacity>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
           }}></View>
         <View
           style={{
@@ -508,62 +564,7 @@ const EditSkillComponent = (props) => {
           type="1"
         />
 
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkLever && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn cấp bậc</Text>
-          )}
-        </View>
-        <TouchableOpacity
-          onPress={() => modal.current.open()}
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomColor: '#FA8C16',
-            borderBottomWidth: 2,
-            marginHorizontal: 80,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/icondegree.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <Text
-              style={{
-                marginLeft: 15,
-                color: lever_Name === 'Cấp bật' ? '#BFBFBF' : 'black',
-              }}>
-              {lever_Name}
-            </Text>
-          </View>
-          {clearLever && (
-            <TouchableOpacity
-              onPress={() => {
-                onClearLever();
-              }}
-              style={{
-                height: 30,
-                width: 30,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../res/image/img/icon_close.png')}
-                style={{height: 15, width: 15, resizeMode: 'contain'}}
-              />
-            </TouchableOpacity>
-          )}
-        </TouchableOpacity>
+        
 
         <View
           style={{
@@ -607,5 +608,5 @@ const EditSkillComponent = (props) => {
   );
 };
 
-export default EditSkillComponent;
+export default EditExpComponent;
 

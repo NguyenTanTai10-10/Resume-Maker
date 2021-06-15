@@ -828,12 +828,13 @@ const BasicInfoComponent = (props) => {
           </View>
 
           <TouchableOpacity onPress={() => modal2.current.open()}>
-            <Image
-              source={require('../res/image/img/list.png')}
-              style={{height: 30, width: 30, resizeMode: 'contain'}}
+          <Image
+              source={require('../res/image/img/down-arrow.png')}
+              style={{height: 15, width: 15, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>
+        
 
         <View
           style={{

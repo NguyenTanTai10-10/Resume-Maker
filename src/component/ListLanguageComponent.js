@@ -64,7 +64,6 @@ const ListLanguageComponent = (props) => {
       }
     } else if (props.errorDelete !== null) {
       Alert.alert('Thông báo', props.errorDelete);
-      
     }
   }, [props.statusDelete]);
   const getData = async () => {
@@ -92,16 +91,34 @@ const ListLanguageComponent = (props) => {
     }
   };
 
-  const onDelete = () => {
-    props.deleteLangAction({
-      lang_id: language_Id,
-      user_id: user_Id,
-    });
+  const onDelete = (item) => {
+    Alert.alert(
+      'Bạn có muốn xóa không',
+      '',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            props.deleteLangAction({
+              lang_id: item,
+              user_id: user_Id,
+            });
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+    
   };
-  const OnNavigate = () => {
+  const OnNavigate = (item) => {
     setTimeout(() => {
       props.navigation.navigate('EditLanguageContainer', {
-         DataLang: dataItem,
+        DataLang: item,
       });
     }, 300);
   };
@@ -142,14 +159,44 @@ const ListLanguageComponent = (props) => {
                 justifyContent: 'flex-start',
                 alignItems: 'center',
               }}>
-              <Image
-                source={require('../res/image/img/translate(1).png')}
-                style={{height: 23, width: 23, resizeMode: 'contain'}}
-              />
-              <Text style={{marginLeft: 10}}>Ngôn ngữ : </Text>
-              <Text style={{marginLeft: 10}}>{item.item.language}</Text>
+              <Text style={{marginLeft: 10, fontSize: 17, color: 'gray', fontWeight: '700',}}>
+                {item.item.language}
+              </Text>
             </View>
-            <TouchableOpacity
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={ () => {
+                  OnNavigate(item.item);
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/edit.png')}
+                  style={{height: 20, width: 20, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={ () => {
+                  onDelete(item.item.lang_id);
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/trash.png')}
+                  style={{height: 20, width: 20, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+            </View>
+
+            {/* <TouchableOpacity
               onPress={async () => {
                 setDataItem(item.item);
                 setLanguage_Id(item.item.lang_id);
@@ -165,7 +212,7 @@ const ListLanguageComponent = (props) => {
                 source={require('../res/image/img/more(1).png')}
                 style={{height: 25, width: 25, resizeMode: 'contain'}}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <View
             style={{
@@ -173,12 +220,9 @@ const ListLanguageComponent = (props) => {
               justifyContent: 'flex-start',
               alignItems: 'center',
             }}>
-            <Image
-              source={require('../res/image/img/iconrank.png')}
-              style={{height: 23, width: 23, resizeMode: 'contain'}}
-            />
-            <Text style={{marginLeft: 10}}>Trình độ : </Text>
-            <Text style={{marginLeft: 10}}>{chooseDegree(item.item.degree)}</Text>
+            <Text style={{marginLeft: 10, color: '#FFC069'}}>
+              {chooseDegree(item.item.degree)}
+            </Text>
           </View>
         </View>
       </View>
@@ -262,7 +306,6 @@ const ListLanguageComponent = (props) => {
           style={{
             marginBottom: 20,
             marginTop: 10,
-
             justifyContent: 'space-between',
             alignItems: 'center',
             flexDirection: 'row',
@@ -278,12 +321,11 @@ const ListLanguageComponent = (props) => {
               height: 50,
               width: (screenWidth * 0.7) / 2,
               flexDirection: 'row',
-
               borderRadius: 13,
             }}>
             <Image
               source={require('../res/image/img/left-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
+              style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
             <Text style={{color: 'black'}}>Trở về</Text>
           </TouchableOpacity>
@@ -293,31 +335,29 @@ const ListLanguageComponent = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'row',
-
               height: 50,
               width: (screenWidth * 0.7) / 2,
-
               borderRadius: 13,
             }}>
             <Text style={{color: 'black'}}>Tiếp tục</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
+              style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>
-        <BottomSheetChoose
-            onPressNavigation={() => {
-              OnNavigate()
-            }}
-            OnDelete={() => {
-              onDelete();
-            }}
+        {/* <BottomSheetChoose
+          onPressNavigation={() => {
+            OnNavigate();
+          }}
+          OnDelete={() => {
+            onDelete();
+          }}
           ref={modal}
           title="Chỉnh sửa thông tin"
           // data={eductionId}
           modalHeight={200}
-        />
+        /> */}
       </ScrollView>
     </View>
   );
