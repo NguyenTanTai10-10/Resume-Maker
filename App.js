@@ -35,6 +35,7 @@ import  ListLanguageContainer  from './src/container/ListLanguageContainer/ListL
 import  EditLanguageContainer  from './src/container/EditLanguageContainer/EditLanguageContainer';
 import  SkillsContainer  from './src/container/SkillsContainer/SkillsContainer';
 import EditExpContainer from './src/container/EditExpContainer/EditExpContainer';
+import i18n from './src/Language/LanguageContext'
 
 
 

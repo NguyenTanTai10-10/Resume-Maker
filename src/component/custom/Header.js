@@ -7,81 +7,70 @@ import {
   ImageBackground,
   Image,
   Platform,
-  
 } from 'react-native';
-
 
 import Images from '../../res/image';
 import {colors, screenWidth, screenHeight} from '../../res/style/theme';
 import Sizes from '../../utils/Sizes';
 import StatusBarView from './StatusBarView';
 
-const Header = props => {
- 
+const Header = (props) => {
   // console.log('props===',props);
   const iconBack = () => (
     <TouchableOpacity
-      
       style={styles.iconBack}
       onPress={() => props.onPressBack()}>
-      <Image source={Images.arrow} style={{width: Sizes.s50,
-        height: Sizes.s50,}} />
+      <Image
+        source={Images.arrow}
+        style={{width: Sizes.s50, height: Sizes.s50}}
+      />
     </TouchableOpacity>
   );
   const iconMenu = () => (
     <TouchableOpacity
-      
       style={styles.iconBack}
       onPress={() => props.onPressMenu()}>
-      <Image source={require('../../res/image/img/list.png')} style={{width: Sizes.s50,
-        height: Sizes.s50,}} />
+      <Image
+        source={require('../../res/image/img/list.png')}
+        style={{width: Sizes.s50, height: Sizes.s50}}
+      />
     </TouchableOpacity>
   );
   const iconRight = () => (
-    <View style={{
-        
+    <View
+      style={{
         height: Sizes.s80,
         marginHorizontal: Sizes.s20,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection:'row',
-        
-        
+        flexDirection: 'row',
       }}>
-         <TouchableOpacity
-     
-      onPress={() => props.onPressRightVN()}>
-        <Image source={require('../../res/image/img/flag_vietnam.png')} style={{width: Sizes.s50, 
-        height: Sizes.s50,}} />
-        
-        
-        
-      
-    </TouchableOpacity>
-    <TouchableOpacity
-      
-      onPress={() => props.onPressRightEN()}>
-        
-        <Image source={require('../../res/image/img/flag_english.png')} style={{width: Sizes.s50,marginLeft:10,
-        height: Sizes.s50,}} />
-        
-        
-      
-    </TouchableOpacity>
+      <TouchableOpacity onPress={() => props.onPressRightVN()}>
+        <Image
+          source={require('../../res/image/img/flag_vietnam.png')}
+          style={{width: Sizes.s50, height: Sizes.s50}}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => props.onPressRightEN()}>
+        <Image
+          source={require('../../res/image/img/flag_english.png')}
+          style={{width: Sizes.s50, marginLeft: 10, height: Sizes.s50}}
+        />
+      </TouchableOpacity>
     </View>
- 
   );
-  
+
   const textRight = () => (
     <TouchableOpacity
-      
-      style={{ marginHorizontal: Sizes.s20,
-      width: Sizes.s80,
+      style={{
+        marginHorizontal: Sizes.s20,
+        width: Sizes.s80,
         height: Sizes.s80,
         justifyContent: 'center',
-        alignItems: 'center',}}
+        alignItems: 'center',
+      }}
       onPress={() => props.onPressNavigate()}>
-      <Text  style={{color:'white', fontSize:Sizes.h34 ,fontWeight: '700',}} >
+      <Text style={{color: 'white', fontSize: Sizes.h34, fontWeight: '700'}}>
         abc
       </Text>
     </TouchableOpacity>
@@ -89,7 +78,6 @@ const Header = props => {
   //////////////////////////////////
   return (
     <View>
-      
       <StatusBarView />
       {/* <View style={styles.container}> */}
       <ImageBackground
@@ -103,21 +91,25 @@ const Header = props => {
           // flex: 3,
           // flex:1
         }}>
-        <View style={{justifyContent: 'center', alignItems: 'flex-start' , flex:0.2}}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            flex: 0.2,
+          }}>
           {props.isShowMenu ? iconMenu() : null}
           {props.isShowBack ? iconBack() : null}
         </View>
 
-        <View style={{justifyContent: 'center', alignItems: 'center' , flex:0.6}}>
+        <View
+          style={{justifyContent: 'center', alignItems: 'center', flex: 0.6}}>
           <Text style={styles.title}>{props.title}</Text>
         </View>
-        <View style={{justifyContent: 'center', alignItems: 'flex-end' ,flex:0.2}}>
+        <View
+          style={{justifyContent: 'center', alignItems: 'flex-end', flex: 0.2}}>
           {props.isShowImage ? images(props.image) : null}
           {/* isShowRight */}
           {props.isShowRight ? iconRight() : null}
-          
-          
-          
 
           {props.isShowTextRight ? textRight() : null}
         </View>
@@ -131,10 +123,10 @@ export default Header;
 Header.defaultProps = {
   onPressBack: () => {},
   onPressMenu: () => {},
-  onPressRightVN :()=>{},
-  onPressRightEN :()=>{},
-  onPressNavigate:()=>{},
-  onPressImage :()=>{}
+  onPressRightVN: () => {},
+  onPressRightEN: () => {},
+  onPressNavigate: () => {},
+  onPressImage: () => {},
 };
 const styles = StyleSheet.create({
   container: {
@@ -158,6 +150,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: Sizes.h32,
     justifyContent: 'center',
     alignItems: 'center',
-     
   },
 });

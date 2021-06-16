@@ -10,14 +10,17 @@ import {
   Alert,
   Share,
 } from 'react-native';
-import Images from '../../res/image';
+
 import {screenWidth} from '../../res/style/theme';
 import Header from '../custom/Header';
 import LoadingView from '../custom/LoadingView';
 import Slider from '../custom/Slider';
-// import Slider from '../custom/Slider'
+import { useTranslation } from 'react-i18next';
+
+
 
 const Home = (props) => {
+  const {t,i18n} = useTranslation()
   const [data, setData] = useState('');
   const [ImagesAVT, setImagesAVT] = useState(false);
 
@@ -25,6 +28,8 @@ const Home = (props) => {
   const [widthNoPercent, setWidthNoPercent] = useState();
   const [dataEducation, setDataEducation] = useState('');
   const [dataSkill, setDataSkill] = useState('');
+  const [percent_cv, setPercent_cv] = useState('');
+
   useEffect(() => {
     getData();
   }, []);
@@ -35,6 +40,7 @@ const Home = (props) => {
         setImagesAVT(true);
 
         setData(props.dataUser);
+        setPercent_cv(props.dataUser.percent_cv);
 
         const kq1 = (props.dataUser.percent_cv * 140) / 100;
         setWidthPercent(kq1);
@@ -111,6 +117,19 @@ const Home = (props) => {
       alert(error.message);
     }
   };
+  //=================================
+  const onPressVn = () => {
+    console.log('123');
+     
+    i18n.changeLanguage('vn')
+
+    // this.props.i18n.changeLanguage('en')
+  };
+  const onPressEn = () => {
+    i18n.changeLanguage('en');
+
+    // this.props.i18n.changeLanguage('en')
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
@@ -120,8 +139,8 @@ const Home = (props) => {
         isShowMenu
         onPressMenu={() => props.navigation.openDrawer()}
         isShowRight
-        onPressRightVN={() => console.log('VN')}
-        onPressRightEN={() => console.log('EN')}
+        onPressRightVN={() => onPressVn()}
+        onPressRightEN={() => onPressEn()}
       />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View
@@ -220,7 +239,8 @@ const Home = (props) => {
                 <TouchableOpacity
                   style={{}}
                   onPress={() => {
-                    console.log('123');
+                    // onPressVn('vn')
+                    // console.log('123');
                     Linking.openURL(data.link_web);
                   }}>
                   <Image
@@ -229,7 +249,9 @@ const Home = (props) => {
                   />
                 </TouchableOpacity>
               </View>
-              <Text style={{marginTop: 10}}>Mức độ hoàn thiện CiVi : 100%</Text>
+              <Text style={{marginTop: 10}}>
+                {t('Mức độ hoàn thiện CiVi')} : {percent_cv}%
+              </Text>
               <Slider
                 kq1={widthPercent === undefined ? 0 : widthPercent}
                 kq2={widthPercent === undefined ? 140 : widthNoPercent}
