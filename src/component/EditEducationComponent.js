@@ -249,7 +249,7 @@ const EditEducationComponent = (props) => {
 
   return (
     <View style={{flex: 1}}>
-      {props.loadingFunc && <LoadingView />}
+      {props.loadingFunc  && <LoadingView />}
       {props.loadingQua && <LoadingView />}
       {props.loadingEditEdu && <LoadingView />}
       <StatusBarView />

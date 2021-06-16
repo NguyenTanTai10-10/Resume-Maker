@@ -320,7 +320,7 @@ const ResumeHomeComponent = (props) => {
           <Text style={{color: 'black'}}>Tiếp tục</Text>
           <Image
             source={require('../res/image/img/right-arrow.png')}
-            style={{height: 35, width: 35, resizeMode: 'contain'}}
+            style={{height: 30, width: 30, resizeMode: 'contain'}}
           />
         </TouchableOpacity>
       </View>

@@ -35,57 +35,51 @@ const DrawerComponent = (props) => {
         </View>
         <View style={{marginHorizontal:20,marginTop:20, flex:0.7}}>
           <Text style={{fontSize: 17,}}>
-            ACCOUNT SETTING
+            Cài đặt tài khoản
           </Text>
           <TouchableOpacity style={{ alignItems:'center',flexDirection :'row',marginLeft:30, marginVertical:10}}>
           <Image style={{height:20, width:20 }} source={require('../../res/image/img/icon_edit_account.png')}/>
           <Text style={{marginLeft:15, fontSize: 12}}>
-            EDIT ACCOUNT
+            Thay đổi thông tin
           </Text>
 
           </TouchableOpacity>
           <TouchableOpacity style={{ alignItems:'center',flexDirection :'row',marginLeft:30, marginVertical:10}}>
           <Image style={{height:25, width:25 }} source={require('../../res/image/img/icon_change_password.png')}/>
           <Text style={{marginLeft:15, fontSize: 12}}>
-            CHANGE PASSWORD
+            Thay đổi mật khẩu
           </Text>
 
           </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems:'center',flexDirection :'row',marginLeft:30, marginVertical:10}}>
-          <Image style={{height:25, width:25 }} source={require('../../res/image/img/icon_sns_connection.png')}/>
-          <Text style={{marginLeft:15, fontSize: 12,}}>
-            SNS CONNECTION
-          </Text>
-
-          </TouchableOpacity>
+         
           <Text style={{fontSize: 17,marginTop:15}}>
-            SETTING
+            Cài đặt
           </Text>
           <TouchableOpacity style={{ alignItems:'center',flexDirection :'row',marginLeft:30, marginVertical:10}}>
           <Image style={{height:25, width:25 }} source={require('../../res/image/img/icon_rating_app.png')}/>
           <Text style={{marginLeft:15, fontSize: 12}}>
-            RETING APP
+            Đánh giá 
           </Text>
 
           </TouchableOpacity>
           <TouchableOpacity style={{ alignItems:'center',flexDirection :'row',marginLeft:30, marginVertical:10}}>
           <Image style={{height:25, width:25 }} source={require('../../res/image/img/icon_send_feedback.png')}/>
           <Text style={{marginLeft:15, fontSize: 12}}>
-            SEND FEEBACK
+            Phản hồi
           </Text>
 
           </TouchableOpacity>
           <TouchableOpacity style={{ alignItems:'center',flexDirection :'row',marginLeft:30, marginVertical:10}}>
           <Image style={{height:25, width:25 }} source={require('../../res/image/img/icon_privacy_policy.png')}/>
           <Text style={{marginLeft:15, fontSize: 12}}>
-            PRIVACYPOLICY
+            Chính sách bảo mật
           </Text>
 
           </TouchableOpacity>
           <TouchableOpacity style={{ alignItems:'center',flexDirection :'row',marginLeft:30, marginVertical:10}}>
           <Image style={{height:25, width:25 }} source={require('../../res/image/img/icon_term_and_condition.png')}/>
           <Text style={{marginLeft:15, fontSize: 12}}>
-            TERM AND CONDITION
+            Điều khoàn và điều kiện
           </Text>
 
           </TouchableOpacity>
@@ -95,7 +89,7 @@ const DrawerComponent = (props) => {
           }
          }>
           <Text style={{fontSize: 17,}}>
-            LOGOUT
+            Đăng xuất
           </Text>
           </TouchableOpacity>
 

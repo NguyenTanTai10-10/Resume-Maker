@@ -299,7 +299,7 @@ const ListExperienComponent = (props) => {
           <TouchableOpacity
             onPress={async () => {
               await props.logoutDeleteSkillAction();
-              await props.navigation.goBack();
+              await props.navigation.navigate('HomeContainer');
             }}
             style={{
               justifyContent: 'center',
@@ -314,7 +314,7 @@ const ListExperienComponent = (props) => {
               source={require('../res/image/img/left-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
-            <Text style={{color: 'black'}}>Trở về</Text>
+            <Text style={{color: 'black'}}>Trang chủ</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

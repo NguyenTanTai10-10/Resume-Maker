@@ -418,6 +418,10 @@ const BasicInfoComponent = (props) => {
     <View style={{flex: 1}}>
       {props.loadingUser && <LoadingView />}
       {props.loadingEditCv && <LoadingView />}
+      {/* {props.loadingLever && <LoadingView />}
+      {props.loadingIndustry && <LoadingView />} */}
+      
+      
 
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
@@ -690,7 +694,7 @@ const BasicInfoComponent = (props) => {
           )}
 
           <Text style={{alignSelf: 'center', marginLeft: 15}}>
-            Không hiển thị
+           Thỏa thuận
           </Text>
         </TouchableOpacity>
         <View
@@ -887,7 +891,7 @@ const BasicInfoComponent = (props) => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.goBack();
+              props.navigation.navigate('HomeContainer');
               props.logoutEditCiviAction()
             }}
             style={{
@@ -901,12 +905,13 @@ const BasicInfoComponent = (props) => {
             }}>
             <Image
               source={require('../res/image/img/left-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
+              style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
-            <Text style={{color: 'black'}}>Trở về</Text>
+            <Text style={{color: 'black'}}>Trang chủ</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
+          onPress={()=> props.navigation.navigate('ListLanguageContainer')}
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -920,7 +925,7 @@ const BasicInfoComponent = (props) => {
             <Text style={{color: 'black'}}>Tiếp tục</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
+              style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>

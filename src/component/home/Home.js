@@ -250,7 +250,7 @@ const Home = (props) => {
                     fontSize: 15,
                     fontWeight: '700',
                   }}>
-                  Your resume link
+                  Liên kết của ban
                 </Text>
                 <View style={{flexDirection: 'row'}}>
                   <View
@@ -298,7 +298,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/icon_resume_title.png')}
               />
-              <Text style={{marginLeft: 10}}>Resume Title</Text>
+              <Text style={{marginLeft: 10}}>Tiêu đề Civi</Text>
             </View>
             <View
               style={{
@@ -326,7 +326,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/icon_contact_information.png')}
               />
-              <Text style={{marginLeft: 10}}>Contact Information</Text>
+              <Text style={{marginLeft: 10}}>Thông tin liên lạc</Text>
             </View>
             <View
               style={{
@@ -355,7 +355,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/icon_basic_information.png')}
               />
-              <Text style={{marginLeft: 10}}>Basic Information</Text>
+              <Text style={{marginLeft: 10}}>Thông tin xin việc</Text>
             </View>
             <View
               style={{
@@ -384,7 +384,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/translate.png')}
               />
-              <Text style={{marginLeft: 10}}>Language</Text>
+              <Text style={{marginLeft: 10}}>Ngôn ngữ</Text>
             </View>
             <View
               style={{
@@ -412,7 +412,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/new_icon_education.png')}
               />
-              <Text style={{marginLeft: 10}}>Education</Text>
+              <Text style={{marginLeft: 10}}>Trình độ học vấn</Text>
             </View>
             <View
               style={{
@@ -440,7 +440,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/new_icon_experiences.png')}
               />
-              <Text style={{marginLeft: 10}}>Experiences</Text>
+              <Text style={{marginLeft: 10}}>Kinh nghiệm làm việc</Text>
             </View>
             <View
               style={{
@@ -468,7 +468,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/new_icon_skills.png')}
               />
-              <Text style={{marginLeft: 10}}>Skills</Text>
+              <Text style={{marginLeft: 10}}>Kỹ năng</Text>
             </View>
             <View
               style={{
@@ -499,7 +499,7 @@ const Home = (props) => {
               borderRadius: 13,
             }}>
             <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-              Export CV
+              Xuất PDF
             </Text>
           </TouchableOpacity>
         </View>

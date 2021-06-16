@@ -153,6 +153,7 @@ const SkillsComponent = (props) => {
   }, [props.statusTech]);
   //===================================================
   const onChooseTech = async (item) => {
+    setCheck(false)
     setCheckTech(false);
     setCheckTitle(true);
     // console.log(item);
@@ -179,6 +180,7 @@ const SkillsComponent = (props) => {
   };
   const onDeleteTech = (items) => {
     // setCheck(false)
+    setCheck(false)
     const new_arr = nameTechnique.filter((item) => item !== items);
     console.log('====================================');
     console.log('arr===', new_arr);
@@ -382,8 +384,9 @@ const SkillsComponent = (props) => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('HomeContainer');
+              onPress={async() => {
+                await props.logoutUpdateTechAction()
+                await props.navigation.navigate('HomeContainer');
               }}
               style={{
                 justifyContent: 'center',
@@ -409,11 +412,7 @@ const SkillsComponent = (props) => {
             flexDirection: 'row',
           }}>
           <TouchableOpacity
-            onPress={async () => { 
-              await props.logoutUpdateTechAction();
-              await props.navigation.goBack();
-             
-            }}
+           
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -423,11 +422,7 @@ const SkillsComponent = (props) => {
 
               borderRadius: 13,
             }}>
-            <Image
-              source={require('../res/image/img/left-arrow.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <Text style={{color: 'black'}}>Trở về</Text>
+            
           </TouchableOpacity>
 
           <TouchableOpacity
