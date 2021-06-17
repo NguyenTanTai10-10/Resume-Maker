@@ -7,7 +7,6 @@ const initState = {
   error: null,
 };
 const loginReducer = (state = initState, action) => {
- 
   switch (action.type) {
     case LOGIN:
       console.log('LOGIN');
@@ -38,7 +37,7 @@ const loginReducer = (state = initState, action) => {
         loading: false,
         data: null,
 
-        message: 'Đăng nhập thất bại',
+        error: 'Lỗi sever',
       };
     case LOGOUT:
       return initState;

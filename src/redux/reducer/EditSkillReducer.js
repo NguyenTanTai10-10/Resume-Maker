@@ -32,7 +32,7 @@ import {
           data: action.data.result_data,
           error: null,
           message:
-            action.data.result_code === 1 ? 'Cập nhật thông tin thành công' : 'Cập nhật thất bại',
+            action.data.result_code === 1 ? 'Cập nhật thông tin thành công' : 'Cập nhật không thành công',
         };
   
       case EDIT_SKILL_ERROR:

@@ -12,19 +12,29 @@ import Header from '../custom/Header';
 import {screenHeight, screenWidth} from '../../res/style/theme';
 import LoadingView from '../custom/LoadingView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 
 const LoginHome = (props) => {
+  const {t} = useTranslation();
+  const [clearPassword, setClearPassword] = useState(false);
+  const [clearUser, setClearUser] = useState(false);
+  const [saveLogin, setSaveLogin] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [Check, setCheck] = useState(false);
-
-  const [username, setUsername] = useState('hotroviecoi@gmail.com');
-  const [password, setPassword] = useState('123456');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('1');
   const [registrationIds, setRegistrationIds] = useState('');
   const [FacebookId, setFacebookId] = useState('');
   const [GoogleId, setGoogleId] = useState('');
   const onPressLogin = () => {
-    if (username === '') {
-      Alert.alert('Lưu ý', 'Bạn phải nhập đầy đủ thông tin đăng nhập');
+    if (
+      username === '' ||
+      password === '' ||
+      password.trim() === '' ||
+      username.trim() === ''
+    ) {
+      Alert.alert(t('Lưu ý'), t('Bạn phải nhập đầy đủ thông tin đăng nhập'));
     } else {
       props.loginAction({
         email: username,
@@ -36,56 +46,114 @@ const LoginHome = (props) => {
       });
     }
   };
+  const SaveLogin = async () => {
+    if (saveLogin) {
+      try {
+        const jsonValue = JSON.stringify({
+          username: username,
+          password: password,
+        });
+        await AsyncStorage.setItem('@saveLogin', jsonValue);
+      } catch (e) {
+        // saving error
+      }
+    }
+  };
+  const onPressSaveLogin = async() => {
+    if (saveLogin=== false) {
+      setSaveLogin(!saveLogin) 
+      try {
+        await AsyncStorage.removeItem('@saveLogin');
+      } catch (e) {
+        // remove error
+      }
+    }
+    else if(saveLogin===true){
+      setSaveLogin(!saveLogin)
+    }
+    
+
+      
+    
+  };
+
   useEffect(() => {
+    getdata();
+  }, []);
+  const getdata = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@saveLogin');
+      if (jsonValue != null) {
+        var data = JSON.parse(jsonValue);
+        setUsername(data.username);
+        setPassword(data.password);
+        setSaveLogin(true);
+
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    console.log(props.status);
     if (props.status !== null) {
       if (props.status === 1) {
-        console.log(props.data.jobseeker_id);
+        SaveLogin();
         storeData(props.data.jobseeker_id);
-      } else {
-        setTimeout(() => {
-          Alert.alert('Thông báo', props.message);
-        }, 10);
+        // Alert.alert(t(props.message));
+      } else if (props.status === 0) {
+        Alert.alert(t(props.message));
       }
+    } else if (props.error !== null) {
+      Alert.alert(t(props.error));
     }
   }, [props.status]);
 
-  // useEffect(() => {
-  //   if (props.statusEmail !== null) {
-  //     setCheck(true);
-  //   } else if (props.errorEmail !== null) {
-  //     Alert.alert(props.errorEmail);
-  //   }
-  // }, [props.statusEmail]);
   const storeData = async (value) => {
     try {
       const jsonValue = JSON.stringify(value);
       await AsyncStorage.setItem('@jobseeker_id', jsonValue);
-      await props.navigation.replace('Drawers');
+      await Alert.alert(
+        t(props.message),
+        '',
+        [
+          {
+            text: 'OK',
+            onPress: async () => {
+              props.navigation.replace('Drawers');
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+      // await props.navigation.replace('Drawers');
     } catch (e) {
       // saving error
     }
   };
 
   const onChangeUser = (text) => {
+    setClearUser(true)
     setUsername(text);
   };
   const onChangePass = (text) => {
+    setClearPassword(true);
     setPassword(text);
   };
-  const emailValidation = (email) => {
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-    if (reg.test(email)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const onClearPassword =()=>{
+    setPassword('')
+    setClearPassword(false)
+  }
+  const onClearUser =()=>{
+    setUsername('')
+    setClearUser(false)
+  }
 
   return (
     <View style={{flex: 1}}>
       {props.loading && <LoadingView />}
-      <Header isShowBack onPressBack={() => props.navigation.goBack()} />
+      <Header />
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         <Image
           source={require('../../res/image/img/resumeicon.png')}
@@ -100,63 +168,150 @@ const LoginHome = (props) => {
             fontWeight: '700',
             marginTop: 30,
           }}>
-          Login
+          {t('Đăng nhập')}
         </Text>
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             alignItems: 'center',
             borderBottomColor: '#FA8C16',
             borderBottomWidth: 2,
-            marginHorizontal: 30,
-            marginTop: 10,
+            width: screenWidth * 0.6,
           }}>
           <Image
             source={require('../../res/image/img/iconemail.png')}
-            style={{height: 40, width: 40}}
+            style={{height: 35, width: 35}}
           />
           <TextInput
+          defaultValue={username}
             placeholder="Email"
             onChangeText={(text) => {
               onChangeUser(text);
             }}
-            style={{width: '70%'}}></TextInput>
+            style={{width: '75%'}}></TextInput>
+            {clearUser &&<TouchableOpacity
+                onPress={() => {
+                  onClearUser();
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../../res/image/img/icon_close.png')}
+                  style={{height: 15, width: 15, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity> }
+            
         </View>
-        {/* {Check === true ? (
-          <Text
-            style={{
-              color:
-                props.messageEmail === 'email đã được đăng ký'
-                  ? 'red'
-                  : '#2EB553',
-            }}>
-            {props.messageEmail}
-          </Text>
-        ) : null} */}
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomColor: '#FA8C16',
             borderBottomWidth: 2,
-            marginHorizontal: 30,
-            paddingVertical: 8,
+            width: screenWidth * 0.6,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../../res/image/img/padlock.png')}
+              style={{height: 35, width: 35}}
+            />
+            <TextInput
+            defaultValue={password}
+              secureTextEntry={showPassword}
+              placeholder={t('Mật khẩu')}
+              onChangeText={(text) => {
+                onChangePass(text);
+              }}
+              style={{width: '60%'}}></TextInput>
+          </View>
+
+          {clearPassword && (
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowPassword(!showPassword);
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {showPassword === true ? (
+                  <Image
+                    source={require('../../res/image/img/eye.png')}
+                    style={{height: 20, width: 25, resizeMode: 'contain'}}
+                  />
+                ) : (
+                  <Image
+                    source={require('../../res/image/img/invisible.png')}
+                    style={{height: 20, width: 25, resizeMode: 'contain'}}
+                  />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  onClearPassword();
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../../res/image/img/icon_close.png')}
+                  style={{height: 15, width: 15, resizeMode: 'contain'}}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            width: screenWidth * 0.6,
+          }}><TouchableOpacity
+          onPress={() => {
+            onPressSaveLogin();
+          }}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            
             marginTop: 10,
           }}>
-          <Image
-            source={require('../../res/image/img/padlock.png')}
-            style={{height: 35, width: 35}}
-          />
-          <TextInput
-            placeholder="Mật khẩu"
-            onChangeText={(text) => {
-              onChangePass(text);
-            }}
-            style={{width: '70%'}}></TextInput>
-        </View>
+          {saveLogin === false ? (
+            <Image
+              source={require('../../res/image/img/stop.png')}
+              style={{height: 17, width: 17, resizeMode: 'contain'}}
+            />
+          ) : (
+            <Image
+              source={require('../../res/image/img/check.png')}
+              style={{height: 17, width: 17, resizeMode: 'contain'}}
+            />
+          )}
 
+          <Text style={{alignSelf: 'center', marginLeft: 15 , color:'red'}}>
+           Lưu mật khẩu
+          </Text>
+        </TouchableOpacity></View>
+        
         <View style={{marginTop: 20}}>
           <TouchableOpacity
             onPress={() => {
@@ -171,10 +326,11 @@ const LoginHome = (props) => {
               alignItems: 'center',
             }}>
             <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>
-              Log in
+              {t('Đăng nhập')}
             </Text>
           </TouchableOpacity>
         </View>
+
         <View style={{marginTop: 20, flexDirection: 'row'}}>
           <TouchableOpacity
             style={{
@@ -219,10 +375,10 @@ const LoginHome = (props) => {
         <TouchableOpacity
           onPress={() => props.navigation.navigate('ListCVContainer')}
           style={{marginTop: 20}}>
-          <Text>Create a new account</Text>
+          <Text>{t('Tạo tài khoản')}</Text>
         </TouchableOpacity>
         <View style={{marginTop: 20}}>
-          <Text>Forget password</Text>
+          <Text>{t('Quên mật khẩu')}</Text>
         </View>
       </View>
     </View>

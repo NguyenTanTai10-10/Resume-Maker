@@ -6,6 +6,7 @@ import {screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
 import Header from './custom/Header';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const ResumeTitleComponent = (props) => {
   const [data, setData] = useState('');

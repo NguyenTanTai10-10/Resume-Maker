@@ -15,12 +15,10 @@ import {screenWidth} from '../../res/style/theme';
 import Header from '../custom/Header';
 import LoadingView from '../custom/LoadingView';
 import Slider from '../custom/Slider';
-import { useTranslation } from 'react-i18next';
-
-
+import {useTranslation} from 'react-i18next';
 
 const Home = (props) => {
-  const {t,i18n} = useTranslation()
+  const {t, i18n} = useTranslation();
   const [data, setData] = useState('');
   const [ImagesAVT, setImagesAVT] = useState(false);
 
@@ -37,7 +35,13 @@ const Home = (props) => {
   useEffect(() => {
     if (props.statusUser !== null) {
       if (props.statusUser === 1) {
-        setImagesAVT(true);
+        if(props.dataUser.profile_image !== ''){
+          setImagesAVT(true);
+        }
+        else if(props.dataUser.profile_image === ''){
+          setImagesAVT(false);
+        }
+        
 
         setData(props.dataUser);
         setPercent_cv(props.dataUser.percent_cv);
@@ -119,9 +123,7 @@ const Home = (props) => {
   };
   //=================================
   const onPressVn = () => {
-    console.log('123');
-     
-    i18n.changeLanguage('vn')
+    i18n.changeLanguage('vn');
 
     // this.props.i18n.changeLanguage('en')
   };
@@ -272,7 +274,7 @@ const Home = (props) => {
                     fontSize: 15,
                     fontWeight: '700',
                   }}>
-                  Liên kết của ban
+                  {t('Liên kết của bạn')}
                 </Text>
                 <View style={{flexDirection: 'row'}}>
                   <View
@@ -320,7 +322,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/icon_resume_title.png')}
               />
-              <Text style={{marginLeft: 10}}>Tiêu đề Civi</Text>
+              <Text style={{marginLeft: 10}}>{t('Tiêu đề Civi')}</Text>
             </View>
             <View
               style={{
@@ -348,7 +350,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/icon_contact_information.png')}
               />
-              <Text style={{marginLeft: 10}}>Thông tin liên lạc</Text>
+              <Text style={{marginLeft: 10}}>{t('Thông tin liên lạc')}</Text>
             </View>
             <View
               style={{
@@ -377,7 +379,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/icon_basic_information.png')}
               />
-              <Text style={{marginLeft: 10}}>Thông tin xin việc</Text>
+              <Text style={{marginLeft: 10}}>{t('Thông tin xin việc')}</Text>
             </View>
             <View
               style={{
@@ -406,7 +408,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/translate.png')}
               />
-              <Text style={{marginLeft: 10}}>Ngôn ngữ</Text>
+              <Text style={{marginLeft: 10}}>{t('Ngôn ngữ')}</Text>
             </View>
             <View
               style={{
@@ -434,7 +436,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/new_icon_education.png')}
               />
-              <Text style={{marginLeft: 10}}>Trình độ học vấn</Text>
+              <Text style={{marginLeft: 10}}>{t('Trình độ học vấn')}</Text>
             </View>
             <View
               style={{
@@ -462,7 +464,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/new_icon_experiences.png')}
               />
-              <Text style={{marginLeft: 10}}>Kinh nghiệm làm việc</Text>
+              <Text style={{marginLeft: 10}}>{t('Kinh nghiệm làm việc')}</Text>
             </View>
             <View
               style={{
@@ -490,7 +492,7 @@ const Home = (props) => {
                 style={{height: 30, width: 30}}
                 source={require('../../res/image/img/new_icon_skills.png')}
               />
-              <Text style={{marginLeft: 10}}>Kỹ năng</Text>
+              <Text style={{marginLeft: 10}}>{t('Kỹ năng')}</Text>
             </View>
             <View
               style={{
@@ -521,7 +523,7 @@ const Home = (props) => {
               borderRadius: 13,
             }}>
             <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-              Xuất PDF
+              {t('Xuất PDF')}
             </Text>
           </TouchableOpacity>
         </View>

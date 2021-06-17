@@ -5,6 +5,7 @@ const language = 'vi';
 import axios from 'axios';
 import {Alert} from 'react-native';
 function* LoginUser(input) {
+  // console.log('input', input);
   let temp;
   yield axios
     .post(urlSever, {
@@ -26,8 +27,7 @@ function* LoginUser(input) {
     .catch(function (error) {
       console.log(error);
     });
-  const result = yield temp.result_code === 1 ? temp : false;
-  return result;
+  return temp;
 }
 //========================================================
 function* CheckEmail(input) {
@@ -598,7 +598,7 @@ function* updateTech(input) {
       method: 'update_technique',
       version: Ver,
       params: {
-        technique_ids:input.technique_ids ,
+        technique_ids: input.technique_ids,
         user_id: input.user_id,
       },
     })
