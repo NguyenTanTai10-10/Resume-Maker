@@ -27,6 +27,13 @@ const Home = (props) => {
   const [dataEducation, setDataEducation] = useState('');
   const [dataSkill, setDataSkill] = useState('');
   const [percent_cv, setPercent_cv] = useState('');
+  const [emtyQua, setEmtyQua] = useState(false);
+  const [emtySkills, setEmtySkills] = useState(false);
+  const [emtyLangs, setEmtyLangs] = useState(false);
+  const [emtyTech, setEmtyTech] = useState(false);
+  const [emtyTitle, setEmtyTitle] = useState(false);
+  const [emtyEmail, setEmtyEmail] = useState(false);
+  const [emtyPlace, setEmtyPlace] = useState(false);
 
   useEffect(() => {
     getData();
@@ -35,13 +42,55 @@ const Home = (props) => {
   useEffect(() => {
     if (props.statusUser !== null) {
       if (props.statusUser === 1) {
-        if(props.dataUser.profile_image !== ''){
-          setImagesAVT(true);
+        if(props.dataUser.resume_title === ""){
+          setEmtyTitle(false)
         }
-        else if(props.dataUser.profile_image === ''){
+        else if(props.dataUser.resume_title !== "" ){
+          setEmtyTitle(true)
+        }
+        if(props.dataUser.email === ""){
+          setEmtyEmail(false)
+        }
+        else if(props.dataUser.email !== ""){
+          setEmtyEmail(true)
+        }
+        if(props.dataUser.workplace === ""){
+          setEmtyPlace(false)
+        }
+        else if(props.dataUser.workplace !== ""){
+          setEmtyPlace(true)
+        }
+        if(props.dataUser.qualifications.length === 0){
+          setEmtyQua(false)
+        }
+        else if(props.dataUser.qualifications.length !== 0){
+          setEmtyQua(true)
+        }
+        if(props.dataUser.skills.length === 0){
+          setEmtySkills(false)
+        }
+        else if(props.dataUser.skills.length !== 0){
+          setEmtySkills(true)
+        }
+        if(props.dataUser.langs.length === 0){
+          setEmtyLangs(false)
+        }
+        else if(props.dataUser.langs.length !== 0){
+          setEmtyLangs(true)
+        }
+        if(props.dataUser.techniques.length === 0){
+          setEmtyTech(false)
+        }
+        else if(props.dataUser.techniques.length !== 0){
+          setEmtyTech(true)
+        }
+
+        if (props.dataUser.profile_image !== '') {
+          
+          setImagesAVT(true);
+        } else if (props.dataUser.profile_image === '') {
           setImagesAVT(false);
         }
-        
 
         setData(props.dataUser);
         setPercent_cv(props.dataUser.percent_cv);
@@ -330,10 +379,17 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-              <Image
-                style={{height: 30, width: 30}}
-                source={require('../../res/image/img/icon_empty_tick.png')}
-              />
+              {emtyTitle === false ? (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_empty_tick.png')}
+                />
+              ) : (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_active_tick.png')}
+                />
+              )}
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -358,10 +414,17 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-              <Image
-                style={{height: 30, width: 30}}
-                source={require('../../res/image/img/icon_empty_tick.png')}
-              />
+              {emtyEmail === false  ? (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_empty_tick.png')}
+                />
+              ) : (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_active_tick.png')}
+                />
+              )}
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -387,10 +450,17 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-              <Image
-                style={{height: 30, width: 30}}
-                source={require('../../res/image/img/icon_empty_tick.png')}
-              />
+              {emtyPlace === false ? (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_empty_tick.png')}
+                />
+              ) : (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_active_tick.png')}
+                />
+              )}
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -416,10 +486,17 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-              <Image
-                style={{height: 30, width: 30}}
-                source={require('../../res/image/img/icon_empty_tick.png')}
-              />
+             {emtyLangs === false ? (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_empty_tick.png')}
+                />
+              ) : (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_active_tick.png')}
+                />
+              )}
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -444,10 +521,17 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-              <Image
-                style={{height: 30, width: 30}}
-                source={require('../../res/image/img/icon_empty_tick.png')}
-              />
+              {emtyQua === false ? (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_empty_tick.png')}
+                />
+              ) : (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_active_tick.png')}
+                />
+              )}
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -472,10 +556,17 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-              <Image
-                style={{height: 30, width: 30}}
-                source={require('../../res/image/img/icon_empty_tick.png')}
-              />
+              {emtySkills === false ? (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_empty_tick.png')}
+                />
+              ) : (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_active_tick.png')}
+                />
+              )}
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -500,10 +591,17 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-              <Image
-                style={{height: 30, width: 30}}
-                source={require('../../res/image/img/icon_empty_tick.png')}
-              />
+              { emtyTech === false ? (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_empty_tick.png')}
+                />
+              ) : (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_active_tick.png')}
+                />
+              )}
             </View>
           </TouchableOpacity>
         </View>

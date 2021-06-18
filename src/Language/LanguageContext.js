@@ -22,6 +22,11 @@ const resources = {
       'email đã được đăng ký':'email đã được đăng ký',
       'Lưu ý':'Lưu ý',
       'Bạn phải nhập đầy đủ thông tin đăng nhập':'Bạn phải nhập đầy đủ thông tin đăng nhập',
+      'Lưu mật khẩu':'Lưu mật khẩu',
+      'Xóa Thành Công':'Xóa Thành Công',
+      'Thêm Thành Công':'Thêm Thành Công',
+      'Sửa Thành Công' : 'Sửa Thành Công',
+      "Trang chủ":"Trang chủ",
       //================HOME============================
       'Mức độ hoàn thiện CiVi': 'Mức độ hoàn thiện CiVi',
       'Liên kết của bạn' : 'Liên kết của bạn',
@@ -55,7 +60,52 @@ const resources = {
       'Quên mật khẩu':'Quên mật khẩu',
       //================ResumeTitle============================
       "Tiêu đề" : "Tiêu đề",
-      "Vui lòng nhập tiêu đề của bạn":"Vui lòng nhập tiêu đề của bạn"
+      "Vui lòng nhập tiêu đề của bạn":"Vui lòng nhập tiêu đề của bạn",
+      //================Contact============================
+      "Thông tin liên hệ" : "Thông tin liên hệ",
+      "Tỉnh/thành phố" :"Tỉnh/thành phố",
+      "Ngày sinh" :"Ngày sinh",
+      "Vui lòng nhập đầy đủ họ và tên của bạn":"Vui lòng nhập đầy đủ họ và tên của bạn",
+      "Vui lòng chọn ngày sinh của bạn" :"Vui lòng chọn ngày sinh của bạn",
+      "Vui lòng nhập Email của bạn":"Vui lòng nhập Email của bạn",
+      "Vui lòng nhập Email đúng định dạng":"Vui lòng nhập Email đúng định dạng",
+      "Vui lòng nhập số điện thoại":"Vui lòng nhập số điện thoại",
+      "Vui lòng nhập số điện thoại hợp lệ":"Vui lòng nhập số điện thoại hợp lệ",
+      "Vui lòng chọn tỉnh thành phố":"Vui lòng chọn tỉnh thành phố",
+      "Vui lòng chọn địa chỉ":"Vui lòng chọn địa chỉ",
+      "Chọn tỉnh thành":"Chọn tỉnh thành",
+      "Thêm ảnh":"Thêm ảnh",
+      "Địa chỉ":"Địa chỉ",
+      "Họ và tên":"Họ và tên",
+      "Nam":"Nam",
+      "Nữ":"Nữ",
+      "Chụp ảnh":"Chụp ảnh",
+      "Thư viện ảnh":"Thư viện ảnh",
+      "Mật khẩu hơn 4 kí tự trở lên":"Mật khẩu hơn 4 kí tự trở lên",
+      "Vui lòng nhập mật khẩu của bạn":"Vui lòng nhập mật khẩu của bạn",
+      
+      //================Basic============================
+     "Lĩnh vực" :"Lĩnh vực",
+     "Vui lòng chọn lĩnh vực":"Vui lòng chọn lĩnh vực",
+     "Vị trí":"Vị trí",
+     "Lương hiện tại":"Lương hiện tại",
+     "Không hiển thị":"Không hiển thị",
+     "Vui lòng nhập lương hiện tại":"Vui lòng nhập lương hiện tại",
+     "Vui lòng nhập lương mong muốn":"Vui lòng nhập lương mong muốn",
+     "Lương mong muốn":"Lương mong muốn",
+     "Thỏa thuận":"Thỏa thuận",
+     "Vui lòng chọn vị trí":"Vui lòng chọn vị trí",
+     "Vui lòng chọn khu vực":"Vui lòng chọn khu vực",
+     "Khu vực bạn muốn":"Khu vực bạn muốn",
+     "Chọn lĩnh vực":"Chọn lĩnh vực",
+     "Chọn vị trí":"Chọn vị trí",
+     "Chọn khu vực":"Chọn khu vực",
+     "Vui lòng chọn một mẫu CV để xuất":"Vui lòng chọn một mẫu CV để xuất",
+     "Cơ bản":"Cơ bản"
+
+
+
+      
       
 
 
@@ -82,6 +132,11 @@ const resources = {
       'email đã được đăng ký':'The Email was registered',
       'Lưu ý':'Note',
       'Bạn phải nhập đầy đủ thông tin đăng nhập':'You must enter full login information',
+      'Lưu mật khẩu':'Save Password',
+      'Sửa Thành Công':'Successfully Edited',
+      'Thêm Thành Công' :'Successfully Added',
+      'Xóa Thành Công':'Successfully Deleted',
+      "Trang chủ":"Home",
 
       //================HOME============================
       'Mức độ hoàn thiện CiVi': 'Level of perfection Civi',
@@ -116,7 +171,48 @@ const resources = {
       'Quên mật khẩu':'Forget password',
       //================ResumeTitle============================
       "Tiêu đề" : "Title",
-      "Vui lòng nhập tiêu đề của bạn":"Please enter your title"
+      "Vui lòng nhập tiêu đề của bạn":"Please enter your title",
+      //================Contact============================
+      "Thông tin liên hệ" : "Contact infomation",
+      "Tỉnh/thành phố" :"Province/city",
+      "Ngày sinh" :"Birthday",
+      "Vui lòng nhập đầy đủ họ và tên của bạn":"Please enter your full name",
+      "Vui lòng chọn ngày sinh của bạn" :"Please select your date of birth",
+      "Vui lòng nhập Email của bạn":"Please enter your email",
+      "Vui lòng nhập Email đúng định dạng":"Please enter Email in correct format",
+      "Vui lòng nhập số điện thoại":"Please enter the phone number",
+      "Vui lòng nhập số điện thoại hợp lệ":"Please enter a valid phone number",
+      "Vui lòng chọn tỉnh thành phố":"Please select city or province",
+      "Vui lòng chọn địa chỉ":"Please select the address",
+      "Chọn tỉnh thành":"Choose a province",
+      "Thêm ảnh":"More photos",
+      "Địa chỉ":"Adress",
+      "Họ và tên":"Full name",
+      "Nam":"Male",
+      "Nữ":"Female",
+      "Chụp ảnh":"Take a photo",
+      "Thư viện ảnh":"Photo library",
+      "Mật khẩu hơn 4 kí tự trở lên":'Password more than 4 characters',
+      "Vui lòng nhập mật khẩu của bạn":"Please enter your password",
+      //================Basic============================
+      "Lĩnh vực" :"Field ",
+      "Vui lòng chọn lĩnh vực":"Please select field",
+      "Vị trí":"Location",
+      "Lương hiện tại":"Current salary",
+      "Không hiển thị":"Not displayed",
+      'Vui lòng nhập lương hiện tại':'Please enter your current salary',
+      "Vui lòng nhập lương mong muốn":'Please enter desired salary',
+      "Lương mong muốn":"Desired salary",
+      "Thỏa thuận":"Agree",
+      "Vui lòng chọn vị trí":"Please select location",
+      "Vui lòng chọn khu vực":"Please select region",
+       "Khu vực bạn muốn":"Region you want",
+       "Chọn lĩnh vực":"Choose field",
+     "Chọn vị trí":"Choose location",
+     "Chọn khu vực":"Choose region",
+     "Vui lòng chọn một mẫu CV để xuất":"Please select a CV form to export",
+     "Cơ bản":'Basic'
+      
 
 
 

@@ -4,6 +4,7 @@ import React, {
     forwardRef,
     useEffect,
   } from 'react';
+import { useTranslation } from 'react-i18next';
   import {
     View,
     Text,
@@ -21,6 +22,7 @@ import React, {
 
   
   const SheetPhoto = forwardRef((props, ref) => {
+    const {t}= useTranslation()
 
     const [show, setShow] = useState(false);
     const [selectItem, setSelectItem] = useState('');
@@ -102,7 +104,7 @@ import React, {
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
-                    <Text style={{color: 'white'}}>Chụp ảnh</Text>
+                    <Text style={{color: 'white'}}>{t('Chụp ảnh')}</Text>
                     {/* {selectItem===item?<Image source={require("../../res/image/img/arrow-up.png")} style={{ width: Sizes.h16, height: Sizes.h16, resizeMode: 'contain' }} />:null} */}
                   </TouchableOpacity>
                 </View>
@@ -133,7 +135,7 @@ import React, {
                       alignItems: 'center',
                      
                     }}>
-                    <Text style={{color: 'white'}}>Thư viện ảnh</Text>
+                    <Text style={{color: 'white'}}>{t('Thư viện ảnh')}</Text>
                    
                   </TouchableOpacity>
                 </View>

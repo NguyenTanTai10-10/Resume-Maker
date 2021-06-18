@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {Component} from 'react';
+import { withTranslation } from 'react-i18next';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {screenWidth} from '../../res/style/theme';
 
-export default class ButtonChoose extends Component {
+ class ButtonChoose extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,31 +12,25 @@ export default class ButtonChoose extends Component {
       select: '1',
     };
   }
-  async componentDidMount(){
+  async componentDidMount() {
     try {
-      const kq = await AsyncStorage.getItem('@storage_Key')
-     
+      const kq = await AsyncStorage.getItem('@storage_Key');
 
-      if(kq !== null) {
-        this.setState({select:kq})
-        
-        
+      if (kq !== null) {
+        this.setState({select: kq});
       }
-    } catch(e) {
+    } catch (e) {
       // error reading value
     }
-    
   }
-  
+
   storeData = async (value) => {
-    
-    
     try {
-      await AsyncStorage.setItem('@storage_Key', value)
+      await AsyncStorage.setItem('@storage_Key', value);
     } catch (e) {
       // saving error
     }
-  }
+  };
 
   render() {
     const {arrButton, select} = this.state;
@@ -59,8 +54,9 @@ export default class ButtonChoose extends Component {
               <TouchableOpacity
                 onPress={
                   () => {
-                    this.setState({select: e}); this.props.OnGender(e);
-                    this.storeData(e)
+                    this.setState({select: e});
+                    this.props.OnGender(e);
+                    this.storeData(e);
                   }
                   // console.log(index)
                 }
@@ -92,7 +88,7 @@ export default class ButtonChoose extends Component {
                       },
                       select === e && {color: 'white', fontWeight: '700'},
                     ]}>
-                    Nam
+                    {this.props.t('Nam')}
                   </Text>
                 ) : (
                   <Text
@@ -104,7 +100,7 @@ export default class ButtonChoose extends Component {
                       },
                       select === e && {color: 'white', fontWeight: '700'},
                     ]}>
-                    Nữ
+                    {this.props.t('Nữ')}
                   </Text>
                 )}
               </TouchableOpacity>
@@ -128,3 +124,4 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
 });
+export default withTranslation()(ButtonChoose) 

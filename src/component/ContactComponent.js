@@ -22,8 +22,10 @@ import ImagePicker from 'react-native-image-crop-picker';
 import React, {useState, useEffect} from 'react';
 import LoadingView from './custom/LoadingView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 
 const ContactComponent = (props) => {
+  const {t}= useTranslation()
   useEffect(() => {
     props.getCityAction({city_id: '', country_id: ''});
   }, []);
@@ -48,11 +50,7 @@ const ContactComponent = (props) => {
     if (props.statusCity !== null) {
       if (props.statusCity === 1) {
         setDataCity(props.dataCity);
-      } else {
-        setTimeout(() => {
-          Alert.alert('Thông báo', props.messageCity);
-        }, 10);
-      }
+      } 
     }
   }, [props.statusCity]);
   useEffect(() => {
@@ -61,10 +59,10 @@ const ContactComponent = (props) => {
         setDataRegister(props.dataRegister);
         setCheck(true);
 
-        Alert.alert('Thông báo', props.messageRegister);
+        Alert.alert(t('Thông báo'), t(props.messageRegister));
       } else {
         setTimeout(() => {
-          Alert.alert('Thông báo', props.messageRegister);
+          Alert.alert(t('Thông báo'),t(props.messageRegister) );
         }, 10);
       }
     }
@@ -72,10 +70,10 @@ const ContactComponent = (props) => {
 
   useEffect(() => {
     if (props.statusEmail !== null) {
-      setEmailExits(props.messageEmail);
+      setEmailExits(t(props.messageEmail));
       setCheckEmaiExit(true);
     } else if (props.errorEmail !== null) {
-      Alert.alert(props.errorEmail);
+      Alert.alert(t(props.errorEmail));
     }
   }, [props.statusEmail]);
 
@@ -96,10 +94,10 @@ const ContactComponent = (props) => {
   const [check, setCheck] = useState(false);
   const [Password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
-  const [birthDay, setBirthDay] = useState('Ngày sinh');
+  const [birthDay, setBirthDay] = useState(t('Ngày sinh'));
   const [emailKh, setEmailKh] = useState('');
   const [phone, setPhone] = useState('');
-  const [City, setCity] = useState('Tỉnh/thành phố');
+  const [City, setCity] = useState(t('Tỉnh/thành phố'));
   const [City_id, setCity_id] = useState();
   const [Adress, setAdress] = useState('');
   const [emailExit, setEmailExits] = useState('');
@@ -160,14 +158,6 @@ const ContactComponent = (props) => {
       cropping: true,
       includeBase64: true,
     }).then(async (image) => {
-      // const Image64 = `data:${image.mime};base64,${image.data}`;
-      // try {
-      //   await AsyncStorage.setItem('@Images64', Image64);
-      // } catch (e) {
-      //   // saving error
-      // }
-      // console.log(`data:${image.mime};base64,${image.data}`);
-
       setPhotoBase64(`data:${image.mime};base64,${image.data}`);
     });
   };
@@ -238,7 +228,7 @@ const ContactComponent = (props) => {
     setCheckEmaiExit(false);
   };
   const onClearCity = () => {
-    setCity('Tỉnh/thành phố');
+    setCity(t('Tỉnh/thành phố'));
     setClearCity(false);
   };
   const onClearPhone = () => {
@@ -254,45 +244,13 @@ const ContactComponent = (props) => {
     setClearPassword(false);
     setCheckPasswordHL(false);
   };
-  //==============================================================
-  // const getData = async () => {
-  //   try {
-  //     const jsonValue = await AsyncStorage.getItem('@Userinfo');
-
-  //     if (jsonValue != null) {
-  //       var data = JSON.parse(jsonValue);
-
-  //       setAdress(data.address);
-  //       setBirthDay(data.birthday);
-  //       setCity(data.city);
-  //       setEmailKh(data.email);
-  //       setGender(data.gender);
-  //       setUserName(data.name);
-  //       setPassword(data.password);
-  //       setPhone(data.phone);
-  //       setCity_id(data.id_city);
-  //     }
-  //   } catch (e) {
-  //     // error reading value
-  //   }
-  //   try {
-  //     const value = await AsyncStorage.getItem('@Images64');
-  //     if (value !== null) {
-  //       setPhotoBase64(value);
-  //     }
-  //   } catch (e) {
-  //     // error reading value
-  //   }
-  // };
-
-  //==============================================================
   const onSubmit = async () => {
     if (
       userName === null ||
       userName.trim() === '' ||
       birthDay === null ||
       birthDay.trim() === '' ||
-      birthDay === 'Ngày sinh'||
+      birthDay === t('Ngày sinh') ||
       emailKh === null ||
       emailKh.trim() === '' ||
       !emailValidation(emailKh) ||
@@ -302,7 +260,7 @@ const ContactComponent = (props) => {
       !phoneValidation(phone) ||
       City === null ||
       City.trim() === '' ||
-      City === 'Tỉnh/thành phố' ||
+      City === t('Tỉnh/thành phố') ||
       Adress === null ||
       Adress.trim() === '' ||
       Password === null ||
@@ -313,7 +271,11 @@ const ContactComponent = (props) => {
         setUserName('');
         setCheckHoTen(true);
       }
-      if (birthDay === null || birthDay.trim() === '' || birthDay === 'Ngày sinh') {
+      if (
+        birthDay === null ||
+        birthDay.trim() === '' ||
+        birthDay === t('Ngày sinh')
+      ) {
         setBirthDay('');
         setCheckBirthDay(true);
       }
@@ -339,7 +301,7 @@ const ContactComponent = (props) => {
       } else if (!phoneValidation(phone)) {
         setCheckPhoneHL(true);
       }
-      if (City === 'Tỉnh/thành phố') {
+      if (City === t('Tỉnh/thành phố')) {
         setCheckCity(true);
       } else if (City === null || City.trim() === '') {
         setCity('');
@@ -395,21 +357,25 @@ const ContactComponent = (props) => {
   };
   //=========================================
   const onUpdate = async () => {
+    props.logoutRegisterlAction();
     try {
       const jsonValue = JSON.stringify(DataRegister.jobseeker_id);
       await AsyncStorage.setItem('@jobseeker_id', jsonValue);
     } catch (e) {
       // saving error
     }
-    await props.editAvatarAction({
-      user_id: DataRegister !== null ? DataRegister.jobseeker_id : '',
-      image: PhotoBase64,
-    });
+    if (PhotoBase64 !== '') {
+      await props.editAvatarAction({
+        user_id: DataRegister !== null ? DataRegister.jobseeker_id : '',
+        image: PhotoBase64,
+      });
+    }
+
     await props.editCiviAction({
       user_id: DataRegister !== null ? DataRegister.jobseeker_id : '',
       cv_tittle: title,
-      industry_id:'' ,
-      functional_role_id:'' ,
+      industry_id: '',
+      functional_role_id: '',
       csalary: '',
       is_hide_current_salary: '',
       esalary: '',
@@ -418,7 +384,6 @@ const ContactComponent = (props) => {
       location_id: [],
     });
     await props.navigation.navigate('Drawers');
-
   };
   return (
     <View style={{flex: 1}}>
@@ -481,7 +446,7 @@ const ContactComponent = (props) => {
             alignItems: 'center',
           }}>
           <Text style={{fontSize: 20, color: '#2EB553'}}>
-            Thông tin liên hệ
+            {t('Thông tin liên hệ')}
           </Text>
         </View>
 
@@ -535,8 +500,6 @@ const ContactComponent = (props) => {
           </TouchableOpacity>
         </View>
         <View style={{marginTop: 30}}>
-          
-
           <View
             style={{
               justifyContent: 'center',
@@ -545,7 +508,7 @@ const ContactComponent = (props) => {
             }}>
             {checkHoTen && (
               <Text style={{color: 'red'}}>
-                * Vui lòng nhập đầy đủ họ và tên của bạn
+                * {t('Vui lòng nhập đầy đủ họ và tên của bạn')}
               </Text>
             )}
           </View>
@@ -576,7 +539,7 @@ const ContactComponent = (props) => {
               <TextInput
                 defaultValue={userName}
                 onChangeText={(text) => onUserName(text)}
-                placeholder="Họ và tên"
+                placeholder={t('Họ và tên')}
                 style={{width: '70%', marginLeft: 15}}></TextInput>
             </View>
             {clearHoTen && (
@@ -608,7 +571,7 @@ const ContactComponent = (props) => {
           }}>
           {checkBirthDay && (
             <Text style={{color: 'red'}}>
-              * Vui lòng chọn ngày sinh của bạn
+              * {t('Vui lòng chọn ngày sinh của bạn')}
             </Text>
           )}
         </View>
@@ -624,11 +587,11 @@ const ContactComponent = (props) => {
             marginTop: 20,
           }}>
           {checkEmail && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập Email của bạn</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng nhập Email của bạn')}</Text>
           )}
           {checkEmailHL && (
             <Text style={{color: 'red'}}>
-              * Vui lòng nhập Email đúng định dạng
+              * {t('Vui lòng nhập Email đúng định dạng')}
             </Text>
           )}
         </View>
@@ -690,11 +653,11 @@ const ContactComponent = (props) => {
             <Text
               style={{
                 color:
-                  props.messageEmail === 'email đã được đăng ký'
+                  t(props.messageEmail) === t('email đã được đăng ký')
                     ? 'red'
                     : '#2EB553',
               }}>
-              {props.messageEmail}
+              {t(props.messageEmail)}
             </Text>
           </View>
         ) : null}
@@ -708,12 +671,12 @@ const ContactComponent = (props) => {
           }}>
           {CheckPassword && (
             <Text style={{color: 'red', marginTop: 10}}>
-              * Vui lòng nhập mật khẩu của bạn
+              * {t('Vui lòng nhập mật khẩu của bạn')}
             </Text>
           )}
           {CheckPasswordHL && (
             <Text style={{color: 'red', marginTop: 10}}>
-              * Mật khẩu hơn 4 kí tự trở lên
+              * {t('Mật khẩu hơn 4 kí tự trở lên')}
             </Text>
           )}
         </View>
@@ -743,7 +706,7 @@ const ContactComponent = (props) => {
                 onPassword(text);
               }}
               defaultValue={Password}
-              placeholder="Mật khẩu"
+              placeholder={t("Mật khẩu")}
               style={{width: '60%', marginLeft: 15}}></TextInput>
           </View>
           {clearPassword && (
@@ -796,11 +759,11 @@ const ContactComponent = (props) => {
             marginTop: 20,
           }}>
           {checkPhone && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập số điện thoại</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng nhập số điện thoại')}</Text>
           )}
           {checkPhoneHL && (
             <Text style={{color: 'red'}}>
-              * Vui lòng nhập số điện thoại hợp lệ{' '}
+              * {t('Vui lòng nhập số điện thoại hợp lệ')}
             </Text>
           )}
         </View>
@@ -859,7 +822,7 @@ const ContactComponent = (props) => {
             marginTop: 20,
           }}>
           {checkCity && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn tỉnh thành phố</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn tỉnh thành phố')}</Text>
           )}
         </View>
 
@@ -887,7 +850,7 @@ const ContactComponent = (props) => {
               style={{
                 marginLeft: 15,
                 width: '70%',
-                color: City === 'Tỉnh/thành phố' ? '#BFBFBF' : 'black',
+                color: City === t('Tỉnh/thành phố') ? '#BFBFBF' : 'black',
               }}>
               {City}
             </Text>
@@ -918,7 +881,7 @@ const ContactComponent = (props) => {
             marginTop: 20,
           }}>
           {checkAdress && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn địa chỉ</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn địa chỉ')}</Text>
           )}
         </View>
 
@@ -946,7 +909,7 @@ const ContactComponent = (props) => {
               onChangeText={(text) => {
                 onAdress(text);
               }}
-              placeholder="Địa chỉ"
+              placeholder={t("Địa chỉ")}
               style={{width: '70%', marginLeft: 15}}></TextInput>
           </View>
           {clearAdress && (
@@ -987,7 +950,7 @@ const ContactComponent = (props) => {
                 borderRadius: 13,
               }}>
               <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Cập nhập
+              {t('Cập nhập')}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -1006,7 +969,7 @@ const ContactComponent = (props) => {
                 borderRadius: 13,
               }}>
               <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Tiếp tục
+                {t('Tiếp tục')}
               </Text>
             </TouchableOpacity>
           )}
@@ -1023,7 +986,7 @@ const ContactComponent = (props) => {
         />
         <SheetPhoto
           ref={modal1}
-          title="Thêm ảnh"
+          title={t('Thêm ảnh')} 
           data={Photo}
           modalHeight={200}
           onPressTakePhoto={() => takePhoto()}

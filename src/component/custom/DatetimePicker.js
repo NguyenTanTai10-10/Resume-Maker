@@ -11,8 +11,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import {set} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 
 const DatetimePicker = (props) => {
+  const {t}= useTranslation()
   useEffect(() => {
     setDateStart(props.title)
   
@@ -65,9 +67,9 @@ const DatetimePicker = (props) => {
     showMode('');
   };
   const onPressDate = async() => {
-    setDateStart('Ngày sinh');
+    setDateStart(t('Ngày sinh'));
     setClearBirthday(false);
-    props.chooseDay('Ngày sinh');
+    props.chooseDay(t('Ngày sinh'));
     // const deleteDate = 'Ngày sinh'
     // try {
     //   await AsyncStorage.setItem('@birthday', deleteDate);
@@ -108,7 +110,7 @@ const DatetimePicker = (props) => {
             source={require('../../res/image/img/iconbirthday.png')}
             style={{height: 35, width: 35, resizeMode: 'contain'}}
           />
-          {DateStart === 'Ngày sinh' ? (
+          {DateStart === t('Ngày sinh') ? (
             <Text style={{marginLeft: 15, color: '#BFBFBF'}}>{DateStart}</Text>
           ) : (
             <Text style={{marginLeft: 15, color: 'black'}}>{DateStart}</Text>

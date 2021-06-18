@@ -19,6 +19,7 @@ export class BasicsInfoContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.editCiviReducer);
 
   return {
     statusIndustry: state.getIndustryReducer.status,

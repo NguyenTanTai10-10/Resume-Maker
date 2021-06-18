@@ -11,18 +11,16 @@ import {
 import Images from '../res/image';
 import Sizes from '../utils/Sizes';
 import StatusBarView from './custom/StatusBarView';
-import BottomSheetCity from './custom/BottomSheetCity';
 import {screenHeight, screenWidth} from '../res/style/theme';
-import Button from './custom/Button';
 import BottomSheetIndustry from './custom/BottomSheetIndustry';
 import BottomSheetLever from './custom/BottomSheetLever';
 import BottomSheetListCity from './custom/BottomSheetListCity';
-import {set} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {LOGIN} from '../redux/actions/Action';
 import LoadingView from './custom/LoadingView';
+import {useTranslation} from 'react-i18next';
 
 const BasicInfoComponent = (props) => {
+  const {t} = useTranslation();
   const [dataIndustry, setDataIndustry] = useState([]);
   const [dataLever, setDataLever] = useState([]);
   const [dataCity, setDataCity] = useState([]);
@@ -116,7 +114,7 @@ const BasicInfoComponent = (props) => {
         }
       }
     } else if (props.errorUser !== null) {
-      Alert.alert('Thông báo', props.errorUser);
+      Alert.alert(t('Thông báo'), t(props.errorUser));
     }
   }, [props.statusUser]);
 
@@ -153,10 +151,6 @@ const BasicInfoComponent = (props) => {
     if (props.statusIndustry !== null) {
       if (props.statusIndustry === 1) {
         setDataIndustry(props.dataIndustrys);
-      } else {
-        setTimeout(() => {
-          Alert.alert('Thông báo', props.messageIndustry);
-        }, 10);
       }
     }
   }, [props.statusIndustry]);
@@ -165,10 +159,6 @@ const BasicInfoComponent = (props) => {
     if (props.statusCity !== null) {
       if (props.statusCity === 1) {
         setDataCity(props.dataCity);
-      } else {
-        setTimeout(() => {
-          Alert.alert('Thông báo', props.messageCity);
-        }, 10);
       }
     }
   }, [props.statusCity]);
@@ -176,20 +166,19 @@ const BasicInfoComponent = (props) => {
     if (props.statusLever !== null) {
       if (props.statusLever === 1) {
         setDataLever(props.dataLever);
-      } else {
-        setTimeout(() => {
-          Alert.alert('Thông báo', props.messageLever);
-        }, 10);
       }
     }
   }, [props.statusLever]);
   useEffect(() => {
     if (props.statusEditCv !== null) {
       if (props.statusEditCv === 1) {
-        Alert.alert('Thông báo', props.messageEditCv);
+        Alert.alert(t('Thông báo'), t(props.messageEditCv));
+         setCheck(true);
+      } else if (props.statusEditCv === 0) {
+        Alert.alert(t('Thông báo'), t(props.messageEditCv));
       }
     } else if (props.errorEditCv !== null) {
-      Alert.alert('Thông báo', props.errorEditCv);
+      Alert.alert(t('Thông báo'), t(props.errorEditCv));
     }
   }, [props.statusEditCv]);
 
@@ -216,9 +205,9 @@ const BasicInfoComponent = (props) => {
   const [userId, setUserId] = useState('');
   const [moneyNow, setMoneyNow] = useState('');
   const [moneyNew, setMoneyNew] = useState('');
-  const [industry, setIndustry] = useState('Lĩnh vực');
-  const [leverGroup, setLeverGroup] = useState('Vị trí');
-  const [leverGroupId, setLeverGroupId] = useState('Vị trí');
+  const [industry, setIndustry] = useState(t('Lĩnh vực'));
+  const [leverGroup, setLeverGroup] = useState(t('Vị trí'));
+  const [leverGroupId, setLeverGroupId] = useState(t('Vị trí'));
   const [hideMoneyNow, setHideMoneyNow] = useState(0);
   const [hideMoneyNew, setHideMoneyNew] = useState(0);
   const [resumeTitle, setResumeTitle] = useState('');
@@ -226,14 +215,14 @@ const BasicInfoComponent = (props) => {
   //================================================
 
   const textMoneyNow = (text) => {
-    setCheck(false)
+    setCheck(false);
     const kq = text.replace(/^0+/, '');
     setMoneyNow(kq);
     setCheckMoneyNow(false);
     setCheckOnMoneyNow(true);
   };
   const textMoneyNew = (text) => {
-    setCheck(false)
+    setCheck(false);
     const kq = text.replace(/^0+/, '');
 
     setMoneyNew(kq);
@@ -246,27 +235,27 @@ const BasicInfoComponent = (props) => {
   const modal2 = React.createRef();
 
   const onChooseIndustry = (item) => {
-    setCheck(false)
+    setCheck(false);
     setIndustry(item);
   };
   const onChooseIndustry_id = (item) => {
-    setCheck(false)
+    setCheck(false);
     setCheckFuncRole(false);
     setCheckOnFuncRole(true);
     setFuncRole(item);
   };
   const onChooseLever = (item) => {
-    setCheck(false)
+    setCheck(false);
     setLeverGroup(item);
   };
   const onChooseLever_id = (item) => {
-    setCheck(false)
+    setCheck(false);
     setCheckLever(false);
     setCheckOnLever(true);
     setLeverGroupId(item);
   };
   const onChooseCity = async (item) => {
-    setCheck(false)
+    setCheck(false);
     setCheckCityError(false);
     setCheckCity(true);
     city.push(item);
@@ -274,7 +263,7 @@ const BasicInfoComponent = (props) => {
     setCityName(x);
   };
   const onChooseCity_id = (item) => {
-    setCheck(false)
+    setCheck(false);
     console.log(item);
     const kq = {};
     kq['city_id'] = item;
@@ -287,16 +276,16 @@ const BasicInfoComponent = (props) => {
   const onSubmit = async () => {
     if (
       industry === null ||
-      industry === 'Lĩnh vực' ||
+      industry === t('Lĩnh vực') ||
       moneyNow === null ||
       moneyNow.trim() === '' ||
       moneyNew === null ||
       moneyNew.trim() === '' ||
       leverGroup === null ||
-      leverGroup === 'Vị trí' ||
+      leverGroup === t('Vị trí') ||
       cityName.length === 0
     ) {
-      if (industry === null || industry === 'Lĩnh vực') {
+      if (industry === null || industry === t('Lĩnh vực')) {
         setCheckFuncRole(true);
         setFuncRole('');
         setCheckOnFuncRole(false);
@@ -311,9 +300,9 @@ const BasicInfoComponent = (props) => {
         setMoneyNew('');
         setCheckOnMoneyNew(false);
       }
-      if (leverGroup === null || leverGroup === 'Vị trí') {
+      if (leverGroup === null || leverGroup === t('Vị trí')) {
         setCheckLever(true);
-        setLeverGroup('Vị trí');
+        setLeverGroup(t('Vị trí'));
         setCheckOnLever(false);
       }
       if (cityName.length === 0) {
@@ -346,12 +335,12 @@ const BasicInfoComponent = (props) => {
         user_id: userId,
       });
       console.log('====================================');
-      await setCheck(true);
+      
     }
   };
   //===============================
   const onDeleteCity = (items) => {
-    setCheck(false)
+    setCheck(false);
     const new_arr = cityName.filter((item) => item !== items);
     setCityName(new_arr);
     setCity(new_arr);
@@ -360,7 +349,7 @@ const BasicInfoComponent = (props) => {
     }
   };
   const onDeleteCity_Id = (items) => {
-    setCheck(false)
+    setCheck(false);
     const new_arr = cityName_Id.filter(
       (item) => item.city_id !== items.toLocaleString(),
     );
@@ -372,24 +361,24 @@ const BasicInfoComponent = (props) => {
   //=======================================
 
   const onFuncRole = (items) => {
-    setCheck(false)
+    setCheck(false);
     setCheckOnFuncRole(false);
-    setIndustry('Lĩnh vực');
+    setIndustry(t('Lĩnh vực'));
     setFuncRole('');
   };
   const onLever = (items) => {
-    setCheck(false)
+    setCheck(false);
     setCheckOnLever(false);
-    setLeverGroup('Vị trí');
+    setLeverGroup(t('Vị trí'));
     setLeverGroupId('');
   };
   const onMoneyNow = (items) => {
-    setCheck(false)
+    setCheck(false);
     setCheckOnMoneyNow(false);
     setMoneyNow('');
   };
   const onHideMoneyNow = (items) => {
-    setCheck(false)
+    setCheck(false);
     if (checkShow === false) {
       setCheckShow(!checkShow);
       setHideMoneyNow(1);
@@ -399,12 +388,12 @@ const BasicInfoComponent = (props) => {
     }
   };
   const onMoneyNew = (items) => {
-    setCheck(false)
+    setCheck(false);
     setCheckOnMoneyNew(false);
     setMoneyNew('');
   };
   const onHideMoneyNew = (items) => {
-    setCheck(false)
+    setCheck(false);
     if (checkShow1 === false) {
       setCheckShow1(!checkShow1);
       setHideMoneyNew(1);
@@ -420,8 +409,6 @@ const BasicInfoComponent = (props) => {
       {props.loadingEditCv && <LoadingView />}
       {/* {props.loadingLever && <LoadingView />}
       {props.loadingIndustry && <LoadingView />} */}
-      
-      
 
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
@@ -480,7 +467,7 @@ const BasicInfoComponent = (props) => {
             alignItems: 'center',
           }}>
           <Text style={{fontSize: 20, color: '#2EB553'}}>
-            Thông tin xin việc
+           {t("Thông tin xin việc")} 
           </Text>
         </View>
         <View
@@ -490,7 +477,7 @@ const BasicInfoComponent = (props) => {
             marginTop: 20,
           }}>
           {checkFuncRole && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn lĩnh vực</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn lĩnh vực')}</Text>
           )}
         </View>
 
@@ -519,7 +506,7 @@ const BasicInfoComponent = (props) => {
               style={{
                 width: '70%',
                 marginLeft: 15,
-                color: industry === 'Lĩnh vực' ? '#BFBFBF' : 'black',
+                color: industry === t('Lĩnh vực') ? '#BFBFBF' : 'black',
               }}>
               {industry}
             </Text>
@@ -549,7 +536,9 @@ const BasicInfoComponent = (props) => {
             marginTop: 20,
           }}>
           {checkMoneyNow && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập lương hiện tại</Text>
+            <Text style={{color: 'red'}}>
+              * {t('Vui lòng nhập lương hiện tại')}
+            </Text>
           )}
         </View>
         <View
@@ -571,7 +560,7 @@ const BasicInfoComponent = (props) => {
               textMoneyNow(text);
             }}
             keyboardType="number-pad"
-            placeholder="Lương hiện tại"
+            placeholder={t('Lương hiện tại')}
             style={{width: '58%', marginLeft: 15}}></TextInput>
 
           <Text style={{}}>VND</Text>
@@ -617,7 +606,7 @@ const BasicInfoComponent = (props) => {
           )}
 
           <Text style={{alignSelf: 'center', marginLeft: 15}}>
-            Không hiển thị
+            {t('Không hiển thị')}
           </Text>
         </TouchableOpacity>
 
@@ -628,7 +617,9 @@ const BasicInfoComponent = (props) => {
             marginTop: 20,
           }}>
           {checkMoneyNew && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập lương mong muốn</Text>
+            <Text style={{color: 'red'}}>
+              * {t('Vui lòng nhập lương mong muốn')}
+            </Text>
           )}
         </View>
         <View
@@ -648,7 +639,7 @@ const BasicInfoComponent = (props) => {
             defaultValue={moneyNew}
             keyboardType="number-pad"
             onChangeText={(text) => textMoneyNew(text)}
-            placeholder="Lương mong muốn"
+            placeholder={t('Lương mong muốn')}
             style={{width: '58%', marginLeft: 15}}></TextInput>
 
           <Text style={{}}>VND</Text>
@@ -694,7 +685,7 @@ const BasicInfoComponent = (props) => {
           )}
 
           <Text style={{alignSelf: 'center', marginLeft: 15}}>
-           Thỏa thuận
+            {t('Thỏa thuận')}
           </Text>
         </TouchableOpacity>
         <View
@@ -704,7 +695,7 @@ const BasicInfoComponent = (props) => {
             marginTop: 20,
           }}>
           {checkLever && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn vị trí</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn vị trí')}</Text>
           )}
         </View>
         <TouchableOpacity
@@ -730,7 +721,7 @@ const BasicInfoComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                color: leverGroup === 'Vị trí' ? '#BFBFBF' : 'black',
+                color: leverGroup === t('Vị trí') ? '#BFBFBF' : 'black',
               }}>
               {leverGroup}
             </Text>
@@ -760,7 +751,7 @@ const BasicInfoComponent = (props) => {
             marginTop: 20,
           }}>
           {checkCityError && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn khu vực</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn khu vực')}</Text>
           )}
         </View>
 
@@ -791,7 +782,7 @@ const BasicInfoComponent = (props) => {
 
             {checkCity === false ? (
               <Text style={{color: '#BFBFBF', marginLeft: 15}}>
-                Khu vực bạn muốn
+                {t('Khu vực bạn muốn')}
               </Text>
             ) : (
               <ScrollView
@@ -832,13 +823,12 @@ const BasicInfoComponent = (props) => {
           </View>
 
           <TouchableOpacity onPress={() => modal2.current.open()}>
-          <Image
+            <Image
               source={require('../res/image/img/down-arrow.png')}
               style={{height: 15, width: 15, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>
-        
 
         <View
           style={{
@@ -858,13 +848,13 @@ const BasicInfoComponent = (props) => {
                 borderRadius: 13,
               }}>
               <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Cập nhập
+                {t('Cập nhập')}
               </Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('');
+                props.navigation.navigate('ListLanguageContainer');
               }}
               style={{
                 justifyContent: 'center',
@@ -875,7 +865,7 @@ const BasicInfoComponent = (props) => {
                 borderRadius: 13,
               }}>
               <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Tiếp tục
+                {t('Tiếp tục')}
               </Text>
             </TouchableOpacity>
           )}
@@ -892,7 +882,7 @@ const BasicInfoComponent = (props) => {
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('HomeContainer');
-              props.logoutEditCiviAction()
+              props.logoutEditCiviAction();
             }}
             style={{
               justifyContent: 'center',
@@ -907,11 +897,11 @@ const BasicInfoComponent = (props) => {
               source={require('../res/image/img/left-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
-            <Text style={{color: 'black'}}>Trang chủ</Text>
+            <Text style={{color: 'black'}}>{t('Trang chủ')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-          onPress={()=> props.navigation.navigate('ListLanguageContainer')}
+            onPress={() => props.navigation.navigate('ListLanguageContainer')}
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -922,7 +912,7 @@ const BasicInfoComponent = (props) => {
 
               borderRadius: 13,
             }}>
-            <Text style={{color: 'black'}}>Tiếp tục</Text>
+            <Text style={{color: 'black'}}>{t('Tiếp tục')}</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
@@ -937,7 +927,7 @@ const BasicInfoComponent = (props) => {
             onChooseIndustry_id(item);
           }}
           ref={modal}
-          title="Chọn lĩnh vực"
+          title={t('Chọn lĩnh vực')}
           data={dataIndustry}
           modalHeight={screenHeight / 2}
         />
@@ -949,7 +939,7 @@ const BasicInfoComponent = (props) => {
             onChooseLever_id(item);
           }}
           ref={modal1}
-          title="Chọn vị trí"
+          title={t('Chọn vị trí')}
           data={dataLever}
           modalHeight={screenHeight / 2}
         />
@@ -961,7 +951,7 @@ const BasicInfoComponent = (props) => {
             onChooseCity_id(item);
           }}
           ref={modal2}
-          title="Chọn khu vực"
+          title={t('Chọn khu vực')}
           data={dataCity}
           modalHeight={screenHeight / 2}
         />

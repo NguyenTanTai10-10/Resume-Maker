@@ -15,9 +15,10 @@ import Sizes from '../utils/Sizes';
 import Header from './custom/Header';
 import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const ListCVComponent = (props) => {
- 
+  const {t} = useTranslation();
   const [listData, setListData] = useState('')
   useEffect(() => {
     props.navigation.addListener('focus', () => {
@@ -62,7 +63,7 @@ const ListCVComponent = (props) => {
           style={{height: 170, width: screenWidth / 3.5}}
           source={{uri:item.item.template_cv_image}}
         />
-        <Text style={{alignSelf: 'center'}}>Basic</Text>
+        <Text style={{alignSelf: 'center'}}> {t('Cơ bản')}</Text>
       </TouchableOpacity>
     );
   };
@@ -89,7 +90,7 @@ const ListCVComponent = (props) => {
           />
         </TouchableOpacity>
         <Text style={{alignSelf: 'center', fontSize: 20}}>
-          Please select a CV form to export
+         {t('Vui lòng chọn một mẫu CV để xuất')} 
         </Text>
       </View>
       <View style={{justifyContent: 'center', alignItems: 'center',flex: 1 }}>

@@ -308,7 +308,7 @@ const LoginHome = (props) => {
           )}
 
           <Text style={{alignSelf: 'center', marginLeft: 15 , color:'red'}}>
-           Lưu mật khẩu
+           {t('Lưu mật khẩu')}
           </Text>
         </TouchableOpacity></View>
         

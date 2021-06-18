@@ -13,18 +13,18 @@ import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
 import BottomSheetCity from './custom/BottomSheetCity';
 import ButtonChoose from './custom/ButtonChoose';
-
 import DatetimePicker from './custom/DatetimePicker';
 import SheetPhoto from './custom/SheetPhoto';
-
 import StatusBarView from './custom/StatusBarView';
 import ImagePicker from 'react-native-image-crop-picker';
 import React, {useState, useEffect} from 'react';
 import LoadingView from './custom/LoadingView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {set} from 'react-native-reanimated';
+import {useTranslation} from 'react-i18next';
+
 
 const ContactHomeComponent = (props) => {
+  const {t}= useTranslation()
   const [data, setData] = useState('');
   const [ImagesAVT, setImagesAVT] = useState(false);
 
@@ -75,7 +75,7 @@ const ContactHomeComponent = (props) => {
         });
       }
     } else if (props.errorUser !== null) {
-      Alert.alert('Thông báo', props.errorUser);
+      Alert.alert(t('Thông báo'),t(props.errorUser) );
     }
   }, [props.statusUser]);
 
@@ -83,11 +83,7 @@ const ContactHomeComponent = (props) => {
     if (props.statusCity !== null) {
       if (props.statusCity === 1) {
         setDataCity(props.dataCity);
-      } else {
-        setTimeout(() => {
-          Alert.alert('Thông báo', props.messageCity);
-        }, 10);
-      }
+      } 
     }
   }, [props.statusCity]);
   useEffect(() => {
@@ -96,14 +92,15 @@ const ContactHomeComponent = (props) => {
         setDataRegister(props.dataEditInfo);
         setCheck(true);
 
-        Alert.alert('Thông báo', props.messageEditInfo);
+        Alert.alert(t('Thông báo'), t(props.messageEditInfo));
       }
     }
-    // else {
-    //     setTimeout(() => {
-    //       Alert.alert('Thông báo', props.errorEditInfo);
-    //     }, 10);
-    //   }
+    
+    else if(props.errorEditInfo !== null ){
+        setTimeout(() => {
+          Alert.alert(t('Thông báo'), t(props.errorEditInfo));
+        }, 10);
+      }
   }, [props.statusEditInfo]);
 
   useEffect(() => {
@@ -111,7 +108,7 @@ const ContactHomeComponent = (props) => {
       setEmailExits(props.messageEmail);
       setCheckEmaiExit(true);
     } else if (props.errorEmail !== null) {
-      Alert.alert(props.errorEmail);
+      Alert.alert(t(props.errorEmail));
     }
   }, [props.statusEmail]);
 
@@ -135,7 +132,7 @@ const ContactHomeComponent = (props) => {
   const [birthDay, setBirthDay] = useState('');
   const [emailKh, setEmailKh] = useState('');
   const [phoneNumber, setPhone] = useState('');
-  const [City, setCity] = useState('Tỉnh/thành phố');
+  const [City, setCity] = useState(t('Tỉnh/thành phố'));
   const [City_id, setCity_id] = useState();
   const [Adress, setAdress] = useState('');
   const [emailExit, setEmailExits] = useState('');
@@ -144,8 +141,8 @@ const ContactHomeComponent = (props) => {
   const [dataPhoto, setDataPhoto] = useState('');
 
   const [Photo, setPhoto] = useState([
-    {title: 'Chụp ảnh', value: ''},
-    {title: 'Thư viện ảnh', value: ''},
+    {title: t('Chụp ảnh'), value: ''},
+    {title: t('Thư viện ảnh'), value: ''},
   ]);
   const [PhotoBase64, setPhotoBase64] = useState('');
   const modal = React.createRef();
@@ -193,7 +190,7 @@ const ContactHomeComponent = (props) => {
       cropping: true,
       includeBase64: true,
     }).then(async (image) => {
-      setCheck(false)
+      setCheck(false);
       const Image64 = `data:${image.mime};base64,${image.data}`;
       try {
         await AsyncStorage.setItem('@Images64', Image64);
@@ -203,18 +200,18 @@ const ContactHomeComponent = (props) => {
       // console.log(`data:${image.mime};base64,${image.data}`);
 
       setPhotoBase64(`data:${image.mime};base64,${image.data}`);
-      setDataPhoto(image.data)
+      setDataPhoto(image.data);
     });
   };
 
   const onUserName = (text) => {
-    setCheck(false)
+    setCheck(false);
     setUserName(text);
     setCheckHoTen(false);
     setClearHoTen(true);
   };
   const onGmail = (text) => {
-    setCheck(false)
+    setCheck(false);
     const kq = text;
 
     if (emailValidation(kq)) {
@@ -227,64 +224,64 @@ const ContactHomeComponent = (props) => {
     setCheckEmaiExit(false);
   };
   const onChooseDate = (item) => {
-    setCheck(false)
+    setCheck(false);
     setBirthDay(item);
     setCheckBirthDay(false);
     setClearBirthDay(true);
   };
   const onChooseCity = (item) => {
-    setCheck(false)
+    setCheck(false);
     // console.log(item);
     setCity(item);
     setCheckCity(false);
     setClearCity(true);
   };
   const onChooseCity_id = (item) => {
-    setCheck(false)
+    setCheck(false);
     setCity_id(item);
   };
   const onPhone = (item) => {
-    setCheck(false)
+    setCheck(false);
     setPhone(item);
     setCheckPhone(false);
     setCheckPhoneHL(false);
     setClearPhone(true);
   };
   const onAdress = (text) => {
-    setCheck(false)
+    setCheck(false);
     setAdress(text);
     setCheckAdress(false);
     setClearAdress(true);
   };
   const onGender = (text) => {
-    setCheck(false)
+    setCheck(false);
     setGender(text);
   };
   //=========================================================
   const onClearHoTen = () => {
-    setCheck(false)
+    setCheck(false);
     setUserName('');
     setClearHoTen(false);
   };
 
   const onClearEmail = () => {
-    setCheck(false)
+    setCheck(false);
     setEmailKh('');
     setClearEmail(false);
     setCheckEmaiExit(false);
   };
   const onClearCity = () => {
-    setCheck(false)
-    setCity('Tỉnh/thành phố');
+    setCheck(false);
+    setCity(t('Tỉnh/thành phố'));
     setClearCity(false);
   };
   const onClearPhone = () => {
-    setCheck(false)
+    setCheck(false);
     setPhone('');
     setClearPhone(false);
   };
   const onClearAdress = () => {
-    setCheck(false)
+    setCheck(false);
     setAdress('');
     setClearAdress(false);
   };
@@ -298,17 +295,17 @@ const ContactHomeComponent = (props) => {
       userName.trim() === '' ||
       birthDay === null ||
       birthDay.trim() === '' ||
-      birthDay === 'Ngày sinh' ||
+      birthDay === t('Ngày sinh') ||
       emailKh === null ||
       emailKh.trim() === '' ||
       !emailValidation(emailKh) ||
-      (emailExit === 'email đã được đăng ký' && PasswordNow !== emailKh) ||
+      (emailExit === t('email đã được đăng ký') && PasswordNow !== emailKh) ||
       phoneNumber === null ||
       phoneNumber.trim() === '' ||
       !phoneValidation(phoneNumber) ||
       City === null ||
       City.trim() === '' ||
-      City === 'Tỉnh/thành phố' ||
+      City === t('Tỉnh/thành phố') ||
       Adress === null ||
       Adress.trim() === ''
     ) {
@@ -319,9 +316,9 @@ const ContactHomeComponent = (props) => {
       if (
         birthDay === null ||
         birthDay.trim() === '' ||
-        birthDay === 'Ngày sinh'
+        birthDay === t('Ngày sinh')
       ) {
-        setBirthDay('Ngày sinh');
+        setBirthDay(t('Ngày sinh'));
         setCheckBirthDay(true);
       }
 
@@ -331,7 +328,7 @@ const ContactHomeComponent = (props) => {
       } else if (!emailValidation(emailKh)) {
         setCheckEmailHL(true);
       } else if (
-        emailExit === 'email đã được đăng ký' &&
+        emailExit === t('email đã được đăng ký') &&
         PasswordNow !== emailKh
       ) {
         setCheckEmaiExit(true);
@@ -344,7 +341,7 @@ const ContactHomeComponent = (props) => {
       } else if (!phoneValidation(phoneNumber)) {
         setCheckPhoneHL(true);
       }
-      if (City === 'Tỉnh/thành phố') {
+      if (City === t('Tỉnh/thành phố')) {
         setCheckCity(true);
       } else if (City === null || City.trim() === '') {
         setCity('');
@@ -375,7 +372,10 @@ const ContactHomeComponent = (props) => {
         gender: Gender,
         skype: '',
       });
-      props.editAvatarAction({user_id: userID, image: dataPhoto});
+      if (dataPhoto !== '') {
+        await props.editAvatarAction({user_id: userID, image: dataPhoto});
+      }
+      // props.editAvatarAction({user_id: userID, image: dataPhoto});
     }
   };
   //=========================================
@@ -393,6 +393,7 @@ const ContactHomeComponent = (props) => {
   return (
     <View style={{flex: 1}}>
       {props.loadingUser && <LoadingView />}
+      {props.loadingEditInfo && <LoadingView />}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -414,7 +415,7 @@ const ContactHomeComponent = (props) => {
               onPress={() => {
                 props.navigation.goBack();
                 props.logoutCheckMailAction();
-                props.logoutEditInfoUserAction()
+                props.logoutEditInfoUserAction();
               }}>
               <Image
                 source={Images.arrow}
@@ -451,7 +452,7 @@ const ContactHomeComponent = (props) => {
             alignItems: 'center',
           }}>
           <Text style={{fontSize: 20, color: '#2EB553'}}>
-            Thông tin liên hệ
+           {t('Thông tin liên hệ')} 
           </Text>
         </View>
         <View
@@ -485,8 +486,8 @@ const ContactHomeComponent = (props) => {
                   width: 70,
                   resizeMode: 'cover',
                   borderRadius: 9999,
-                  borderWidth:1,
-                  borderColor:"#FA8C16"
+                  borderWidth: 1,
+                  borderColor: '#FA8C16',
                 }}
               />
             )}
@@ -514,7 +515,7 @@ const ContactHomeComponent = (props) => {
             }}>
             {checkHoTen && (
               <Text style={{color: 'red'}}>
-                * Vui lòng nhập đầy đủ họ và tên của bạn
+                * {t('Vui lòng nhập đầy đủ họ và tên của bạn')}
               </Text>
             )}
           </View>
@@ -545,7 +546,7 @@ const ContactHomeComponent = (props) => {
               <TextInput
                 defaultValue={userName}
                 onChangeText={(text) => onUserName(text)}
-                placeholder="Họ và tên"
+                placeholder={t('Họ và tên')}
                 style={{width: '70%', marginLeft: 15}}></TextInput>
             </View>
             {clearHoTen && (
@@ -577,7 +578,7 @@ const ContactHomeComponent = (props) => {
           }}>
           {checkBirthDay && (
             <Text style={{color: 'red'}}>
-              * Vui lòng chọn ngày sinh của bạn
+              * {t('Vui lòng chọn ngày sinh của bạn')}
             </Text>
           )}
         </View>
@@ -593,11 +594,11 @@ const ContactHomeComponent = (props) => {
             marginTop: 20,
           }}>
           {checkEmail && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập Email của bạn</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng nhập Email của bạn')}</Text>
           )}
           {checkEmailHL && (
             <Text style={{color: 'red'}}>
-              * Vui lòng nhập Email đúng định dạng
+              * {t('Vui lòng nhập Email đúng định dạng')}
             </Text>
           )}
         </View>
@@ -659,11 +660,11 @@ const ContactHomeComponent = (props) => {
             <Text
               style={{
                 color:
-                  props.messageEmail === 'email đã được đăng ký'
+                t(props.messageEmail)  === t('email đã được đăng ký')
                     ? 'red'
                     : '#2EB553',
               }}>
-              {props.messageEmail}
+              {t(props.messageEmail)}
             </Text>
           </View>
         ) : null}
@@ -675,11 +676,11 @@ const ContactHomeComponent = (props) => {
             marginTop: CheckEmaiExit ? null : 20,
           }}>
           {checkPhone && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập số điện thoại</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng nhập số điện thoại')}</Text>
           )}
           {checkPhoneHL && (
             <Text style={{color: 'red'}}>
-              * Vui lòng nhập số điện thoại hợp lệ{' '}
+              * {t('Vui lòng nhập số điện thoại hợp lệ')}
             </Text>
           )}
         </View>
@@ -738,7 +739,7 @@ const ContactHomeComponent = (props) => {
             marginTop: 20,
           }}>
           {checkCity && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn tỉnh thành phố</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn tỉnh thành phố')}</Text>
           )}
         </View>
 
@@ -766,7 +767,7 @@ const ContactHomeComponent = (props) => {
               style={{
                 marginLeft: 15,
                 width: '70%',
-                color: City === 'Tỉnh/thành phố' ? '#BFBFBF' : 'black',
+                color: City === t('Tỉnh/thành phố') ? '#BFBFBF' : 'black',
               }}>
               {City}
             </Text>
@@ -797,7 +798,7 @@ const ContactHomeComponent = (props) => {
             marginTop: 20,
           }}>
           {checkAdress && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn địa chỉ</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn địa chỉ')}</Text>
           )}
         </View>
 
@@ -825,7 +826,7 @@ const ContactHomeComponent = (props) => {
               onChangeText={(text) => {
                 onAdress(text);
               }}
-              placeholder="Địa chỉ"
+              placeholder={t('Địa chỉ')}
               style={{width: '70%', marginLeft: 15}}></TextInput>
           </View>
           {clearAdress && (
@@ -865,7 +866,7 @@ const ContactHomeComponent = (props) => {
                 borderRadius: 13,
               }}>
               <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Cập nhập
+                {t('Cập nhập')}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -884,7 +885,7 @@ const ContactHomeComponent = (props) => {
                 borderRadius: 13,
               }}>
               <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Tiếp tục
+              {t('Tiếp tục')}
               </Text>
             </TouchableOpacity>
           )}
@@ -902,7 +903,7 @@ const ContactHomeComponent = (props) => {
             onPress={() => {
               props.navigation.navigate('HomeContainer');
               props.logoutCheckMailAction();
-              props.logoutEditInfoUserAction()
+              props.logoutEditInfoUserAction();
             }}
             style={{
               justifyContent: 'center',
@@ -917,7 +918,7 @@ const ContactHomeComponent = (props) => {
               source={require('../res/image/img/left-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
-            <Text style={{color: 'black'}}>Trang chủ</Text>
+            <Text style={{color: 'black'}}>{t('Trang chủ')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -925,7 +926,6 @@ const ContactHomeComponent = (props) => {
               props.navigation.navigate('BasicsInfoContainer');
             }}
             style={{
-
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'row',
@@ -935,7 +935,7 @@ const ContactHomeComponent = (props) => {
 
               borderRadius: 13,
             }}>
-            <Text style={{color: 'black'}}>Tiếp tục</Text>
+            <Text style={{color: 'black'}}>{t('Tiếp tục')}</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
@@ -947,13 +947,13 @@ const ContactHomeComponent = (props) => {
           ChooseCity_id={(id) => onChooseCity_id(id)}
           type="getCity"
           ref={modal}
-          title="Chọn tỉnh thành"
+          title={t('Chọn tỉnh thành')}
           data={DataCity}
           modalHeight={screenHeight / 2}
         />
         <SheetPhoto
           ref={modal1}
-          title="Thêm ảnh"
+          title={t('Thêm ảnh')}
           data={Photo}
           modalHeight={200}
           onPressTakePhoto={() => takePhoto()}

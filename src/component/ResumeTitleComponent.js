@@ -9,6 +9,7 @@ import StatusBarView from './custom/StatusBarView';
 import {useTranslation} from 'react-i18next';
 
 const ResumeTitleComponent = (props) => {
+  const {t} = useTranslation()
   const [data, setData] = useState('');
 
   useEffect(() => {
@@ -95,12 +96,12 @@ const ResumeTitleComponent = (props) => {
 
       <View
         style={{marginTop: 50, justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 20, color: '#2EB553'}}>Tiêu đề</Text>
+        <Text style={{fontSize: 20, color: '#2EB553'}}>{t('Tiêu đề Civi')}</Text>
       </View>
       <View style={{marginTop: 35}}>
         {errorTitle && (
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: 'red'}}>* Vui lòng nhập tiêu đề của bạn</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng nhập tiêu đề của bạn')}</Text>
           </View>
         )}
 
@@ -122,7 +123,7 @@ const ResumeTitleComponent = (props) => {
             onChangeText={(text) => {
               onChangeText(text);
             }}
-            placeholder="Tiêu đề"
+            placeholder={t('Tiêu đề')}
             style={{width: '70%'}}></TextInput>
         </View>
       </View>
@@ -143,7 +144,7 @@ const ResumeTitleComponent = (props) => {
               borderRadius: 13,
             }}>
             <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-              Cập nhập
+            {t('Cập nhập')}
             </Text>
           </TouchableOpacity>
         ) : (
@@ -163,7 +164,7 @@ const ResumeTitleComponent = (props) => {
               borderRadius: 13,
             }}>
             <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-              Tiếp tục
+            {t('Tiếp tục')}
             </Text>
           </TouchableOpacity>
         )}

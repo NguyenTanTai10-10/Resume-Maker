@@ -43,7 +43,7 @@ const editInfoUserReducer = (state = initState, action) => {
         loading: false,
         data: null,
 
-        message: 'Lối sever',
+        error: 'Lối sever',
       };
     case LOGOUT_EDIT_INFO_USER:
       console.log('LOGOUT_EDIT_INFO_USER');
