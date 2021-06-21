@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ResumeHomeComponent from '../../component/ResumeHomeComponent';
 
-import { infoUserAction,editCiviAction} from "../../redux/actions/Action"
+import { infoUserAction,editCiviAction,logoutEditCiviAction} from "../../redux/actions/Action"
 
 export class ResumeHomeContainer extends Component {
   render() {
@@ -31,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
      infoUserAction: (input) => dispatch(infoUserAction(input)),
      editCiviAction: (input) => dispatch(editCiviAction(input)),
+     logoutEditCiviAction: (input) => dispatch(logoutEditCiviAction(input)),
+
+     
   };
 };
 

@@ -1,9 +1,6 @@
 const urlSever = 'https://viecoi.vn/api/json';
 const Ver = 2;
-const language = 'vi';
-
 import axios from 'axios';
-import {Alert} from 'react-native';
 function* LoginUser(input) {
   // console.log('input', input);
   let temp;
@@ -55,7 +52,7 @@ function* ListCV(input) {
       method: 'get_template_cv',
       params: {
         template_cv_id: input.template_cv_id,
-        lang_code: language,
+        lang_code: input.language,
       },
     })
     .then(function (response) {
@@ -77,7 +74,7 @@ function* GetCity(input) {
       params: {
         city_id: input.city_id,
         country_id: input.country_id,
-        lang_code: language,
+        lang_code: input.language,
       },
     })
     .then(function (response) {
@@ -110,7 +107,7 @@ function* Register(input) {
         facebook_id: input.facebook_id,
         google_id: input.google_id,
         os_register: 3,
-        lang_code: language,
+        lang_code: input.language,
       },
     })
     .then(function (response) {
@@ -151,7 +148,7 @@ function* InforUser(input) {
       params: {
         user_id: input.user_id,
         emp_id: input.emp_id,
-        lang_code: language,
+        lang_code: input.language,
         is_app_cv: input.is_app_cv,
       },
     })
@@ -184,7 +181,7 @@ function* EditInfoUser(input) {
         city: input.city,
         phone: input.phone,
         skype: '',
-        langCode: language,
+        langCode: input.language,
       },
     })
     .then(function (response) {
@@ -230,7 +227,7 @@ function* GetIndustry(input) {
     .post(urlSever, {
       method: 'get_industry',
       version: Ver,
-      params: {industry_id: input.industry_id, lang_code: language},
+      params: {industry_id: input.industry_id, lang_code: input.language},
     })
     .then(function (response) {
       temp = response.data;
@@ -247,7 +244,7 @@ function* GetLever(input) {
     .post(urlSever, {
       method: 'get_level_group',
       version: Ver,
-      params: {level_group_id: input.level_group_id, lang_code: language},
+      params: {level_group_id: input.level_group_id, lang_code: input.language},
     })
     .then(function (response) {
       temp = response.data;
@@ -264,7 +261,10 @@ function* GetQualitification(input) {
     .post(urlSever, {
       method: 'get_qualifications',
       version: Ver,
-      params: {qualifications_id: input.qualifications_id, lang_code: language},
+      params: {
+        qualifications_id: input.qualifications_id,
+        lang_code: input.language,
+      },
     })
     .then(function (response) {
       temp = response.data;
@@ -284,7 +284,7 @@ function* GetFunctionRole(input) {
       params: {
         funcrole_group_id: input.funcrole_group_id,
         funcrole_role_id: input.funcrole_role_id,
-        lang_code: language,
+        lang_code: input.language,
       },
     })
     .then(function (response) {
@@ -373,7 +373,7 @@ function* GetLeverSc6(input) {
     .post(urlSever, {
       method: 'get_level',
       version: Ver,
-      params: {level_id: input.level_id, lang_code: language},
+      params: {level_id: input.level_id, lang_code: input.language},
     })
     .then(function (response) {
       temp = response.data;
@@ -464,6 +464,7 @@ function* deleteSkill(input) {
   return temp;
 }
 function* AddLanguage(input) {
+  console.log("input==",input);
   let temp;
   yield axios
     .post(urlSever, {
@@ -471,7 +472,7 @@ function* AddLanguage(input) {
       version: Ver,
       params: {
         user_id: input.user_id,
-        lang_code: language,
+        lang_code: input.language,
       },
     })
     .then(function (response) {
@@ -515,7 +516,7 @@ function* GetEditLang(input) {
       params: {
         lang_id: input.langs_id,
         user_id: input.users_id,
-        lang_code: language,
+        lang_code: input.language,
       },
     })
     .then(function (response) {
@@ -577,7 +578,7 @@ function* getTechnique(input) {
       method: 'get_tag_technique',
       version: 2,
       params: {
-        lang_code: language,
+        lang_code: input.language,
         tag_technique_id: input.tag_technique_id,
         type: '2',
       },

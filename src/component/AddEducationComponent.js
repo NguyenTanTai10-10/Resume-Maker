@@ -20,18 +20,20 @@ import DatetimePass from './custom/DatetimePass';
 import DatetimePicker from './custom/DatetimePicker';
 import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const AddEducationComponent = (props) => {
+  const {t} = useTranslation();
   const [dataQua, setDataQua] = useState('');
-  const [quaName, setQuaName] = useState('Trình độ');
+  const [quaName, setQuaName] = useState(t('Trình độ'));
   const [quaId, setQuaId] = useState('');
   const [dataFunc, setDataFunc] = useState('');
-  const [funcName, setFuncName] = useState('Chuyên ngành');
+  const [funcName, setFuncName] = useState(t('Chuyên ngành'));
   const [funcId, setFuncId] = useState('');
-  const [dayPass, setDayPass] = useState('Năm học (từ)');
+  const [dayPass, setDayPass] = useState(t('Năm học (từ)'));
   const [monthPass, setMonthPass] = useState('');
   const [yearPass, setYearPass] = useState('');
-  const [dayEnd, setDayEnd] = useState('Năm học (đến)');
+  const [dayEnd, setDayEnd] = useState(t('Năm học (đến)'));
   const [monthEnd, setMonthEnd] = useState('');
   const [yearEnd, setYearEnd] = useState('');
   const [school, setSchool] = useState('');
@@ -50,15 +52,17 @@ const AddEducationComponent = (props) => {
 
   useEffect(() => {
     getData();
-    props.getQualitificationrAction({qualifications_id: ''});
-    props.getFunctionRoleAction({funcrole_group_id: '', funcrole_role_id: ''});
+   
   }, []);
 
   const getData = async () => {
+    const value = await AsyncStorage.getItem('lang');
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
       const kq = jsonValue != null ? JSON.parse(jsonValue) : null;
       setUserId(kq);
+      props.getQualitificationrAction({qualifications_id: '',language: value!= null ? value : 'vi'});
+      props.getFunctionRoleAction({funcrole_group_id: '', funcrole_role_id: '',language: value!= null ? value : 'vi'});
     } catch (e) {}
   };
 
@@ -127,7 +131,7 @@ const AddEducationComponent = (props) => {
     setCheck(false);
     setDeleteQuaName(false);
     setQuaId('');
-    setQuaName('Trình độ');
+    setQuaName(t('Trình độ'));
   };
 
   //=====//
@@ -146,7 +150,7 @@ const AddEducationComponent = (props) => {
     setCheck(false);
     setDeleteFuncName(false);
     setFuncId('');
-    setFuncName('Chuyên ngành');
+    setFuncName(t('Chuyên ngành'));
   };
   const onChooseDayPass = (item) => {
     setCheck(false);
@@ -190,25 +194,25 @@ const AddEducationComponent = (props) => {
   const onSubmit = (item) => {
     console.log('vvvvvvvvv', userId);
     if (
-      quaName === 'Trình độ' ||
-      funcName === 'Chuyên ngành' ||
-      dayPass === 'Năm học (từ)' ||
-      dayEnd === 'Năm học (đến)' ||
+      quaName === t('Trình độ') ||
+      funcName === t('Chuyên ngành') ||
+      dayPass === t('Năm học (từ)') ||
+      dayEnd === t('Năm học (đến)') ||
       (monthEnd < monthPass && yearPass === yearEnd) ||
       yearPass > yearEnd ||
       school === '' ||
       school.trim() === ''
     ) {
-      if (quaName === 'Trình độ') {
+      if (quaName === t('Trình độ')) {
         setCheckQuaName(true);
       }
-      if (funcName === 'Chuyên ngành') {
+      if (funcName === t('Chuyên ngành')) {
         setCheckFuncName(true);
       }
-      if (dayPass === 'Năm học (từ)') {
+      if (dayPass === t('Năm học (từ)')) {
         setCheckDayPass(true);
       }
-      if (dayEnd === 'Năm học (đến)') {
+      if (dayEnd === t('Năm học (đến)')) {
         setCheckDayEnd(true);
       } else if (monthEnd < monthPass && yearPass === yearEnd) {
         setCheckDayEnd1(true);
@@ -339,7 +343,7 @@ const AddEducationComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                color: quaName === 'Trình độ' ? '#BFBFBF' : 'black',
+                color: quaName === t('Trình độ') ? '#BFBFBF' : 'black',
               }}>
               {quaName}
             </Text>
@@ -397,7 +401,7 @@ const AddEducationComponent = (props) => {
               style={{
                 marginLeft: 15,
                 width:'70%',
-                color: funcName === 'Chuyên ngành' ? '#BFBFBF' : 'black',
+                color: funcName === t('Chuyên ngành') ? '#BFBFBF' : 'black',
               }}>
               {funcName}
             </Text>

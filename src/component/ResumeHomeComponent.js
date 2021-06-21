@@ -19,6 +19,7 @@ import {useTranslation} from 'react-i18next';
 const ResumeHomeComponent = (props) => {
   const {t} = useTranslation()
   const [data, setData] = useState('');
+  const [language, setLanguage] = useState('vi');
 
   useEffect(() => {
     getData();
@@ -76,11 +77,13 @@ const ResumeHomeComponent = (props) => {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const value = await AsyncStorage.getItem('lang')
       setUserId(jsonValue != null ? JSON.parse(jsonValue) : null)
+      setLanguage(value != null ? value :'vi')
       
       props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        lang_code: '',
+        language: language,
         emp_id: '',
         is_app_cv: 1,
       });
@@ -159,6 +162,7 @@ const ResumeHomeComponent = (props) => {
         level_group_id: leverGroupId,
         location_id: cityName_Id,
         user_id: userId,
+        language: language,
       });
     }
   };
@@ -184,7 +188,10 @@ const ResumeHomeComponent = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            onPress={() => props.navigation.goBack()}>
+            onPress={() =>{
+              props.logoutEditCiviAction();
+              props.navigation.goBack()
+            } }>
             <Image
               source={Images.arrow}
               style={{
@@ -271,6 +278,7 @@ const ResumeHomeComponent = (props) => {
         ) : (
           <TouchableOpacity
             onPress={() => {
+              props.logoutEditCiviAction();
               props.navigation.navigate('ContactHomeContainer');
             }}
             style={{

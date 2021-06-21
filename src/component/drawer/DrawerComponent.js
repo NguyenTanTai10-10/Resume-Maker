@@ -18,11 +18,12 @@ const DrawerComponent = (props) => {
     // props.navigation.addListener('focus', async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const value = await AsyncStorage.getItem('lang');
       setUserId(jsonValue != null ? JSON.parse(jsonValue) : null);
 
       await props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        lang_code: '',
+        language:value != null ? value : 'vi',
         emp_id: '',
         is_app_cv: 1,
       });

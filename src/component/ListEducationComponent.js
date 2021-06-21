@@ -68,18 +68,19 @@ const ListEducationComponent = (props) => {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const value = await AsyncStorage.getItem('lang');
       setUser_Id(jsonValue != null ? JSON.parse(jsonValue) : null);
       props.navigation.addListener('focus', async () => {
         props.infoUserAction({
           user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-          lang_code: '',
+          language: value!= null ? value : 'vi',
           emp_id: '',
           is_app_cv: 1,
         });
       });
       props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        lang_code: '',
+        language: value!= null ? value : 'vi',
         emp_id: '',
         is_app_cv: 1,
       });
@@ -183,23 +184,6 @@ const ListEducationComponent = (props) => {
                 />
               </TouchableOpacity>
             </View>
-            {/* <TouchableOpacity
-              onPress={async () => {
-                setEductionId(item.item);
-                setEduction_Id(item.item.eduction_id);
-                modal.current.open();
-              }}
-              style={{
-                height: 30,
-                width: 30,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../res/image/img/more(1).png')}
-                style={{height: 25, width: 25, resizeMode: 'contain'}}
-              />
-            </TouchableOpacity> */}
           </View>
           <View
             style={{

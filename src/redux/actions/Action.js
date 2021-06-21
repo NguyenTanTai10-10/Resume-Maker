@@ -84,7 +84,7 @@ export const INFO_USER = 'INFO_USER';
 export const INFO_USER_SUCCESS = 'INFO_USER_SUCCESS';
 export const INFO_USER_ERROR = 'INFO_USER_ERROR';
 export const infoUserAction = (input) => {
-  console.log('actions==', input);
+  console.log('actions==444', input);
   return {
     type: INFO_USER,
     input: input,
@@ -111,6 +111,7 @@ export const EDIT_CIVI = 'EDIT_CIVI';
 export const EDIT_CIVI_SUCCESS = 'EDIT_CIVI_SUCCESS';
 export const EDIT_CIVI_ERROR = 'EDIT_CIVI_ERROR';
 export const editCiviAction = (input) => {
+  console.log("input===",input);
   return {
     type: EDIT_CIVI,
     input: input,

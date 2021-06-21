@@ -16,14 +16,16 @@ import Sizes from '../utils/Sizes';
 import BottomSheetChoose from './custom/BottomSheetChoose';
 import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const ListLanguageComponent = (props) => {
+  const {t} = useTranslation()
   const [dataLang, setDataLang] = useState('');
   const [language_Id, setLanguage_Id] = useState('');
   const [dataItem, setDataItem] = useState('');
-
   const [user_Id, setUser_Id] = useState('');
   const modal = React.createRef();
+  
   useEffect(() => {
     getData();
   }, []);
@@ -33,18 +35,18 @@ const ListLanguageComponent = (props) => {
         setDataLang(props.dataUser.langs);
       } else {
         setTimeout(() => {
-          Alert.alert('Thông báo', props.messageUser);
+          Alert.alert(t('Thông báo'), t(props.messageUser));
         }, 10);
       }
     } else if (props.errorUser !== null) {
-      Alert.alert('Thông báo', props.errorUser);
+      Alert.alert(t('Thông báo'),t(props.errorUser));
     }
   }, [props.statusUser]);
   useEffect(() => {
     if (props.statusDelete !== null) {
       if (props.statusDelete === 1) {
         Alert.alert(
-          ' Xóa Thành Công',
+          t('Xóa Thành Công'),
           '',
           [
             {
@@ -63,24 +65,25 @@ const ListLanguageComponent = (props) => {
         );
       }
     } else if (props.errorDelete !== null) {
-      Alert.alert('Thông báo', props.errorDelete);
+      Alert.alert(t('Thông báo'), t(props.errorDelete));
     }
   }, [props.statusDelete]);
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const value = await AsyncStorage.getItem('lang');
       setUser_Id(jsonValue != null ? JSON.parse(jsonValue) : null);
       props.navigation.addListener('focus', async () => {
         props.infoUserAction({
           user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-          lang_code: '',
+          language: value,
           emp_id: '',
           is_app_cv: 1,
         });
       });
       props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        lang_code: '',
+        language: value,
         emp_id: '',
         is_app_cv: 1,
       });
@@ -93,7 +96,7 @@ const ListLanguageComponent = (props) => {
 
   const onDelete = (item) => {
     Alert.alert(
-      'Bạn có muốn xóa không',
+      t('Bạn có muốn xóa không'),
       '',
       [
         {
@@ -125,13 +128,13 @@ const ListLanguageComponent = (props) => {
   const chooseDegree = (item) => {
     switch (item) {
       case 1:
-        return 'Sơ cấp';
+        return t('Sơ cấp');
         break;
       case 2:
-        return 'Trung cấp';
+        return t('Trung cấp');
         break;
       case 3:
-        return 'Cao cấp';
+        return t('Cao cấp');
         break;
     }
   };
@@ -195,24 +198,6 @@ const ListLanguageComponent = (props) => {
                 />
               </TouchableOpacity>
             </View>
-
-            {/* <TouchableOpacity
-              onPress={async () => {
-                setDataItem(item.item);
-                setLanguage_Id(item.item.lang_id);
-                modal.current.open();
-              }}
-              style={{
-                height: 30,
-                width: 30,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../res/image/img/more(1).png')}
-                style={{height: 25, width: 25, resizeMode: 'contain'}}
-              />
-            </TouchableOpacity> */}
           </View>
           <View
             style={{
@@ -327,7 +312,7 @@ const ListLanguageComponent = (props) => {
               source={require('../res/image/img/left-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
-            <Text style={{color: 'black'}}>Trang chủ</Text>
+            <Text style={{color: 'black'}}>{t('Trang chủ')} </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -340,25 +325,13 @@ const ListLanguageComponent = (props) => {
               width: (screenWidth * 0.7) / 2,
               borderRadius: 13,
             }}>
-            <Text style={{color: 'black'}}>Tiếp tục</Text>
+            <Text style={{color: 'black'}}>{t('Tiếp tục')}</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>
-        {/* <BottomSheetChoose
-          onPressNavigation={() => {
-            OnNavigate();
-          }}
-          OnDelete={() => {
-            onDelete();
-          }}
-          ref={modal}
-          title="Chỉnh sửa thông tin"
-          // data={eductionId}
-          modalHeight={200}
-        /> */}
       </ScrollView>
     </View>
   );

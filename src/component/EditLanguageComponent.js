@@ -10,20 +10,22 @@ import BottomSheetDegree from './custom/BottomSheetDegree';
 import BottomSheetLanguage from './custom/BottomSheetLanguage';
 import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const EditLanguageComponent = (props) => {
+  const {t} = useTranslation();
 
   const [datas, setDatas] = useState([
-    {id: 1, degree: 'Sơ cấp'},
-    {id: 2, degree: 'Trung cấp'},
-    {id: 3, degree: 'Cao cấp'},
+    {id: 1, degree:t('Sơ cấp') },
+    {id: 2, degree:t('Trung cấp') },
+    {id: 3, degree: t('Cao cấp')},
   ]);
 
   const [dataLanguage, setDataLanguage] = useState('');
   const [userId, setUserId] = useState('');
-  const [nameLang, setNameLang] = useState('Ngôn ngữ');
+  const [nameLang, setNameLang] = useState(t('Ngôn ngữ'));
   const [id_Lang, setId_Lang] = useState('');
-  const [nameDegree, setNameDegree] = useState('Trình độ');
+  const [nameDegree, setNameDegree] = useState(t('Trình độ'));
   const [id_Degree, setId_Degree] = useState('');
   const [langId, setLangId] = useState('');
   
@@ -50,7 +52,8 @@ const EditLanguageComponent = (props) => {
       setUserId(kq);
       props.getEditlangAction({
         users_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        langs_id:props.route.params.DataLang.lang_id
+        langs_id:props.route.params.DataLang.lang_id,
+        language:'vi'
       });
     } catch (e) {}
   };
@@ -68,7 +71,7 @@ const EditLanguageComponent = (props) => {
     if (props.statusEdit !== null) {
       if (props.statusEdit === 1) {
         Alert.alert(
-          ' Sửa Thành Công',
+          t('Sửa Thành Công'),
           '',
           [
             {
@@ -88,7 +91,7 @@ const EditLanguageComponent = (props) => {
         );
       }
     } else if (props.errorEdit !== null) {
-      Alert.alert(props.errorEdit);
+      Alert.alert(t(props.errorEdit));
     }
   }, [props.statusEdit]);
   //===========================================
@@ -103,12 +106,12 @@ const EditLanguageComponent = (props) => {
     // console.log(item);
   };
   const onClearlang = (item) => {
-    setNameLang('Ngôn ngữ');
+    setNameLang(t('Ngôn ngữ'));
     setClearNameLang(false);
     // console.log(item);
   };
   const onClearDegree = (item) => {
-    setNameDegree('Trình độ');
+    setNameDegree(t('Trình độ'));
     setClearNameDegree(false);
     // console.log(item);
   };
@@ -134,11 +137,11 @@ const EditLanguageComponent = (props) => {
   const [clearNameDegree, setClearNameDegree] = useState(false);
   //===========================================
   const onSubmit = () => {
-    if (nameLang === 'Ngôn ngữ' || nameDegree === 'Trình độ') {
-      if (nameLang === 'Ngôn ngữ') {
+    if (nameLang === t('Ngôn ngữ') || nameDegree === t('Trình độ')) {
+      if (nameLang === t('Ngôn ngữ')) {
         setCheckNameLang(true);
       }
-      if (nameDegree === 'Trình độ') {
+      if (nameDegree === t('Trình độ')) {
         setCheckNameDegree(true);
       }
     } else {
@@ -201,7 +204,18 @@ const EditLanguageComponent = (props) => {
                 resizeMode: 'contain',
               }}
             />
-            <Text style={{paddingHorizontal: Sizes.h32}}>{}</Text>
+            <TouchableOpacity
+              style={{
+                flex: 0.1,
+                left: 0,
+                height: Sizes.h95,
+                paddingHorizontal: Sizes.h32,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+             >
+
+              </TouchableOpacity>
           </View>
         </View>
         <View
@@ -210,7 +224,7 @@ const EditLanguageComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 20, color: '#2EB553'}}>Ngoại ngữ</Text>
+          <Text style={{fontSize: 20, color: '#2EB553'}}>{t('Ngoại ngữ')}</Text>
         </View>
         <View
           style={{
@@ -219,7 +233,7 @@ const EditLanguageComponent = (props) => {
             marginTop: 20,
           }}>
           {checkNameLang && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn ngôn ngữ</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn ngôn ngữ')}</Text>
           )}
         </View>
         <TouchableOpacity
@@ -246,7 +260,7 @@ const EditLanguageComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                color: nameLang === 'Ngôn ngữ' ? '#BFBFBF' : 'black',
+                color: nameLang === t('Ngôn ngữ') ? '#BFBFBF' : 'black',
               }}>
               {nameLang}
             </Text>
@@ -276,7 +290,7 @@ const EditLanguageComponent = (props) => {
             marginTop: 20,
           }}>
           {checkNameDegree && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn trình độ</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn trình độ')}</Text>
           )}
         </View>
         <TouchableOpacity
@@ -303,7 +317,7 @@ const EditLanguageComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                color: nameDegree === 'Trình độ' ? '#BFBFBF' : 'black',
+                color: nameDegree === t('Trình độ') ? '#BFBFBF' : 'black',
               }}>
               {nameDegree}
             </Text>
@@ -348,7 +362,7 @@ const EditLanguageComponent = (props) => {
               borderRadius: 13,
             }}>
             <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-              Cập nhập
+              {t('Cập nhập')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -357,7 +371,7 @@ const EditLanguageComponent = (props) => {
           OnChooselang_id={(item) => onChooselang_id(item)}
           OnChooselang={(item) => onChooselang(item)}
           ref={modal}
-          title="Chọn ngôn ngữ"
+          title={t("Chọn ngôn ngữ")}
           data={dataLanguage}
           modalHeight={screenHeight / 2}
         />
@@ -365,7 +379,7 @@ const EditLanguageComponent = (props) => {
           OnChooseDegree_id={(item) => onChooseDegree_id(item)}
           OnChooseDegree={(item) => onChooseDegree(item)}
           ref={modal1}
-          title="Chọn trình độ"
+          title={t("Chọn trình độ")}
           data={datas}
           modalHeight={screenHeight / 2}
         />

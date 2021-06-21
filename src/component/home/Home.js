@@ -114,24 +114,28 @@ const Home = (props) => {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const value = await AsyncStorage.getItem('lang');
       props.navigation.addListener('focus', async () => {
         props.infoUserAction({
           user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-          lang_code: '',
+          language: value != null ?value :"vi" ,
           emp_id: '',
           is_app_cv: 1,
         });
       });
-      props.infoUserAction({
-        user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        lang_code: '',
+      if(value || jsonValue !== null ){
+        props.infoUserAction({
+        user_id: jsonValue !=null  ? JSON.parse(jsonValue) : null,
+        language: value != null ?value :"vi",
         emp_id: '',
         is_app_cv: 1,
       });
+      }
+      
 
       // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
     } catch (e) {
-      // error reading value
+      
     }
   };
 
@@ -171,12 +175,22 @@ const Home = (props) => {
     }
   };
   //=================================
-  const onPressVn = () => {
-    i18n.changeLanguage('vn');
+  const onPressVn =  async () => {
+    try {
+      await AsyncStorage.setItem('lang', 'vi')
+    } catch (e) {
+      // saving error
+    }
+    i18n.changeLanguage('vi');
 
     // this.props.i18n.changeLanguage('en')
   };
-  const onPressEn = () => {
+  const onPressEn = async() => {
+    try {
+      await AsyncStorage.setItem('lang', 'en')
+    } catch (e) {
+      // saving error
+    }
     i18n.changeLanguage('en');
 
     // this.props.i18n.changeLanguage('en')

@@ -32,7 +32,7 @@ const ContactHomeComponent = (props) => {
     props.navigation.addListener('focus', async () => {
       props.logoutCheckMailAction('');
 
-      props.getCityAction({city_id: '', country_id: ''});
+      // props.getCityAction({city_id: '', country_id: ''});
       try {
         const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
         setUserID(jsonValue != null ? JSON.parse(jsonValue) : null);
@@ -52,7 +52,21 @@ const ContactHomeComponent = (props) => {
       } catch (e) {
         // error reading value
       }
+      try {
+      const value = await AsyncStorage.getItem('lang')
+      if(value !== null) {
+        console.log('====================================');
+        console.log(value);
+        console.log('====================================');
+        props.getCityAction({city_id: '', country_id: '', language:value});
+        // value previously stored
+      }
+    } catch(e) {
+      props.getCityAction({city_id: '', country_id: '', language:'vi'});
+      // error reading value
+    }
     });
+    
   }, []);
 
   useEffect(() => {
@@ -394,6 +408,7 @@ const ContactHomeComponent = (props) => {
     <View style={{flex: 1}}>
       {props.loadingUser && <LoadingView />}
       {props.loadingEditInfo && <LoadingView />}
+      {props.loadingCity && <LoadingView/>}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,14 +6,31 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  Platform,
 } from 'react-native';
 import Images from '../../res/image';
 import {screenHeight, screenWidth} from '../../res/style/theme';
 import Sizes from '../../utils/Sizes';
 import StatusBarView from '../custom/StatusBarView';
 import {useTranslation} from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = (props) => {
-  const {t} = useTranslation();
+  useEffect(() => {
+    getData()
+
+  }, [])
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('lang')
+      if(value !== null) {
+        i18n.changeLanguage(value);
+      }
+    } catch(e) {
+      i18n.changeLanguage('vi');
+      // error reading value
+    }
+  }
+  const {t,i18n} = useTranslation();
   const OnPessFB = () => {
     props.navigation.navigate('Drawers');
   };
@@ -74,7 +91,7 @@ const Login = (props) => {
             {t('Đăng nhập Google')}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {Platform.OS === 'ios' && <TouchableOpacity
           onPress={() => OnPessAP()}
           style={{
             height: 40,
@@ -94,7 +111,8 @@ const Login = (props) => {
           <Text style={{color: 'white', paddingLeft: 10, fontSize: Sizes.h30}}>
             {t('Đăng nhập Apple')}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
+        
 
         <TouchableOpacity
           style={{marginTop: 20}}

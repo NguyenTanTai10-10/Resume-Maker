@@ -4,24 +4,25 @@ import {View, Text, Image, TouchableOpacity, ScrollView, Alert} from 'react-nati
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
-import BottomSheetCity from './custom/BottomSheetCity';
 import BottomSheetDegree from './custom/BottomSheetDegree';
 import BottomSheetLanguage from './custom/BottomSheetLanguage';
 import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const AddLanguageComponent = (props) => {
+  const {t} = useTranslation();
   const [datas, setDatas] = useState([
-    {id: 1, degree: 'Sơ cấp'},
-    {id: 2, degree: 'Trung cấp'},
-    {id: 3, degree: 'Cao cấp'},
+    {id: 1, degree: t('Sơ cấp')},
+    {id: 2, degree: t('Trung cấp')},
+    {id: 3, degree: t('Cao cấp')},
   ]);
 
   const [dataLanguage, setDataLanguage] = useState('');
   const [userId, setUserId] = useState('');
-  const [nameLang, setNameLang] = useState('Ngôn ngữ');
+  const [nameLang, setNameLang] = useState(t('Ngôn ngữ'));
   const [id_Lang, setId_Lang] = useState('');
-  const [nameDegree, setNameDegree] = useState('Trình độ');
+  const [nameDegree, setNameDegree] = useState(t('Trình độ'));
   const [id_Degree, setId_Degree] = useState('');
 
   //===========================================
@@ -35,6 +36,8 @@ const AddLanguageComponent = (props) => {
       setUserId(kq);
       props.addLanguageAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
+        language:'vi',
+
       });
     } catch (e) {}
   };
@@ -42,7 +45,7 @@ const AddLanguageComponent = (props) => {
   useEffect(() => {
     if (props.statusAdd !== null) {
       if (props.statusAdd === 1) {
-        // console.log(props.dataLAdd);
+        console.log(props.dataLAdd);
         setDataLanguage(props.dataLAdd);
       }
     }
@@ -52,7 +55,7 @@ const AddLanguageComponent = (props) => {
     if (props.statusInsert !== null) {
       if (props.statusInsert === 1) {
         Alert.alert(
-          ' Thêm Thành Công',
+         t('Thêm Thành Công') ,
           '',
           [
             {
@@ -72,7 +75,7 @@ const AddLanguageComponent = (props) => {
         );
       }
     } else if (props.errorInsert !== null) {
-      Alert.alert(props.errorInsert);
+      Alert.alert(t(props.errorInsert));
     }
   }, [props.statusInsert]);
   //===========================================
@@ -87,12 +90,12 @@ const AddLanguageComponent = (props) => {
     // console.log(item);
   };
   const onClearlang = (item) => {
-    setNameLang('Ngôn ngữ');
+    setNameLang(t('Ngôn ngữ'));
     setClearNameLang(false);
     // console.log(item);
   };
   const onClearDegree = (item) => {
-    setNameDegree('Trình độ');
+    setNameDegree(t('Trình độ'));
     setClearNameDegree(false);
     // console.log(item);
   };
@@ -118,11 +121,11 @@ const AddLanguageComponent = (props) => {
   const [clearNameDegree, setClearNameDegree] = useState(false);
   //===========================================
   const onSubmit = () => {
-    if (nameLang === 'Ngôn ngữ' || nameDegree === 'Trình độ') {
-      if (nameLang === 'Ngôn ngữ') {
+    if (nameLang === t('Ngôn ngữ') || nameDegree === t('Trình độ')) {
+      if (nameLang === t('Ngôn ngữ')) {
         setCheckNameLang(true);
       }
-      if (nameDegree === 'Trình độ') {
+      if (nameDegree === t('Trình độ')) {
         setCheckNameDegree(true);
       }
     } else {
@@ -181,7 +184,20 @@ const AddLanguageComponent = (props) => {
                 resizeMode: 'contain',
               }}
             />
-            <Text style={{paddingHorizontal: Sizes.h32}}>{}</Text>
+            <TouchableOpacity
+              style={{
+                flex: 0.1,
+                left: 0,
+                height: Sizes.h95,
+                paddingHorizontal: Sizes.h32,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              >
+              
+            </TouchableOpacity>
+            
+            
           </View>
         </View>
         <View
@@ -190,7 +206,7 @@ const AddLanguageComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 20, color: '#2EB553'}}>Ngoại ngữ</Text>
+          <Text style={{fontSize: 20, color: '#2EB553'}}>{t('Ngoại ngữ')}</Text>
         </View>
         <View
           style={{
@@ -199,7 +215,7 @@ const AddLanguageComponent = (props) => {
             marginTop: 20,
           }}>
           {checkNameLang && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn ngôn ngữ</Text>
+            <Text style={{color: 'red'}}>* {t("Vui lòng chọn ngôn ngữ")}</Text>
           )}
         </View>
         <TouchableOpacity
@@ -226,7 +242,7 @@ const AddLanguageComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                color: nameLang === 'Ngôn ngữ' ? '#BFBFBF' : 'black',
+                color: nameLang === t('Ngôn ngữ') ? '#BFBFBF' : 'black',
               }}>
               {nameLang}
             </Text>
@@ -256,7 +272,7 @@ const AddLanguageComponent = (props) => {
             marginTop: 20,
           }}>
           {checkNameDegree && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn trình độ</Text>
+            <Text style={{color: 'red'}}>* {t("Vui lòng chọn trình độ")}</Text>
           )}
         </View>
         <TouchableOpacity
@@ -283,7 +299,7 @@ const AddLanguageComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                color: nameDegree === 'Trình độ' ? '#BFBFBF' : 'black',
+                color: nameDegree === t('Trình độ') ? '#BFBFBF' : 'black',
               }}>
               {nameDegree}
             </Text>
@@ -328,7 +344,7 @@ const AddLanguageComponent = (props) => {
               borderRadius: 13,
             }}>
             <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-              Cập nhập
+             {t('Cập nhập')} 
             </Text>
           </TouchableOpacity>
         </View>
@@ -337,7 +353,7 @@ const AddLanguageComponent = (props) => {
           OnChooselang_id={(item) => onChooselang_id(item)}
           OnChooselang={(item) => onChooselang(item)}
           ref={modal}
-          title="Chọn ngôn ngữ"
+          title={t("Chọn ngôn ngữ")}
           data={dataLanguage}
           modalHeight={screenHeight / 2}
         />
@@ -345,7 +361,7 @@ const AddLanguageComponent = (props) => {
           OnChooseDegree_id={(item) => onChooseDegree_id(item)}
           OnChooseDegree={(item) => onChooseDegree(item)}
           ref={modal1}
-          title="Chọn trình độ"
+          title={t("Chọn trình độ")}
           data={datas}
           modalHeight={screenHeight / 2}
         />

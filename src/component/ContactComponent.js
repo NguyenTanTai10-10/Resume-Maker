@@ -26,9 +26,7 @@ import {useTranslation} from 'react-i18next';
 
 const ContactComponent = (props) => {
   const {t}= useTranslation()
-  useEffect(() => {
-    props.getCityAction({city_id: '', country_id: ''});
-  }, []);
+
   useEffect(() => {
     getData();
     props.navigation.addListener('focus', () => {
@@ -38,6 +36,15 @@ const ContactComponent = (props) => {
     });
   }, []);
   const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('lang')
+      if(value !== null) {
+        props.getCityAction({city_id: '', country_id: '', language:value!=null ? value: 'vi'});
+        // value previously stored
+      }
+    } catch(e) {
+      // error reading value
+    }
     try {
       const jsonValue = await AsyncStorage.getItem('@title');
       setTitle(jsonValue != null ? JSON.parse(jsonValue) : null);
@@ -276,7 +283,7 @@ const ContactComponent = (props) => {
         birthDay.trim() === '' ||
         birthDay === t('Ngày sinh')
       ) {
-        setBirthDay('');
+        setBirthDay(t('Ngày sinh'));
         setCheckBirthDay(true);
       }
       if (Password === null || Password.trim() === '') {
@@ -980,7 +987,7 @@ const ContactComponent = (props) => {
           ChooseCity_id={(id) => onChooseCity_id(id)}
           type="getCity"
           ref={modal}
-          title="Chọn tỉnh thành"
+          title={t('"Chọn tỉnh thành"')}
           data={DataCity}
           modalHeight={screenHeight / 2}
         />

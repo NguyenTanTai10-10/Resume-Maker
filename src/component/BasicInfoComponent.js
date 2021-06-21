@@ -28,25 +28,32 @@ const BasicInfoComponent = (props) => {
   const [totalCity, setTotalCity] = useState([]);
   useEffect(() => {
     getdata();
-
-    props.getIndustryAction({industry_id: ''});
-    props.getLeverAction({level_group_id: ''});
-    props.getCityAction({city_id: '', country_id: ''});
   }, []);
   const getdata = async () => {
     // props.navigation.addListener('focus', async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
-      setUserId(jsonValue != null ? JSON.parse(jsonValue) : null);
+      const value = await AsyncStorage.getItem('lang');
 
+        props.getCityAction({city_id: '', country_id: '', language: value!= null ? value : 'vi'});
+        props.getIndustryAction({industry_id: '', language: value!= null ? value : 'vi'});
+        props.getLeverAction({level_group_id: '', language: value!= null ? value : 'vi'});
+        // value previously stored
+      
+    } catch (e) {
+      // error reading value
+    }
+    try {
+      const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const value = await AsyncStorage.getItem('lang');
+      setUserId(jsonValue != null ? JSON.parse(jsonValue) : null);
       await props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        lang_code: '',
+        language: value!= null ? value : 'vi',
         emp_id: '',
         is_app_cv: 1,
       });
     } catch (e) {
-      // error reading value
+     
     }
     // });
   };
@@ -67,7 +74,7 @@ const BasicInfoComponent = (props) => {
           }
         });
         dataLever.map((item) => {
-          if (item.level_group === props.dataUser.levelGroup) {
+          if (item.level_group_id === props.dataUser.levelGroupId) {
             setLeverGroup(item.level_group);
             setLeverGroupId(item.level_group_id);
           }
@@ -173,7 +180,7 @@ const BasicInfoComponent = (props) => {
     if (props.statusEditCv !== null) {
       if (props.statusEditCv === 1) {
         Alert.alert(t('Thông báo'), t(props.messageEditCv));
-         setCheck(true);
+        setCheck(true);
       } else if (props.statusEditCv === 0) {
         Alert.alert(t('Thông báo'), t(props.messageEditCv));
       }
@@ -335,7 +342,6 @@ const BasicInfoComponent = (props) => {
         user_id: userId,
       });
       console.log('====================================');
-      
     }
   };
   //===============================
@@ -407,8 +413,9 @@ const BasicInfoComponent = (props) => {
     <View style={{flex: 1}}>
       {props.loadingUser && <LoadingView />}
       {props.loadingEditCv && <LoadingView />}
-      {/* {props.loadingLever && <LoadingView />}
-      {props.loadingIndustry && <LoadingView />} */}
+      {props.loadingLever && <LoadingView />}
+      {props.loadingIndustry && <LoadingView />}
+      {props.loadingCity && <LoadingView />}
 
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
@@ -467,7 +474,7 @@ const BasicInfoComponent = (props) => {
             alignItems: 'center',
           }}>
           <Text style={{fontSize: 20, color: '#2EB553'}}>
-           {t("Thông tin xin việc")} 
+            {t('Thông tin xin việc')}
           </Text>
         </View>
         <View
