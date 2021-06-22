@@ -32,6 +32,7 @@ const resources = {
       'Sơ cấp':'Sơ cấp',
       'Trung cấp':'Trung cấp',
       'Cao cấp':'Cao cấp',
+      'Hoàn thành':'Hoàn thành',
       //================HOME============================
       'Mức độ hoàn thiện CiVi': 'Mức độ hoàn thiện CiVi',
       'Liên kết của bạn': 'Liên kết của bạn',
@@ -121,7 +122,30 @@ const resources = {
       'Chuyên ngành':'Chuyên ngành',
       'Năm học (từ)':'Năm học (từ)',
       'Năm học (đến)':'Năm học (đến)',
-      'Trường':'Trường'
+      'Trường':'Trường',
+      'Vui lòng chọn chuyên ngành':'Vui lòng chọn chuyên ngành',
+      'Vui lòng nhập trường':'Vui lòng nhập trường',
+      'Vui lòng chọn năm học (từ)':'Vui lòng chọn năm học (từ)',
+      'Vui lòng chọn năm học (đến)':'Vui lòng chọn năm học (đến)',
+      'Vui lòng chọn năm học (đến) lớn hơn':'Vui lòng chọn năm học (đến) lớn hơn',
+      //==================Exp=========================
+      'Thời gian bắt đầu làm việc từ':'Thời gian bắt đầu làm việc từ',
+      'Thời gian nghỉ việc':'Thời gian nghỉ việc',
+      'Cấp bậc':'Cấp bậc',
+      'Vui lòng chọn thời gian nghỉ lớn hơn':'Vui lòng chọn thời gian nghỉ lớn hơn',
+      'Vui lòng chọn thời gian nghỉ' :'Vui lòng chọn thời gian nghỉ',
+      'Vui lòng chọn thời gian bắt đầu làm việc':'Vui lòng chọn thời gian bắt đầu làm việc',
+      'Nhập thông tin...':'Nhập thông tin...',
+      'Công việc chính':'Công việc chính',
+      'Vui lòng chọn cấp bậc':'Vui lòng chọn cấp bậc',
+      'Tên công ty':'Tên công ty',
+      'Vui lòng nhập tên công ty':'Vui lòng nhập tên công ty',
+      'Kinh nghiệm':'Kinh nghiệm',
+      'Vui lòng nhập kinh nghiệm':'Vui lòng nhập kinh nghiệm',
+      'Hiện nay':'Hiện nay',
+      //==================Exp=========================
+      'Chọn kỹ năng':'Chọn kỹ năng',
+      'Vui lòng chọn kỹ năng':'Vui lòng chọn kỹ năng'
       
 
       
@@ -155,6 +179,7 @@ const resources = {
       'Sơ cấp' :'Primary',
       'Trung cấp':'Intermediate',
       'Cao cấp':'Premium',
+      'Hoàn thành':'Finish',
 
       //================HOME============================
       'Mức độ hoàn thiện CiVi': 'Level of perfection Civi',
@@ -240,9 +265,39 @@ const resources = {
       'Chọn trình độ':'Choose level',
       //==================Edu=========================
       'Chuyên ngành':'Major',
-      'Năm học (từ)':'School year (start)',
+      'Năm học (từ)':'The academic year (from)',
       'Trường':'School',
-      'Năm học (đến)':'School year (end)'
+      'Năm học (đến)':'The academic year (to)',
+      'Vui lòng chọn chuyên ngành':'Please select a major',
+      'Vui lòng nhập trường':'Please enter the school',
+      'Vui lòng chọn năm học (từ)':'Please select the academic year (from)',
+      'Vui lòng chọn năm học (đến)':'Please select the academic year (to)',
+      'Vui lòng chọn năm học (đến) lớn hơn':'Please select a larger the academic year (to)',
+      //==================EXp=========================
+      'Thời gian bắt đầu làm việc từ':'Time start worked (from)',
+      'Thời gian nghỉ việc' : 'Time end worked (to)',
+      'Cấp bậc' :'Degree',
+      'Vui lòng chọn thời gian nghỉ lớn hơn':'Please choose a larger time end worked',
+      'Vui lòng chọn thời gian nghỉ':'Please choose time end worked',
+      'Vui lòng chọn thời gian bắt đầu làm việc':'Please choose time start worked',
+      'Nhập thông tin...':'Enter information...',
+      'Công việc chính':'Main job',
+      'Vui lòng chọn cấp bậc':'Please select degree',
+      'Tên công ty':'Company name',
+      'Vui lòng nhập tên công ty':'Please enter company name',
+      'Kinh nghiệm':'Experience',
+      'Vui lòng nhập kinh nghiệm':'Please enter experience',
+      'Hiện nay' :'Now',
+      //==================Skill=========================
+      'Chọn kỹ năng':'Choose skills',
+      'Vui lòng chọn kỹ năng':'Please select skill'
+
+
+      
+
+
+      
+
 
     },
   },

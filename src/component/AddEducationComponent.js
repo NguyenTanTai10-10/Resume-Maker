@@ -52,17 +52,24 @@ const AddEducationComponent = (props) => {
 
   useEffect(() => {
     getData();
-   
   }, []);
 
   const getData = async () => {
-    const value = await AsyncStorage.getItem('lang');
+    
     try {
+      const value = await AsyncStorage.getItem('lang');
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
       const kq = jsonValue != null ? JSON.parse(jsonValue) : null;
       setUserId(kq);
-      props.getQualitificationrAction({qualifications_id: '',language: value!= null ? value : 'vi'});
-      props.getFunctionRoleAction({funcrole_group_id: '', funcrole_role_id: '',language: value!= null ? value : 'vi'});
+      props.getQualitificationrAction({
+        qualifications_id: '',
+        language: value != null ? value : 'vi',
+      });
+      props.getFunctionRoleAction({
+        funcrole_group_id: '',
+        funcrole_role_id: '',
+        language: value != null ? value : 'vi',
+      });
     } catch (e) {}
   };
 
@@ -87,7 +94,7 @@ const AddEducationComponent = (props) => {
     if (props.statusInsert !== null) {
       if (props.statusInsert === 1) {
         Alert.alert(
-          ' Thêm Thành Công',
+          t('Thêm Thành Công'),
           '',
           [
             {
@@ -97,15 +104,14 @@ const AddEducationComponent = (props) => {
             },
             {
               text: 'OK',
-              onPress:async () => {
-                await props.logoutInsertEduAction()
-                await props.navigation.navigate('ListEducationContainer')
+              onPress: async () => {
+                await props.logoutInsertEduAction();
+                await props.navigation.navigate('ListEducationContainer');
               },
             },
           ],
           {cancelable: false},
         );
-        
       }
     } else if (props.errorInsert !== null) {
       Alert.alert(props.errorInsert);
@@ -248,9 +254,9 @@ const AddEducationComponent = (props) => {
 
   return (
     <View style={{flex: 1}}>
-      {props.loadingInsert && <LoadingView/>}
-      {props.loadingFunc && <LoadingView/>}
-      {props.loadingQua && <LoadingView/>}
+      {props.loadingInsert && <LoadingView />}
+      {props.loadingFunc && <LoadingView />}
+      {props.loadingQua && <LoadingView />}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -270,8 +276,8 @@ const AddEducationComponent = (props) => {
                 alignItems: 'center',
               }}
               onPress={async () => {
-               await props.logoutInsertEduAction();
-               await props.navigation.goBack();
+                await props.logoutInsertEduAction();
+                await props.navigation.goBack();
               }}>
               <Image
                 source={Images.arrow}
@@ -307,7 +313,9 @@ const AddEducationComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 20, color: '#2EB553'}}>Trình độ học vấn</Text>
+          <Text style={{fontSize: 20, color: '#2EB553'}}>
+          {t('Trình độ học vấn')}
+          </Text>
         </View>
         <View
           style={{
@@ -316,7 +324,7 @@ const AddEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkQuaName && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn trình độ</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn trình độ')}</Text>
           )}
         </View>
         <TouchableOpacity
@@ -373,7 +381,9 @@ const AddEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkFuncName && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn chuyên ngành</Text>
+            <Text style={{color: 'red'}}>
+              * {t('Vui lòng chọn chuyên ngành')}
+            </Text>
           )}
         </View>
         <TouchableOpacity
@@ -400,7 +410,7 @@ const AddEducationComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                width:'70%',
+                width: '70%',
                 color: funcName === t('Chuyên ngành') ? '#BFBFBF' : 'black',
               }}>
               {funcName}
@@ -431,7 +441,7 @@ const AddEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkSchool && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập trường</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng nhập trường')}</Text>
           )}
         </View>
 
@@ -458,7 +468,7 @@ const AddEducationComponent = (props) => {
             <TextInput
               onChangeText={(text) => textSchool(text)}
               defaultValue={school}
-              placeholder="Trường"
+              placeholder={t('Trường')}
               style={{width: '70%', marginLeft: 15}}
             />
           </View>
@@ -487,7 +497,9 @@ const AddEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkDayPass && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (từ)</Text>
+            <Text style={{color: 'red'}}>
+              * {t('Vui lòng chọn năm học (từ)')}
+            </Text>
           )}
         </View>
 
@@ -505,16 +517,18 @@ const AddEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkDayEnd && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (đến)</Text>
+            <Text style={{color: 'red'}}>
+              * {t('Vui lòng chọn năm học (đến)')}
+            </Text>
           )}
           {checkDayEnd1 && (
             <Text style={{color: 'red'}}>
-              * Vui lòng chọn năm học (đến) lớn hơn
+              * {t('Vui lòng chọn năm học (đến) lớn hơn')}
             </Text>
           )}
           {checkDayEnd2 && (
             <Text style={{color: 'red'}}>
-              * Vui lòng chọn năm học (đến) lớn hơn
+              * {t('Vui lòng chọn năm học (đến) lớn hơn')}
             </Text>
           )}
         </View>
@@ -527,32 +541,28 @@ const AddEducationComponent = (props) => {
           type="0"
         />
 
-        
-
         <View
           style={{
             marginTop: 20,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-         
-            <TouchableOpacity
-              onPress={() => {
-                onSubmit();
-              }}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 50,
-                width: (screenWidth * 0.8) / 2,
-                backgroundColor: '#FA8C16',
-                borderRadius: 13,
-              }}>
-              <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Cập nhập
-              </Text>
-            </TouchableOpacity>
-         
+          <TouchableOpacity
+            onPress={() => {
+              onSubmit();
+            }}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 50,
+              width: (screenWidth * 0.8) / 2,
+              backgroundColor: '#FA8C16',
+              borderRadius: 13,
+            }}>
+            <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
+              {t('Cập nhập')}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <BottomSheetQua

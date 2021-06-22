@@ -16,8 +16,11 @@ import BottomSheetCity from './custom/BottomSheetCity';
 import BottomSheetTechnique from './custom/BottomSheetTechnique';
 import DatetimePicker from './custom/DatetimePicker';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
+import LoadingView from './custom/LoadingView';
 
 const SkillsComponent = (props) => {
+  const {t} = useTranslation();
   const [data, setData] = useState([]);
   const [dataTechnique, setDataTechnique] = useState([]);
   const [nameTechnique, setNameTechnique] = useState([]);
@@ -35,18 +38,20 @@ const SkillsComponent = (props) => {
 
   useEffect(() => {
     getdata();
-    props.getTechniqueAction({tag_technique_id: ''});
+    
   }, []);
 
   const getdata = async () => {
     // props.navigation.addListener('focus', async () => {
     try {
+      const value = await AsyncStorage.getItem('lang');
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
       setUserId(jsonValue != null ? JSON.parse(jsonValue) : null);
+      props.getTechniqueAction({tag_technique_id: '',language: value != null ? value : 'vi'});
 
       await props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        lang_code: '',
+        language: value != null ? value : 'vi',
         emp_id: '',
         is_app_cv: 1,
       });
@@ -61,20 +66,10 @@ const SkillsComponent = (props) => {
         if (props.dataUser.techniques.length === 0) {
           console.log('flase1');
         } else if (props.dataUser.techniques.length > 0) {
-          // console.log("props.dataUser.location_id",props.dataUser.location_id);
-
           const arrMin = props.dataUser.techniques.sort(function (a, b) {
             return a.tag_technique_id - b.tag_technique_id;
           });
-          // console.log('====================================');
-          // console.log("arrMin",arrMin);
-          // console.log('====================================');
           setTechniqueGet(arrMin);
-          // setCityName_Id(arrMin);
-          // dataTechnique(arrMin);
-          // const arrMaxc = dataCity.sort(function (a, b) {
-          //   return a.city_id - b.city_id;
-          // });
           arrdataCity();
         }
       }
@@ -87,7 +82,6 @@ const SkillsComponent = (props) => {
     const arrMaxc = data.sort(function (a, b) {
       return a.id - b.id;
     });
-    // console.log(arrMaxc);
 
     for (let i = 0; i < techniqueGet.length; i++) {
       const parseInts = parseInt(techniqueGet[i].tag_technique_id);
@@ -121,7 +115,7 @@ const SkillsComponent = (props) => {
     if (props.statusUpTech !== null) {
       if (props.statusUpTech === 1) {
         Alert.alert(
-          ' Thêm Thành Công',
+          t('Thêm Thành Công'),
           '',
           [
             {
@@ -146,7 +140,6 @@ const SkillsComponent = (props) => {
   useEffect(() => {
     if (props.statusTech !== null) {
       if (props.statusTech === 1) {
-        // console.log(props.dataLever);
         setData(props.dataTech);
       }
     }
@@ -156,10 +149,6 @@ const SkillsComponent = (props) => {
     setCheck(false)
     setCheckTech(false);
     setCheckTitle(true);
-    // console.log(item);
-    // setCheck(false)
-    // setCheckCityError(false);
-    // setCheckCity(true);
     nameTechnique.push(item);
     var x = Array.from(new Set(nameTechnique.map(JSON.stringify))).map(
       JSON.parse,
@@ -218,6 +207,9 @@ const SkillsComponent = (props) => {
 
   return (
     <View style={{flex: 1}}>
+      {props.loadingUser && <LoadingView />}
+      {props.loadingTech && <LoadingView />}
+      {props.loadingUpTech && <LoadingView />}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -276,7 +268,7 @@ const SkillsComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 20, color: '#2EB553'}}>Kỹ năng</Text>
+          <Text style={{fontSize: 20, color: '#2EB553'}}>{t('Kỹ năng')}</Text>
         </View>
         {checkTech && (
           <View
@@ -285,7 +277,7 @@ const SkillsComponent = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{color: 'red'}}>* Vui lòng chọn kỹ năng</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn kỹ năng')}</Text>
           </View>
         )}
 
@@ -313,7 +305,7 @@ const SkillsComponent = (props) => {
               />
             </TouchableOpacity>
             {checkTitle === false ? (
-              <Text style={{color: '#BFBFBF', marginLeft: 15}}>Kỹ năng</Text>
+              <Text style={{color: '#BFBFBF', marginLeft: 15}}>{t('Kỹ năng')}</Text>
             ) : (
               <ScrollView
                 horizontal
@@ -379,7 +371,7 @@ const SkillsComponent = (props) => {
                 borderRadius: 13,
               }}>
               <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Cập nhập
+                {t('Cập nhập')}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -397,7 +389,7 @@ const SkillsComponent = (props) => {
                 borderRadius: 13,
               }}>
               <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Tiếp tục
+               {t('Tiếp tục')} 
               </Text>
             </TouchableOpacity>
           )}
@@ -439,7 +431,7 @@ const SkillsComponent = (props) => {
 
               borderRadius: 13,
             }}>
-            <Text style={{color: 'black'}}>Hoàn thành</Text>
+            <Text style={{color: 'black'}}>{t('Hoàn thành')} </Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
               style={{height: 35, width: 35, resizeMode: 'contain'}}
@@ -450,7 +442,7 @@ const SkillsComponent = (props) => {
           OnChooseTech_id={(item) => onChooseTech_id(item)}
           OnChooseTech={(item) => onChooseTech(item)}
           ref={modal}
-          title="Chọn kỹ năng"
+          title={t('Chọn kỹ năng')}
           data={data}
           modalHeight={screenHeight / 2}
         />

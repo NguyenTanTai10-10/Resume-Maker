@@ -9,7 +9,6 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {set} from 'react-native-reanimated';
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
@@ -17,13 +16,13 @@ import BottomSheetLeverSc6 from './custom/BottomSheetLeverSc6';
 import DatetimeEnd from './custom/DatetimeEnd';
 import DatetimePass from './custom/DatetimePass';
 import LoadingView from './custom/LoadingView';
-
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const AddExperiencesComponent = (props) => {
+  const {t} = useTranslation();
   useEffect(() => {
     getData()
-    props.getLeverSr6Action({level_id: ''});
   }, []);
   useEffect(() => {
     if (props.statusLever !== null) {
@@ -35,8 +34,10 @@ const AddExperiencesComponent = (props) => {
   }, [props.statusLever]);
   const getData = async () => {
     try {
+      const value = await AsyncStorage.getItem('lang');
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
       const kq = jsonValue != null ? JSON.parse(jsonValue) : null;
+      props.getLeverSr6Action({level_id: '',language: value != null ? value : 'vi',});
       setUserId(kq);
     } catch (e) {}
   };
@@ -44,7 +45,7 @@ const AddExperiencesComponent = (props) => {
     if (props.statusInsert !== null) {
       if (props.statusInsert === 1) {
         Alert.alert(
-          ' Thêm Thành Công',
+          t('Thêm Thành Công'),
           '',
           [
             {
@@ -71,14 +72,14 @@ const AddExperiencesComponent = (props) => {
   //================================================
   const [dataLever, setDataLever] = useState('');
   const [exp, setExp] = useState('');
-  const [dayPass, setDayPass] = useState('Thời gian bắt đầu làm việc từ');
+  const [dayPass, setDayPass] = useState(t('Thời gian bắt đầu làm việc từ'));
   const [monthPass, setMonthPass] = useState('');
   const [yearPass, setYearPass] = useState('');
-  const [dayEnd, setDayEnd] = useState('Thời gian nghỉ việc');
+  const [dayEnd, setDayEnd] = useState(t('Thời gian nghỉ việc'));
   const [monthEnd, setMonthEnd] = useState('');
   const [yearEnd, setYearEnd] = useState('');
   const [nameCompany, setNameCompany] = useState('');
-  const [lever_Name, setLever_Name] = useState('Cấp bật');
+  const [lever_Name, setLever_Name] = useState(t('Cấp bậc'));
   const [lever_Id, setLever_Id] = useState('');
   const [nowDate, setNowDate] = useState(0);
   const [content, setContent] = useState('');
@@ -151,7 +152,7 @@ const AddExperiencesComponent = (props) => {
   const onClearLever = (text) => {
     setClearLever(false);
     setClearNameCom(false);
-    setLever_Name('Cấp bật');
+    setLever_Name(t('Cấp bậc'));
     setLever_Id('');
   };
   const onNowDate = (text) => {
@@ -171,11 +172,11 @@ const AddExperiencesComponent = (props) => {
       exp.trim() === '' ||
       nameCompany === null ||
       nameCompany.trim() === '' ||
-      dayPass === 'Thời gian bắt đầu làm việc từ' ||
-      dayEnd === 'Thời gian nghỉ việc' ||
+      dayPass === t('Thời gian bắt đầu làm việc từ') ||
+      dayEnd === t('Thời gian nghỉ việc') ||
       (monthEnd < monthPass && yearPass === yearEnd) ||
       yearPass > yearEnd ||
-      lever_Name === 'Cấp bật'
+      lever_Name === t('Cấp bậc')
     ) {
       if (exp === null || exp.trim() === '') {
         setNameCompany('');
@@ -185,17 +186,17 @@ const AddExperiencesComponent = (props) => {
         setExp('');
         setCheckNameCom(true);
       }
-      if (dayPass === 'Thời gian bắt đầu làm việc từ') {
+      if (dayPass === t('Thời gian bắt đầu làm việc từ')) {
         setCheckDayPass(true);
       }
-      if (dayEnd === 'Thời gian nghỉ việc') {
+      if (dayEnd === t('Thời gian nghỉ việc')) {
         setCheckDayEnd(true);
       } else if (monthEnd < monthPass && yearPass === yearEnd) {
         setCheckDayEnd1(true);
       } else if (yearPass > yearEnd) {
         setCheckDayEnd2(true);
       }
-      if (lever_Name === 'Cấp bật') {
+      if (lever_Name === t('Cấp bậc')) {
         setCheckLever(true);
       }
     } else {
@@ -284,7 +285,7 @@ const AddExperiencesComponent = (props) => {
             alignItems: 'center',
           }}>
           <Text style={{fontSize: 20, color: '#2EB553'}}>
-            Kinh nghiệm làm việc
+           {t('Kinh nghiệm làm việc')} 
           </Text>
         </View>
         <View
@@ -294,7 +295,7 @@ const AddExperiencesComponent = (props) => {
             marginTop: 20,
           }}>
           {checkExp && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập kinh nghiệm</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng nhập kinh nghiệm')}</Text>
           )}
         </View>
         <View
@@ -322,7 +323,7 @@ const AddExperiencesComponent = (props) => {
               onChangeText={(text) => {
                 textExp(text);
               }}
-              placeholder="Kinh nghiệm"
+              placeholder={t('Kinh nghiệm')}
               style={{width: '70%', marginLeft: 15}}></TextInput>
           </View>
           {clearExp && (
@@ -350,7 +351,7 @@ const AddExperiencesComponent = (props) => {
             marginTop: 20,
           }}>
           {checkNameCom && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập tên công ty</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng nhập tên công ty')}</Text>
           )}
         </View>
         <View
@@ -374,7 +375,7 @@ const AddExperiencesComponent = (props) => {
             />
             <TextInput
               defaultValue={nameCompany}
-              placeholder="Tên công ty"
+              placeholder={t('Tên công ty')}
               onChangeText={(text) => {
                 textNameCom(text);
               }}
@@ -405,7 +406,7 @@ const AddExperiencesComponent = (props) => {
             marginTop: 20,
           }}>
           {checkLever && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn cấp bậc</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn cấp bậc')}</Text>
           )}
         </View>
         <TouchableOpacity
@@ -431,7 +432,7 @@ const AddExperiencesComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                color: lever_Name === 'Cấp bật' ? '#BFBFBF' : 'black',
+                color: lever_Name === t('Cấp bậc') ? '#BFBFBF' : 'black',
               }}>
               {lever_Name}
             </Text>
@@ -467,12 +468,12 @@ const AddExperiencesComponent = (props) => {
             marginHorizontal: 80,
             paddingVertical: 10,
           }}>
-          <Text>Công việc chính</Text>
+          <Text>{t('Công việc chính')}</Text>
           <TextInput
             onChangeText={(text) => {
               textContent(text);
             }}
-            placeholder="Nhận thông tin..."
+            placeholder={t("Nhập thông tin...")}
             numberOfLines={5}
             multiline={true}
             style={{
@@ -493,7 +494,7 @@ const AddExperiencesComponent = (props) => {
           }}>
           {checkDayPass && (
             <Text style={{color: 'red'}}>
-              * Vui lòng chọn thời gian bắt đầu làm việc
+              * {t('Vui lòng chọn thời gian bắt đầu làm việc')}
             </Text>
           )}
         </View>
@@ -512,16 +513,16 @@ const AddExperiencesComponent = (props) => {
             marginTop: 20,
           }}>
           {checkDayEnd && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn thời gian nghỉ </Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn thời gian nghỉ')} </Text>
           )}
           {checkDayEnd1 && (
             <Text style={{color: 'red'}}>
-              * Vui lòng chọn thời gian nghỉ lớn hơn
+              * {t('Vui lòng chọn thời gian nghỉ lớn hơn')}
             </Text>
           )}
           {checkDayEnd2 && (
             <Text style={{color: 'red'}}>
-              * Vui lòng chọn thời gian nghỉ lớn hơn
+              * {t('Vui lòng chọn thời gian nghỉ lớn hơn')}
             </Text>
           )}
         </View>
@@ -559,7 +560,7 @@ const AddExperiencesComponent = (props) => {
               borderRadius: 13,
             }}>
             <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-              Cập nhập
+            {t('Cập nhập')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -572,7 +573,7 @@ const AddExperiencesComponent = (props) => {
             onChooseLever(item);
           }}
           ref={modal}
-          title="Cấp bậc"
+          title={t('Cấp bậc')}
           data={dataLever}
           modalHeight={screenHeight / 2}
         />

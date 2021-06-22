@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import {set} from 'react-native-reanimated';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 
 const DatetimeEnd = (props) => {
+  const {t} = useTranslation();
   useEffect(() => {
     setTypes(chosseType(props.type));
   }, []);
@@ -22,10 +22,10 @@ const DatetimeEnd = (props) => {
   const chosseType = (item) => {
     switch (item) {
       case '0':
-        return 'Năm học (đến)';
+        return t('Năm học (đến)');
         break;
       case '1':
-        return 'Thời gian nghỉ việc';
+        return t('Thời gian nghỉ việc');
         break;
     }
   };
@@ -72,7 +72,7 @@ const DatetimeEnd = (props) => {
   };
   const onNowDate = async () => {
     if (checkNowDate === true) {
-      props.OnChooseDayEnd('Thời gian nghỉ việc');
+      props.OnChooseDayEnd(t('Thời gian nghỉ việc'));
       props.OnNowDate(false)
     } else if (checkNowDate === false) {
       setClearBirthday(true)
@@ -166,7 +166,7 @@ const DatetimeEnd = (props) => {
           />
         )}
 
-        <Text style={{alignSelf: 'center', marginLeft: 15}}>Hiện nay</Text>
+        <Text style={{alignSelf: 'center', marginLeft: 15}}>{t('Hiện nay')}</Text>
       </TouchableOpacity>}
       
     </View>

@@ -16,8 +16,10 @@ import Sizes from '../utils/Sizes';
 import BottomSheetChoose from './custom/BottomSheetChoose';
 import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const ListEducationComponent = (props) => {
+  const {t} = useTranslation();
   const [dataEducation, setDataEducation] = useState('');
   const [eductionId, setEductionId] = useState('');
   const [eduction_Id, setEduction_Id] = useState('');
@@ -32,18 +34,18 @@ const ListEducationComponent = (props) => {
         setDataEducation(props.dataUser.qualifications);
       } else {
         setTimeout(() => {
-          Alert.alert('Thông báo', props.messageUser);
+          Alert.alert(t('Thông báo'), t(props.messageUser));
         }, 10);
       }
     } else if (props.errorUser !== null) {
-      Alert.alert('Thông báo', props.errorUser);
+      Alert.alert(t('Thông báo'), t(props.errorUser));
     }
   }, [props.statusUser]);
   useEffect(() => {
     if (props.statusDelete !== null) {
       if (props.statusDelete === 1) {
         Alert.alert(
-          ' Xóa Thành Công',
+          t('Xóa Thành Công'),
           '',
           [
             {
@@ -62,7 +64,7 @@ const ListEducationComponent = (props) => {
         );
       }
     } else if (props.errorDelete !== null) {
-      Alert.alert('Thông báo', props.errorDelete);
+      Alert.alert(t('Thông báo'), t(props.errorDelete));
     }
   }, [props.statusDelete]);
   const getData = async () => {
@@ -93,7 +95,7 @@ const ListEducationComponent = (props) => {
 
   const onDelete = (item) => {
     Alert.alert(
-      'Bạn có muốn xóa không',
+      t('Bạn có muốn xóa không'),
       '',
       [
         {
@@ -123,7 +125,6 @@ const ListEducationComponent = (props) => {
   };
 
   const renderItem = (item) => {
-    console.log("====",item);
     return (
       <View
         style={{
@@ -315,7 +316,7 @@ const ListEducationComponent = (props) => {
               source={require('../res/image/img/left-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
-            <Text style={{color: 'black'}}>Trang chủ</Text>
+            <Text style={{color: 'black'}}>{t('Trang chủ')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -331,27 +332,13 @@ const ListEducationComponent = (props) => {
 
               borderRadius: 13,
             }}>
-            <Text style={{color: 'black'}}>Tiếp tục</Text>
+            <Text style={{color: 'black'}}>{t('Tiếp tục')}</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>
-        {/* <BottomSheetChoose
-          onPressNavigation={() => {
-            props.navigation.navigate('EditEducationContainer', {
-              eduction_Id: eductionId,
-            });
-          }}
-          OnDelete={() => {
-            onDelete();
-          }}
-          ref={modal}
-          title="Chỉnh sửa thông tin"
-          // data={eductionId}
-          modalHeight={200}
-        /> */}
       </ScrollView>
     </View>
   );

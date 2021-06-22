@@ -20,18 +20,20 @@ import DatetimePass from './custom/DatetimePass';
 import DatetimePicker from './custom/DatetimePicker';
 import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const EditEducationComponent = (props) => {
+  const {t} = useTranslation();
   const [dataQua, setDataQua] = useState('');
-  const [quaName, setQuaName] = useState('Trình độ');
+  const [quaName, setQuaName] = useState(t('Trình độ'));
   const [quaId, setQuaId] = useState('');
   const [dataFunc, setDataFunc] = useState('');
-  const [funcName, setFuncName] = useState('Chuyên ngành');
+  const [funcName, setFuncName] = useState(t('Chuyên ngành'));
   const [funcId, setFuncId] = useState('');
-  const [dayPass, setDayPass] = useState('Năm học (từ)');
+  const [dayPass, setDayPass] = useState(t('Năm học (từ)'));
   const [monthPass, setMonthPass] = useState('');
   const [yearPass, setYearPass] = useState('');
-  const [dayEnd, setDayEnd] = useState('Năm học (đến)');
+  const [dayEnd, setDayEnd] = useState(t('Năm học (đến)'));
   const [monthEnd, setMonthEnd] = useState('');
   const [yearEnd, setYearEnd] = useState('');
   const [school, setSchool] = useState('');
@@ -51,15 +53,22 @@ const EditEducationComponent = (props) => {
 
   useEffect(() => {
     getData();
-    // console.log('props', props.route.params.eduction_Id);
-    props.getQualitificationrAction({qualifications_id: ''});
-    props.getFunctionRoleAction({funcrole_group_id: '', funcrole_role_id: ''});
   }, []);
 
   const getData = async () => {
     try {
+      const value = await AsyncStorage.getItem('lang');
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
       const kq = jsonValue != null ? JSON.parse(jsonValue) : null;
+      props.getQualitificationrAction({
+        qualifications_id: '',
+        language: value != null ? value : 'vi',
+      });
+      props.getFunctionRoleAction({
+        funcrole_group_id: '',
+        funcrole_role_id: '',
+        language: value != null ? value : 'vi',
+      });
       setUserId(kq);
       const dataItem = props.route.params.eduction_Id;
       setFuncName(dataItem.functional_role);
@@ -100,7 +109,7 @@ const EditEducationComponent = (props) => {
     if (props.statusEditEdu !== null) {
       if (props.statusEditEdu === 1) {
         Alert.alert(
-          ' Sửa Thành Công',
+          t('Sửa Thành Công'),
           '',
           [
             {
@@ -113,7 +122,6 @@ const EditEducationComponent = (props) => {
               onPress: async () => {
                 await props.logoutEditEduAction();
                 await props.navigation.navigate('ListEducationContainer');
-                
               },
             },
           ],
@@ -139,7 +147,7 @@ const EditEducationComponent = (props) => {
   const onDeleteQua = (item) => {
     setDeleteQuaName(false);
     setQuaId('');
-    setQuaName('Trình độ');
+    setQuaName(t('Trình độ'));
   };
 
   //=====//
@@ -155,7 +163,7 @@ const EditEducationComponent = (props) => {
   const onDeleteFunc = (item) => {
     setDeleteFuncName(false);
     setFuncId('');
-    setFuncName('Chuyên ngành');
+    setFuncName(t('Chuyên ngành'));
   };
   const onChooseDayPass = (item) => {
     console.log('item', item);
@@ -194,25 +202,25 @@ const EditEducationComponent = (props) => {
   //==============================================================
   const onSubmit = (item) => {
     if (
-      quaName === 'Trình độ' ||
-      funcName === 'Chuyên ngành' ||
-      dayPass === 'Năm học (từ)' ||
-      dayEnd === 'Năm học (đến)' ||
+      quaName === t('Trình độ') ||
+      funcName === t('Chuyên ngành') ||
+      dayPass === t('Năm học (từ)') ||
+      dayEnd === t('Năm học (đến)') ||
       (monthEnd < monthPass && yearPass === yearEnd) ||
       yearPass > yearEnd ||
       school === '' ||
       school.trim() === ''
     ) {
-      if (quaName === 'Trình độ') {
+      if (quaName === t('Trình độ')) {
         setCheckQuaName(true);
       }
-      if (funcName === 'Chuyên ngành') {
+      if (funcName === t('Chuyên ngành')) {
         setCheckFuncName(true);
       }
-      if (dayPass === 'Năm học (từ)') {
+      if (dayPass === t('Năm học (từ)')) {
         setCheckDayPass(true);
       }
-      if (dayEnd === 'Năm học (đến)') {
+      if (dayEnd === t('Năm học (đến)')) {
         setCheckDayEnd(true);
       } else if (monthEnd < monthPass && yearPass === yearEnd) {
         setCheckDayEnd1(true);
@@ -249,7 +257,7 @@ const EditEducationComponent = (props) => {
 
   return (
     <View style={{flex: 1}}>
-      {props.loadingFunc  && <LoadingView />}
+      {props.loadingFunc && <LoadingView />}
       {props.loadingQua && <LoadingView />}
       {props.loadingEditEdu && <LoadingView />}
       <StatusBarView />
@@ -308,7 +316,9 @@ const EditEducationComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 20, color: '#2EB553'}}>Trình độ học vấn</Text>
+          <Text style={{fontSize: 20, color: '#2EB553'}}>
+            {t('Trình độ học vấn')}
+          </Text>
         </View>
         <View
           style={{
@@ -317,7 +327,7 @@ const EditEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkQuaName && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn trình độ</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng chọn trình độ')}</Text>
           )}
         </View>
         <TouchableOpacity
@@ -344,7 +354,7 @@ const EditEducationComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                color: quaName === 'Trình độ' ? '#BFBFBF' : 'black',
+                color: quaName === t('Trình độ') ? '#BFBFBF' : 'black',
               }}>
               {quaName}
             </Text>
@@ -374,7 +384,9 @@ const EditEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkFuncName && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn chuyên ngành</Text>
+            <Text style={{color: 'red'}}>
+              * {t('Vui lòng chọn chuyên ngành')}
+            </Text>
           )}
         </View>
         <TouchableOpacity
@@ -401,8 +413,8 @@ const EditEducationComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                width:'70%',
-                color: funcName === 'Chuyên ngành' ? '#BFBFBF' : 'black',
+                width: '70%',
+                color: funcName === t('Chuyên ngành') ? '#BFBFBF' : 'black',
               }}>
               {funcName}
             </Text>
@@ -432,7 +444,7 @@ const EditEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkSchool && (
-            <Text style={{color: 'red'}}>* Vui lòng nhập trường</Text>
+            <Text style={{color: 'red'}}>* {t('Vui lòng nhập trường')}</Text>
           )}
         </View>
 
@@ -459,7 +471,7 @@ const EditEducationComponent = (props) => {
             <TextInput
               onChangeText={(text) => textSchool(text)}
               defaultValue={school}
-              placeholder="Trường"
+              placeholder={t('Trường')}
               style={{width: '70%', marginLeft: 15}}
             />
           </View>
@@ -488,7 +500,9 @@ const EditEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkDayPass && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (từ)</Text>
+            <Text style={{color: 'red'}}>
+              * {t('Vui lòng chọn năm học (từ)')}
+            </Text>
           )}
         </View>
 
@@ -506,16 +520,18 @@ const EditEducationComponent = (props) => {
             marginTop: 20,
           }}>
           {checkDayEnd && (
-            <Text style={{color: 'red'}}>* Vui lòng chọn năm học (đến)</Text>
+            <Text style={{color: 'red'}}>
+              * {t('Vui lòng chọn năm học (đến)')}
+            </Text>
           )}
           {checkDayEnd1 && (
             <Text style={{color: 'red'}}>
-              * Vui lòng chọn năm học (đến) lớn hơn
+              * {t('Vui lòng chọn năm học (đến) lớn hơn')}
             </Text>
           )}
           {checkDayEnd2 && (
             <Text style={{color: 'red'}}>
-              * Vui lòng chọn năm học (đến) lớn hơn
+              * {t('Vui lòng chọn năm học (đến) lớn hơn')}
             </Text>
           )}
         </View>
@@ -528,32 +544,28 @@ const EditEducationComponent = (props) => {
           type="0"
         />
 
-       
-
         <View
           style={{
             marginTop: 20,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          
-            <TouchableOpacity
-              onPress={() => {
-                onSubmit();
-              }}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 50,
-                width: (screenWidth * 0.8) / 2,
-                backgroundColor: '#FA8C16',
-                borderRadius: 13,
-              }}>
-              <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-                Cập nhập
-              </Text>
-            </TouchableOpacity>
-          
+          <TouchableOpacity
+            onPress={() => {
+              onSubmit();
+            }}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 50,
+              width: (screenWidth * 0.8) / 2,
+              backgroundColor: '#FA8C16',
+              borderRadius: 13,
+            }}>
+            <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
+            {t('Cập nhập')}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <BottomSheetQua
@@ -564,7 +576,7 @@ const EditEducationComponent = (props) => {
             onChooseQua(item);
           }}
           ref={modal}
-          title="Chọn trình độ"
+          title={t('"Chọn trình độ"')}
           data={dataQua}
           modalHeight={screenHeight / 2}
         />
@@ -576,7 +588,7 @@ const EditEducationComponent = (props) => {
             onChooseFunc(item);
           }}
           ref={modal1}
-          title="Chọn chuyên ngành"
+          title={t('"Chọn chuyên ngành"')}
           data={dataFunc}
           modalHeight={screenHeight / 2}
         />

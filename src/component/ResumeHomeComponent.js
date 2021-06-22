@@ -83,7 +83,7 @@ const ResumeHomeComponent = (props) => {
       
       props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        language: language,
+        language: value != null ? value :'vi',
         emp_id: '',
         is_app_cv: 1,
       });

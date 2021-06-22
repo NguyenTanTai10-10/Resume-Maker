@@ -16,8 +16,10 @@ import Sizes from '../utils/Sizes';
 import BottomSheetChoose from './custom/BottomSheetChoose';
 import LoadingView from './custom/LoadingView';
 import StatusBarView from './custom/StatusBarView';
+import {useTranslation} from 'react-i18next';
 
 const ListExperienComponent = (props) => {
+  const {t} = useTranslation();
   const [dataExp, setDataExp] = useState('');
   const [skill_Id, setSkill_Id] = useState('');
   const [eduction_Id, setEduction_Id] = useState('');
@@ -32,18 +34,18 @@ const ListExperienComponent = (props) => {
         setDataExp(props.dataUser.skills);
       } else {
         setTimeout(() => {
-          Alert.alert('Thông báo', props.messageUser);
+          Alert.alert(t('Thông báo'), t(props.messageUser));
         }, 10);
       }
     } else if (props.errorUser !== null) {
-      Alert.alert('Thông báo', props.errorUser);
+      Alert.alert(t('Thông báo'),t(props.errorUser) );
     }
   }, [props.statusUser]);
   useEffect(() => {
     if (props.statusDelete !== null) {
       if (props.statusDelete === 1) {
         Alert.alert(
-          ' Xóa Thành Công',
+          t('Xóa Thành Công'),
           '',
           [
             {
@@ -68,18 +70,19 @@ const ListExperienComponent = (props) => {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const value = await AsyncStorage.getItem('lang');
       setUser_Id(jsonValue != null ? JSON.parse(jsonValue) : null);
       props.navigation.addListener('focus', async () => {
         props.infoUserAction({
           user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-          lang_code: '',
+          language: value!= null ? value : 'vi',
           emp_id: '',
           is_app_cv: 1,
         });
       });
       props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        lang_code: '',
+        language: value!= null ? value : 'vi',
         emp_id: '',
         is_app_cv: 1,
       });
@@ -92,7 +95,7 @@ const ListExperienComponent = (props) => {
 
   const onDelete = (item) => {
     Alert.alert(
-      'Bạn có muốn xóa không',
+      t('Bạn có muốn xóa không'),
       '',
       [
         {
@@ -206,7 +209,7 @@ const ListExperienComponent = (props) => {
 
           <View style={{borderRadius: 10, borderColor: '#D9D9D9'}}>
             <Text numberOfLines={3} style={{marginLeft: 10, color: '#FFC069'}}>
-              Công việc chính : {item.item.main_job}
+              {t('Công việc chính')} : {item.item.main_job}
             </Text>
           </View>
         </View>
@@ -314,7 +317,7 @@ const ListExperienComponent = (props) => {
               source={require('../res/image/img/left-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
-            <Text style={{color: 'black'}}>Trang chủ</Text>
+            <Text style={{color: 'black'}}>{t('Trang chủ')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -328,25 +331,13 @@ const ListExperienComponent = (props) => {
 
               borderRadius: 13,
             }}>
-            <Text style={{color: 'black'}}>Tiếp tục</Text>
+            <Text style={{color: 'black'}}>{t('Tiếp tục')}</Text>
             <Image
               source={require('../res/image/img/right-arrow.png')}
               style={{height: 30, width: 30, resizeMode: 'contain'}}
             />
           </TouchableOpacity>
         </View>
-        {/* <BottomSheetChoose
-          onPressNavigation={() => {
-            OnNavigate()
-          }}
-          OnDelete={() => {
-            onDelete();
-          }}
-          ref={modal}
-          title="Chỉnh sửa thông tin"
-          // data={eductionId}
-          modalHeight={200}
-        /> */}
       </ScrollView>
     </View>
   );

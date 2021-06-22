@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import {set} from 'react-native-reanimated';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 
 const DatetimePass = (props) => {
+  const {t} = useTranslation();
   useEffect(() => {
     setTypes(chosseType(props.type));
   }, []);
@@ -23,10 +23,10 @@ const DatetimePass = (props) => {
   const chosseType = (item) => {
     switch (item) {
       case '0':
-        return 'Năm học (từ)';
+        return t('Năm học (từ)');
         break;
       case '1':
-        return 'Thời gian bắt đầu làm việc từ';
+        return t('Thời gian bắt đầu làm việc từ');
         break;
     }
   };
