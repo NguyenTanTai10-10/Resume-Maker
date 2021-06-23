@@ -4,11 +4,37 @@ import Images from '../../res/image';
 import StatusBarView from '../custom/StatusBarView';
 import {useTranslation} from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-community/google-signin';
+GoogleSignin.configure({
+  webClientId:
+    '585809866706-f7ohvdh2of7v48u6su4v7gud050t122o.apps.googleusercontent.com',
+});
 
 const DrawerComponent = (props) => {
   const [userId, setUserId] = useState('');
   const [ImagesAVT, setImagesAVT] = useState(false);
   const [data, setData] = useState(false);
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  const onAuthStateChanged=(user) =>{
+    console.log(user);
+    setUser(user);
+    // setUserName(user.displayName)
+    // setUserId(user.uid)
+    // setUserPhoto(user.photoURL)
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+  const LogOut = async () => {
+    auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+  };
 
 
   useEffect(() => {
@@ -206,6 +232,7 @@ const DrawerComponent = (props) => {
             onPress={() => {
               props.logoutAction();
               props.navigation.replace('LoginHomeContainer');
+              LogOut()
             }}>
             <Text style={{fontSize: 17}}>{t('Đăng xuất').toUpperCase()}</Text>
           </TouchableOpacity>
