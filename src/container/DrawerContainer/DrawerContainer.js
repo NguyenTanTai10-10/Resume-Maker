@@ -23,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     infoUserAction: (input) => dispatch(infoUserAction(input)),
     logoutAction: () => dispatch(logoutAction()),
+    // logoutInfoUserAction:()
     
   };
 };

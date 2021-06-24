@@ -704,7 +704,7 @@ const ContactComponent = (props) => {
               alignItems: 'center',
             }}>
             <Image
-              source={require('../res/image/img/padlock(6).png')}
+              source={require('../res/image/img/padlock(8).png')}
               style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
             <TextInput

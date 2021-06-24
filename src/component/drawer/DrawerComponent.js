@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 import Images from '../../res/image';
 import StatusBarView from '../custom/StatusBarView';
@@ -17,25 +17,27 @@ const DrawerComponent = (props) => {
   const [data, setData] = useState(false);
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
-  const onAuthStateChanged=(user) =>{
-    console.log(user);
+  const onAuthStateChanged = (user) => {
+    // console.log(user);
     setUser(user);
     // setUserName(user.displayName)
     // setUserId(user.uid)
     // setUserPhoto(user.photoURL)
     if (initializing) setInitializing(false);
-  }
+  };
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
   const LogOut = async () => {
-    auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
+    
+     auth()
+     .signOut()
+     .then(() => console.log('User signed out!'));
+       props.logoutAction();
+       props.navigation.replace('LoginContainer',{login :'true'});
   };
-
 
   useEffect(() => {
     getdata();
@@ -49,7 +51,7 @@ const DrawerComponent = (props) => {
 
       await props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        language:value != null ? value : 'vi',
+        language: value != null ? value : 'vi',
         emp_id: '',
         is_app_cv: 1,
       });
@@ -61,20 +63,18 @@ const DrawerComponent = (props) => {
   useEffect(() => {
     if (props.statusUser !== null) {
       if (props.statusUser === 1) {
-        if(props.dataUser.profile_image !== ''){
+        if (props.dataUser.profile_image !== '') {
           setImagesAVT(true);
-        }
-        else if(props.dataUser.profile_image === ''){
+        } else if (props.dataUser.profile_image === '') {
           setImagesAVT(false);
         }
-        setData(props.dataUser)
-        
+        setData(props.dataUser);
       }
     } else if (props.errorUser !== null) {
       Alert.alert('Thông báo', props.errorUser);
     }
   }, [props.statusUser]);
-  const{t}=useTranslation()
+  const {t} = useTranslation();
   return (
     <View style={{flex: 1}}>
       <StatusBarView />
@@ -87,30 +87,35 @@ const DrawerComponent = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-                {ImagesAVT === false ?  <Image
-                source={require('../../res/image/img/avatar.png')}
-                style={{
-                  height: 60,
-                  width: 60,
-                  resizeMode: 'cover',
-                  borderRadius: 100,
-                  position: 'absolute',
-                  flex: 0.5,borderColor: '#FA8C16',
-                  borderWidth: 1,
-                }}
-              /> : <Image
-              source={{uri: data.profile_image}}
-              style={{
-                height: 60,
-                width: 60,
-                resizeMode: 'cover',
-                borderRadius: 100,
-                position: 'absolute',
-                flex: 0.5,borderColor: '#FA8C16',
-                borderWidth: 1,
-              }}
-            />}
-             
+              {ImagesAVT === false ? (
+                <Image
+                  source={require('../../res/image/img/avatar.png')}
+                  style={{
+                    height: 60,
+                    width: 60,
+                    resizeMode: 'cover',
+                    borderRadius: 100,
+                    position: 'absolute',
+                    flex: 0.5,
+                    borderColor: '#FA8C16',
+                    borderWidth: 1,
+                  }}
+                />
+              ) : (
+                <Image
+                  source={{uri: data.profile_image}}
+                  style={{
+                    height: 60,
+                    width: 60,
+                    resizeMode: 'cover',
+                    borderRadius: 100,
+                    position: 'absolute',
+                    flex: 0.5,
+                    borderColor: '#FA8C16',
+                    borderWidth: 1,
+                  }}
+                />
+              )}
             </View>
             <View
               style={{
@@ -118,10 +123,12 @@ const DrawerComponent = (props) => {
                 justifyContent: 'center',
                 alignItems: 'flex-start',
               }}>
-              <Text style={{fontSize: 21, fontWeight: '700'}} numberOfLines={1}>
+              <Text style={{fontSize: 21, fontWeight: '700',marginTop:5}} numberOfLines={1}>
                 {data.name}
               </Text>
-              <Text style={{color: '#FA8C16', fontSize: 15}} numberOfLines={1}>{data.email}</Text>
+              <Text style={{color: '#FA8C16', fontSize: 15}} numberOfLines={1}>
+                {data.email}
+              </Text>
               <View
                 style={{
                   justifyContent: 'center',
@@ -132,13 +139,17 @@ const DrawerComponent = (props) => {
                   paddingVertical: 5,
                   marginTop: 5,
                 }}>
-                <Text style={{color: 'white'}} numberOfLines={1}>{data.phone}</Text>
+                <Text style={{color: 'white'}} numberOfLines={1}>
+                  {data.phone}
+                </Text>
               </View>
             </View>
           </View>
         </View>
         <View style={{marginHorizontal: 20, marginTop: 20, flex: 0.7}}>
-          <Text style={{fontSize: 17}}>{t('Cài đặt tài khoản').toUpperCase()}</Text>
+          <Text style={{fontSize: 17}}>
+            {t('Cài đặt tài khoản').toUpperCase()}
+          </Text>
           <TouchableOpacity
             style={{
               alignItems: 'center',
@@ -151,10 +162,11 @@ const DrawerComponent = (props) => {
               source={require('../../res/image/img/icon_edit_account.png')}
             />
             <Text style={{marginLeft: 15, fontSize: 12}}>
-            {t('Thay đổi thông tin').toUpperCase()}
+              {t('Thay đổi thông tin').toUpperCase()}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+          onPress={()=>{props.navigation.navigate('ChangePassContainer')}}
             style={{
               alignItems: 'center',
               flexDirection: 'row',
@@ -166,11 +178,13 @@ const DrawerComponent = (props) => {
               source={require('../../res/image/img/icon_change_password.png')}
             />
             <Text style={{marginLeft: 15, fontSize: 12}}>
-            {t('Thay đổi mật khẩu').toUpperCase()}
+              {t('Thay đổi mật khẩu').toUpperCase()}
             </Text>
           </TouchableOpacity>
 
-          <Text style={{fontSize: 17, marginTop: 15}}>{t('Cài đặt').toUpperCase()}</Text>
+          <Text style={{fontSize: 17, marginTop: 15}}>
+            {t('Cài đặt').toUpperCase()}
+          </Text>
           <TouchableOpacity
             style={{
               alignItems: 'center',
@@ -182,7 +196,9 @@ const DrawerComponent = (props) => {
               style={{height: 25, width: 25}}
               source={require('../../res/image/img/icon_rating_app.png')}
             />
-            <Text style={{marginLeft: 15, fontSize: 12}}>{t('Đánh giá').toUpperCase()}</Text>
+            <Text style={{marginLeft: 15, fontSize: 12}}>
+              {t('Đánh giá').toUpperCase()}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
@@ -195,7 +211,9 @@ const DrawerComponent = (props) => {
               style={{height: 25, width: 25}}
               source={require('../../res/image/img/icon_send_feedback.png')}
             />
-            <Text style={{marginLeft: 15, fontSize: 12}}>{t('Phản hồi').toUpperCase()}</Text>
+            <Text style={{marginLeft: 15, fontSize: 12}}>
+              {t('Phản hồi').toUpperCase()}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
@@ -209,7 +227,7 @@ const DrawerComponent = (props) => {
               source={require('../../res/image/img/icon_privacy_policy.png')}
             />
             <Text style={{marginLeft: 15, fontSize: 12}}>
-            {t('Chính sách bảo mật').toUpperCase()}
+              {t('Chính sách bảo mật').toUpperCase()}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -224,15 +242,13 @@ const DrawerComponent = (props) => {
               source={require('../../res/image/img/icon_term_and_condition.png')}
             />
             <Text style={{marginLeft: 15, fontSize: 12}}>
-            {t('Điều khoàn và điều kiện').toUpperCase()}
+              {t('Điều khoàn và điều kiện').toUpperCase()}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{marginTop: 15}}
-            onPress={() => {
-              props.logoutAction();
-              props.navigation.replace('LoginHomeContainer');
-              LogOut()
+            onPress={async () => {
+              LogOut();
             }}>
             <Text style={{fontSize: 17}}>{t('Đăng xuất').toUpperCase()}</Text>
           </TouchableOpacity>

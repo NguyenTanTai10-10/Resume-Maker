@@ -27,6 +27,7 @@ import editLangReducer from './EditLangReducer';
 import deleteLangReducer from './DeleteLangReducer';
 import getTechniqueReducer from './GetTechniqueReducer';
 import updateTechReducer from './UpdatetechReducer';
+import changePassReducer from './ChangePassReducer';
 
 
 
@@ -57,7 +58,8 @@ const allReducers = combineReducers({
    editLangReducer,
    deleteLangReducer,
    getTechniqueReducer,
-   updateTechReducer
+   updateTechReducer,
+   changePassReducer
 });
 
 export default allReducers;

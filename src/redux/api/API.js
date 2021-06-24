@@ -464,7 +464,7 @@ function* deleteSkill(input) {
   return temp;
 }
 function* AddLanguage(input) {
-  console.log("input==",input);
+  console.log('input==', input);
   let temp;
   yield axios
     .post(urlSever, {
@@ -612,6 +612,27 @@ function* updateTech(input) {
 
   return temp;
 }
+function* ChangePass(input) {
+  let temp;
+  yield axios
+    .post(urlSever, {
+      method: 'change_password',
+      version: Ver,
+      params: {
+        user_id: input.user_id,
+        old_password: input.old_password,
+        new_password: input.new_password,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
 export const API = {
   LoginUser,
   CheckEmail,
@@ -640,4 +661,5 @@ export const API = {
   DeleteLang,
   getTechnique,
   updateTech,
+  ChangePass
 };

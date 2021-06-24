@@ -1,4 +1,4 @@
-import {INFO_USER, INFO_USER_SUCCESS, INFO_USER_ERROR} from '../actions/Action';
+import {INFO_USER, INFO_USER_SUCCESS, INFO_USER_ERROR, LOGOUT_INFO_USER} from '../actions/Action';
 const initState = {
   status: null,
   data: null,
@@ -41,6 +41,12 @@ const userInfoReducer = (state = initState, action) => {
         data: null,
         message: ''
       };
+      case LOGOUT_INFO_USER:
+      console.log('LOGOUT_INFO_USER');
+      return {
+        initState,
+      };
+
 
     default:
       return state;

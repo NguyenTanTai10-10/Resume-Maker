@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Login from '../../component/login/Login';
-import {  loginAction } from '../../redux/actions/Action';
+import {  loginAction,logoutAction } from '../../redux/actions/Action';
 
 
 
@@ -13,7 +13,7 @@ export class LoginContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-   console.log('state.loginReducer',state.loginReducer);
+   // console.log('state.loginReducer1',state.loginReducer);
   
    return {
       status: state.loginReducer.status,
@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
    return {
+      logoutAction:()=>dispatch(logoutAction()),
       loginAction: (userType,email, password,registrationIds,FacebookId,GoogleId) => dispatch(loginAction(userType,email, password,registrationIds,FacebookId,GoogleId)),
    };
 };

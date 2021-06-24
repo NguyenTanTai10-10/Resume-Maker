@@ -8,6 +8,12 @@ export const loginAction = (input) => {
     input: input,
   };
 };
+export const LOGOUT = 'LOGOUT';
+export const logoutAction = () => {
+  return {
+    type: LOGOUT,
+  };
+};
 //===================================================================================
 export const CHECKEMAIL = 'CHECKEMAIL';
 export const CHECKEMAIL_SUCCESS = 'CHECKEMAIL_SUCCESS';
@@ -24,13 +30,7 @@ export const logoutCheckMailAction = () => {
     type: LOGOUTCHECKEMAIL,
   };
 };
-//===================================================================================
-export const LOGOUT = 'LOGOUT';
-export const logoutAction = () => {
-  return {
-    type: LOGOUT,
-  };
-};
+
 //===================================================================================
 export const LISTCV = 'LISTCV';
 export const LISTCV_SUCCESS = 'LISTCV_SUCCESS';
@@ -88,6 +88,12 @@ export const infoUserAction = (input) => {
   return {
     type: INFO_USER,
     input: input,
+  };
+};
+export const LOGOUT_INFO_USER = 'LOGOUT_INFO_USER';
+export const logoutInfoUserAction = () => {
+  return {
+    type: LOGOUT_INFO_USER,
   };
 };
 //===================================================================================
@@ -378,4 +384,15 @@ export const logoutUpdateTechAction = () => {
   };
 };
 //===================================================================================
+
+export const CHANGE_PASS = 'CHANGE_PASS';
+export const CHANGE_PASS_SUCCESS = 'CHANGE_PASS_SUCCESS';
+export const CHANGE_PASS_ERROR = 'CHANGE_PASS_ERROR';
+export const changePassAction = (input) => {
+
+  return {
+    type: CHANGE_PASS,
+    input: input,
+  };
+};
 

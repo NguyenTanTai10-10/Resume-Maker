@@ -36,6 +36,8 @@ import  EditLanguageContainer  from './src/container/EditLanguageContainer/EditL
 import  SkillsContainer  from './src/container/SkillsContainer/SkillsContainer';
 import EditExpContainer from './src/container/EditExpContainer/EditExpContainer';
 import i18n from './src/Language/LanguageContext'
+import  ChangePassContainer  from './src/container/ChangePassContainer/ChangePassContainer';
+
 
 
 
@@ -129,6 +131,11 @@ const App = () => {
           name="SkillsContainer"
           component={SkillsContainer}
         />
+        <Stack.Screen
+          name="ChangePassContainer"
+          component={ChangePassContainer}
+        />
+        {/* ChangePassContainer */}
         
         {/* EditLanguageContainer */}
         {/* ListLanguageContainer */}

@@ -45,9 +45,10 @@ const resources = {
       'Kỹ năng': 'Kỹ năng',
       'Xuất PDF': 'Xuất PDF',
       //================Login============================
-      'Đăng nhập Facebook': 'Đăng nhập Facebook',
-      'Đăng nhập Google': 'Đăng nhập Google',
-      'Đăng nhập Apple': 'Đăng nhập Apple',
+      'Đăng nhập Facebook': 'Đăng ký Facebook',
+      'Đăng nhập Email': 'Đăng ký Email',
+      'Đăng nhập Google': 'Đăng ký Google',
+      'Đăng nhập Apple': 'Đăng ký Apple',
       'Bạn là thành viên? Đăng nhập': 'Bạn là thành viên? Đăng nhập',
       //================Drawer============================
       'Cài đặt tài khoản': 'Cài đặt tài khoản',
@@ -193,9 +194,10 @@ const resources = {
       'Kỹ năng': 'Skills',
       'Xuất PDF': 'Export PDF',
       //================Login============================
-      'Đăng nhập Facebook': 'Sign in with Facebook',
-      'Đăng nhập Google': 'Sign in with Google',
-      'Đăng nhập Apple': 'Sign in with Apple',
+      'Đăng nhập Facebook': 'Sign up with Facebook',
+      'Đăng nhập Email': 'Sign up with Email',
+      'Đăng nhập Google': 'Sign up with Google',
+      'Đăng nhập Apple': 'Sign up with Apple',
       'Bạn là thành viên? Đăng nhập': 'Already a member? Login',
       //================Drawer============================
       'Cài đặt tài khoản': 'Account settings',

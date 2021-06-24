@@ -40,6 +40,7 @@ const loginReducer = (state = initState, action) => {
         error: 'Lỗi sever',
       };
     case LOGOUT:
+      console.log('LOGOUT');
       return initState;
     default:
       return state;
