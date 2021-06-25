@@ -19,9 +19,13 @@ import {useTranslation} from 'react-i18next';
 
 const Home = (props) => {
   const {t, i18n} = useTranslation();
+  const [codeId, setCodeId] = useState('');
+  const [temId, setTemId] = useState('');
+  const [langId, setLangId] = useState('');
+  const [userId, setUserId] = useState('');
+
   const [data, setData] = useState('');
   const [ImagesAVT, setImagesAVT] = useState(false);
-
   const [widthPercent, setWidthPercent] = useState();
   const [widthNoPercent, setWidthNoPercent] = useState();
   const [dataEducation, setDataEducation] = useState('');
@@ -42,51 +46,50 @@ const Home = (props) => {
   useEffect(() => {
     if (props.statusUser !== null) {
       if (props.statusUser === 1) {
-        if(props.dataUser.resume_title === ""){
-          setEmtyTitle(false)
+        setCodeId(props.dataUser.user_code);
+        if (props.dataUser.template_id == 0) {
+          setTemId(1);
+        } else {
+          setTemId(props.dataUser.template_id);
         }
-        else if(props.dataUser.resume_title !== "" ){
-          setEmtyTitle(true)
+
+        if (props.dataUser.resume_title === '') {
+          setEmtyTitle(false);
+        } else if (props.dataUser.resume_title !== '') {
+          setEmtyTitle(true);
         }
-        if(props.dataUser.email === ""){
-          setEmtyEmail(false)
+        if (props.dataUser.email === '') {
+          setEmtyEmail(false);
+        } else if (props.dataUser.email !== '') {
+          setEmtyEmail(true);
         }
-        else if(props.dataUser.email !== ""){
-          setEmtyEmail(true)
+        if (props.dataUser.workplace === '') {
+          setEmtyPlace(false);
+        } else if (props.dataUser.workplace !== '') {
+          setEmtyPlace(true);
         }
-        if(props.dataUser.workplace === ""){
-          setEmtyPlace(false)
+        if (props.dataUser.qualifications.length === 0) {
+          setEmtyQua(false);
+        } else if (props.dataUser.qualifications.length !== 0) {
+          setEmtyQua(true);
         }
-        else if(props.dataUser.workplace !== ""){
-          setEmtyPlace(true)
+        if (props.dataUser.skills.length === 0) {
+          setEmtySkills(false);
+        } else if (props.dataUser.skills.length !== 0) {
+          setEmtySkills(true);
         }
-        if(props.dataUser.qualifications.length === 0){
-          setEmtyQua(false)
+        if (props.dataUser.langs.length === 0) {
+          setEmtyLangs(false);
+        } else if (props.dataUser.langs.length !== 0) {
+          setEmtyLangs(true);
         }
-        else if(props.dataUser.qualifications.length !== 0){
-          setEmtyQua(true)
-        }
-        if(props.dataUser.skills.length === 0){
-          setEmtySkills(false)
-        }
-        else if(props.dataUser.skills.length !== 0){
-          setEmtySkills(true)
-        }
-        if(props.dataUser.langs.length === 0){
-          setEmtyLangs(false)
-        }
-        else if(props.dataUser.langs.length !== 0){
-          setEmtyLangs(true)
-        }
-        if(props.dataUser.techniques.length === 0){
-          setEmtyTech(false)
-        }
-        else if(props.dataUser.techniques.length !== 0){
-          setEmtyTech(true)
+        if (props.dataUser.techniques.length === 0) {
+          setEmtyTech(false);
+        } else if (props.dataUser.techniques.length !== 0) {
+          setEmtyTech(true);
         }
 
         if (props.dataUser.profile_image !== '') {
-          
           setImagesAVT(true);
         } else if (props.dataUser.profile_image === '') {
           setImagesAVT(false);
@@ -111,32 +114,48 @@ const Home = (props) => {
       Alert.alert('Thông báo', props.errorUser);
     }
   }, [props.statusUser]);
+
+  useEffect(() => {
+    console.log(props.statusPdf);
+    if (props.statusPdf !== null) {
+      if (props.statusPdf === 1) {
+        props.navigation.navigate('ShowPdfComponent',{dataPDF: props.dataPdf})
+        // console.log('====================================');
+        // console.log(props.dataPdf);
+        // console.log('====================================');
+       
+      } 
+    } else if (props.errorPdf !== null) {
+      Alert.alert('Thông báo', props.errorPdf);
+    }
+  }, [props.statusPdf]);
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
       const value = await AsyncStorage.getItem('lang');
+      const valueJson = await AsyncStorage.getItem('@template_cv_id');
+      setUserId(jsonValue != null ? JSON.parse(jsonValue) : null)
+      setTemId(valueJson != null ? JSON.parse(valueJson) : null);
+      setLangId(value != null ? value : 'vi');
       props.navigation.addListener('focus', async () => {
         props.infoUserAction({
           user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-          language: value != null ?value :"vi" ,
+          language: value != null ? value : 'vi',
           emp_id: '',
           is_app_cv: 1,
         });
       });
-      if(value || jsonValue !== null ){
+      if (value || jsonValue !== null) {
         props.infoUserAction({
-        user_id: jsonValue !=null  ? JSON.parse(jsonValue) : null,
-        language: value != null ?value :"vi",
-        emp_id: '',
-        is_app_cv: 1,
-      });
+          user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
+          language: value != null ? value : 'vi',
+          emp_id: '',
+          is_app_cv: 1,
+        });
       }
-      
 
       // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
-    } catch (e) {
-      
-    }
+    } catch (e) {}
   };
 
   //========================
@@ -175,9 +194,9 @@ const Home = (props) => {
     }
   };
   //=================================
-  const onPressVn =  async () => {
+  const onPressVn = async () => {
     try {
-      await AsyncStorage.setItem('lang', 'vi')
+      await AsyncStorage.setItem('lang', 'vi');
     } catch (e) {
       // saving error
     }
@@ -185,9 +204,9 @@ const Home = (props) => {
 
     // this.props.i18n.changeLanguage('en')
   };
-  const onPressEn = async() => {
+  const onPressEn = async () => {
     try {
-      await AsyncStorage.setItem('lang', 'en')
+      await AsyncStorage.setItem('lang', 'en');
     } catch (e) {
       // saving error
     }
@@ -195,10 +214,20 @@ const Home = (props) => {
 
     // this.props.i18n.changeLanguage('en')
   };
+  const onExport = () => {
+    console.log('====================================');
+    props.exportPdfAction({ codeId: codeId ,userId :userId ,langId:langId ,temId:temId})
+    console.log('code==', codeId);
+    console.log('user_id', userId);
+    console.log('temId==',temId);
+    console.log('langId', langId);
+    console.log('====================================');
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
       {props.loadingUser && <LoadingView />}
+      {props.loadingPdf && <LoadingView /> }
 
       <Header
         isShowMenu
@@ -428,7 +457,7 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-              {emtyEmail === false  ? (
+              {emtyEmail === false ? (
                 <Image
                   style={{height: 30, width: 30}}
                   source={require('../../res/image/img/icon_empty_tick.png')}
@@ -500,7 +529,7 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-             {emtyLangs === false ? (
+              {emtyLangs === false ? (
                 <Image
                   style={{height: 30, width: 30}}
                   source={require('../../res/image/img/icon_empty_tick.png')}
@@ -605,7 +634,7 @@ const Home = (props) => {
                 alignItems: 'flex-end',
                 flex: 0.2,
               }}>
-              { emtyTech === false ? (
+              {emtyTech === false ? (
                 <Image
                   style={{height: 30, width: 30}}
                   source={require('../../res/image/img/icon_empty_tick.png')}
@@ -626,6 +655,9 @@ const Home = (props) => {
             marginBottom: 60,
           }}>
           <TouchableOpacity
+            onPress={() => {
+              onExport();
+            }}
             style={{
               width: screenWidth / 2,
               height: 50,

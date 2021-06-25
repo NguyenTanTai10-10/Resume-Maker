@@ -1,7 +1,8 @@
 import {
    CHANGE_PASS,
    CHANGE_PASS_SUCCESS,
-   CHANGE_PASS_ERROR
+   CHANGE_PASS_ERROR,
+   LOGOUT_CHANGE_PASS
   } from '../actions/Action';
   const initState = {
     status: null,
@@ -45,11 +46,11 @@ import {
           data: null,
           message: 'Lối sever',
         };
-    //   case LOGOUT_EDIT_EDUCATION:
-    //     console.log('LOGOUT_EDIT_EDUCATION');
-    //     return {
-    //       initState,
-    //     };
+      case LOGOUT_CHANGE_PASS:
+        console.log('LOGOUT_CHANGE_PASS');
+        return {
+          initState,
+        };
   
       default:
         return state;

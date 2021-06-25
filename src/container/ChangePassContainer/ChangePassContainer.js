@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ChangPassComponent from '../../component/ChangPassComponent';
 
-import {  changePassAction } from '../../redux/actions/Action';
+import {  changePassAction,logoutChangPassAction } from '../../redux/actions/Action';
 
 
 
@@ -32,6 +32,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
    return {
       changePassAction:(input)=>dispatch(changePassAction(input)),
+      logoutChangPassAction:()=>dispatch(logoutChangPassAction()),
+      
     
    };
 };

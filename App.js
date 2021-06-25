@@ -37,6 +37,8 @@ import  SkillsContainer  from './src/container/SkillsContainer/SkillsContainer';
 import EditExpContainer from './src/container/EditExpContainer/EditExpContainer';
 import i18n from './src/Language/LanguageContext'
 import  ChangePassContainer  from './src/container/ChangePassContainer/ChangePassContainer';
+import ShowPdfComponent from './src/component/ShowPdfComponent';
+
 
 
 
@@ -135,8 +137,12 @@ const App = () => {
           name="ChangePassContainer"
           component={ChangePassContainer}
         />
+        <Stack.Screen
+          name="ShowPdfComponent"
+          component={ShowPdfComponent}
+        />
+        {/* ShowPdfComponent */}
         {/* ChangePassContainer */}
-        
         {/* EditLanguageContainer */}
         {/* ListLanguageContainer */}
         {/* EditSkillContainer */}

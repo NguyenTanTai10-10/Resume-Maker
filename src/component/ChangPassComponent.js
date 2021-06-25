@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {screenWidth} from '../res/style/theme';
 import {useTranslation} from 'react-i18next';
 import Header from './custom/Header';
 import LoadingView from './custom/LoadingView';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const ChangPassComponent = (props) => {
   useEffect(() => {
     getData();
@@ -93,14 +93,15 @@ const ChangPassComponent = (props) => {
       console.log('====================================');
       console.log('password', password);
       console.log('passwordNew', passwordNew);
+      console.log('userId', userId);
       console.log('====================================');
     }
   };
   useEffect(() => {
+    // console.log('====================================');
+    //   console.log(props.statusChangePass)
+    //   console.log('====================================');
     if (props.statusChangePass !== null) {
-      console.log('====================================');
-      console.log(props.statusChangePass)
-      console.log('====================================');
       if (props.statusChangePass === 1) {
         console.log('mk dung');
         Alert.alert(
@@ -115,7 +116,7 @@ const ChangPassComponent = (props) => {
             {
               text: 'OK',
               onPress: async () => {
-                //  await props.navigation.navigate('ListLanguageContainer');
+                 await props.navigation.navigate('Drawers');
               },
             },
           ],
@@ -128,12 +129,18 @@ const ChangPassComponent = (props) => {
     } else if (props.errorChangePass !== null) {
       Alert.alert(t('Thông báo'), t(props.errorChangePass));
     }
-  }, [props.statusUser]);
+  }, [props.statusChangePass]);
 
   return (
     <View>
-      {props.loadingChangePass && <LoadingView/>}
-      <Header isShowBack onPressBack={() => props.navigation.goBack()} />
+      {props.loadingChangePass && <LoadingView />}
+      <Header
+        isShowBack
+        onPressBack={() => {
+          props.logoutChangPassAction();
+          props.navigation.goBack();
+        }}
+      />
       <ScrollView>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Text

@@ -28,6 +28,7 @@ import deleteLangReducer from './DeleteLangReducer';
 import getTechniqueReducer from './GetTechniqueReducer';
 import updateTechReducer from './UpdatetechReducer';
 import changePassReducer from './ChangePassReducer';
+import exportPdfReducer from './ExportPdfReducer';
 
 
 
@@ -59,7 +60,8 @@ const allReducers = combineReducers({
    deleteLangReducer,
    getTechniqueReducer,
    updateTechReducer,
-   changePassReducer
+   changePassReducer,
+   exportPdfReducer
 });
 
 export default allReducers;

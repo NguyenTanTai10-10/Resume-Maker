@@ -1,4 +1,5 @@
 const urlSever = 'https://viecoi.vn/api/json';
+const urlSv = "https://taocv.viecoi.vn/api/json";
 const Ver = 2;
 import axios from 'axios';
 function* LoginUser(input) {
@@ -633,7 +634,31 @@ function* ChangePass(input) {
 
   return temp;
 }
+//========================================================
+function* ExportPdf(input) {
+
+  let temp;
+  yield axios
+    .post(urlSv, {
+      method: 'export_pdf',
+      params: {
+        code:input.codeId ,
+        jobseeker_id:input.userId ,
+        lang_code:input.langId ,
+        template_id: input.temId,
+      },
+    })
+    .then(function (response) {
+      temp = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  return temp;
+}
 export const API = {
+  ExportPdf,
   LoginUser,
   CheckEmail,
   ListCV,
@@ -661,5 +686,5 @@ export const API = {
   DeleteLang,
   getTechnique,
   updateTech,
-  ChangePass
+  ChangePass,
 };

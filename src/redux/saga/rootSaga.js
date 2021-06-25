@@ -29,6 +29,7 @@ import { watchDeleteLang } from './DeleteLangSaga';
 import { watchGetTechnique } from './GetTechniqueSaga';
 import { watchUpdateTech } from './UpdateTechSaga';
 import { watchChangePass } from './ChangePassSaga';
+import { watchExportPdf } from './ExportPdfSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -59,7 +60,8 @@ export default function* rootSaga() {
     watchDeleteLang(),
     watchGetTechnique(),
     watchUpdateTech(),
-    watchChangePass()
+    watchChangePass(),
+    watchExportPdf()
 
   ]);
 }

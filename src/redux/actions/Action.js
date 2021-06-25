@@ -395,4 +395,22 @@ export const changePassAction = (input) => {
     input: input,
   };
 };
+export const LOGOUT_CHANGE_PASS = 'LOGOUT_CHANGE_PASS';
+export const logoutChangPassAction = () => {
+  return {
+    type: LOGOUT_CHANGE_PASS,
+  };
+};
+//===================================================================================
+
+export const EXPORT_PDF = 'EXPORT_PDF';
+export const EXPORT_PDF_SUCCESS = 'EXPORT_PDF_SUCCESS';
+export const EXPORT_PDF_ERROR = 'EXPORT_PDF_ERROR';
+export const exportPdfAction = (input) => {
+
+  return {
+    type: EXPORT_PDF,
+    input: input,
+  };
+};
 
