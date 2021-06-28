@@ -37,6 +37,7 @@ const DrawerComponent = (props) => {
      .then(() => console.log('User signed out!'));
        props.logoutAction();
        props.navigation.replace('LoginContainer',{login :'true'});
+       props.logoutExportPdfAction()
   };
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Home from '../../component/home/Home';
-import {infoUserAction,exportPdfAction} from '../../redux/actions/Action';
+import {infoUserAction,exportPdfAction,logoutExportPdfAction} from '../../redux/actions/Action';
 
 export class HomeContainer extends Component {
   render() {
@@ -32,6 +32,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     infoUserAction: (input) => dispatch(infoUserAction(input)),
     exportPdfAction: (input) => dispatch(exportPdfAction(input)),
+    logoutExportPdfAction: () => dispatch(logoutExportPdfAction()),
+    
   };
 };
 

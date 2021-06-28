@@ -119,16 +119,17 @@ const Home = (props) => {
     console.log(props.statusPdf);
     if (props.statusPdf !== null) {
       if (props.statusPdf === 1) {
-        props.navigation.navigate('ShowPdfComponent',{dataPDF: props.dataPdf})
-        // console.log('====================================');
-        // console.log(props.dataPdf);
-        // console.log('====================================');
-       
+        navigateShowPdf()
       } 
     } else if (props.errorPdf !== null) {
       Alert.alert('Thông báo', props.errorPdf);
     }
   }, [props.statusPdf]);
+  const navigateShowPdf = async()=>{
+    await props.navigation.navigate('ShowPdfComponent',{dataPDF: props.dataPdf})
+    await props.logoutExportPdfAction()
+
+  }
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');

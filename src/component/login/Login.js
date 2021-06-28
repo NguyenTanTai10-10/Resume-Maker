@@ -80,6 +80,9 @@ const Login = (props) => {
     console.log('====================================');
 
     if (user !== null) {
+      console.log('====================================');
+      console.log('vao user');
+      console.log('====================================');
       props.loginAction({
         email: user.email,
         password: '',

@@ -16,6 +16,8 @@ target 'Resume_Maker' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/@react-native-community/google-signin'
 
+  pod 'react-native-pdf', :path => '../node_modules/react-native-pdf'
+
   target 'Resume_MakerTests' do
     inherit! :complete
     # Pods for testing

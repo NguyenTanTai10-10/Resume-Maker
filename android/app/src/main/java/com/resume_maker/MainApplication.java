@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import org.wonday.pdf.RCTPdfView;
+import org.wonday.pdf.RCTPdfView;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage;
 import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;

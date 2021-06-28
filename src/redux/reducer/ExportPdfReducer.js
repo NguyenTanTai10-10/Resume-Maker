@@ -1,7 +1,8 @@
 import {
     EXPORT_PDF,
     EXPORT_PDF_SUCCESS,
-    EXPORT_PDF_ERROR
+    EXPORT_PDF_ERROR,
+    LOGOUT_EXPORT_PDF
   } from '../actions/Action';
   const initState = {
     status: null,
@@ -44,11 +45,11 @@ import {
   
           error: 'Lối sever',
         };
-    //   case LOGOUT_EDIT_SKILL:
-    //     console.log('LOGOUT_EDIT_SKILL');
-    //     return {
-    //       initState,
-    //     };
+      case LOGOUT_EXPORT_PDF:
+        console.log('LOGOUT_EXPORT_PDF');
+        return {
+          initState,
+        };
       default:
         return state;
     }

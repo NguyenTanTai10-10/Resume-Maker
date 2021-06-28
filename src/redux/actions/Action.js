@@ -413,4 +413,10 @@ export const exportPdfAction = (input) => {
     input: input,
   };
 };
+export const LOGOUT_EXPORT_PDF = 'LOGOUT_EXPORT_PDF';
+export const logoutExportPdfAction = () => {
+  return {
+    type: LOGOUT_EXPORT_PDF,
+  };
+};
 

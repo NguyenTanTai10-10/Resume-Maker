@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import DrawerComponent from '../../component/drawer/DrawerComponent';
-import {infoUserAction,logoutAction} from '../../redux/actions/Action';
+import {infoUserAction,logoutAction,logoutExportPdfAction} from '../../redux/actions/Action';
 
 export class DrawerContainer extends Component {
   render() {
@@ -23,6 +23,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     infoUserAction: (input) => dispatch(infoUserAction(input)),
     logoutAction: () => dispatch(logoutAction()),
+    logoutExportPdfAction: () => dispatch(logoutExportPdfAction()),
+   
     // logoutInfoUserAction:()
     
   };
