@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Resume_Maker</string>
+    <!-- <string name="facebook_app_id">222790393030755</string>
+<string name="fb_login_protocol_scheme">fb222790393030755</string> -->
+<string name="facebook_app_id">539106900289353</string>
+<string name="fb_login_protocol_scheme">fb539106900289353</string>
 </resources>

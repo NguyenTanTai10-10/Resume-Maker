@@ -18,6 +18,8 @@ target 'Resume_Maker' do
 
   pod 'react-native-pdf', :path => '../node_modules/react-native-pdf'
 
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+
   target 'Resume_MakerTests' do
     inherit! :complete
     # Pods for testing
