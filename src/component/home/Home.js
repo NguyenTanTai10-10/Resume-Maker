@@ -16,6 +16,17 @@ import Header from '../custom/Header';
 import LoadingView from '../custom/LoadingView';
 import Slider from '../custom/Slider';
 import {useTranslation} from 'react-i18next';
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+  InterstitialAd,
+  AdEventType,
+} from '@react-native-firebase/admob';
+
+const adUnitId = __DEV__
+  ? TestIds.INTERSTITIAL
+  : 'ca-app-pub-2243198721344643~4768875832';
 
 const Home = (props) => {
   const {t, i18n} = useTranslation();
@@ -119,23 +130,25 @@ const Home = (props) => {
     console.log(props.statusPdf);
     if (props.statusPdf !== null) {
       if (props.statusPdf === 1) {
-        navigateShowPdf()
-      } 
+        navigateShowPdf();
+      }
     } else if (props.errorPdf !== null) {
       Alert.alert('Thông báo', props.errorPdf);
     }
   }, [props.statusPdf]);
-  const navigateShowPdf = async()=>{
-    await props.navigation.navigate('ShowPdfComponent',{dataPDF: props.dataPdf})
-    await props.logoutExportPdfAction()
-
-  }
+  const navigateShowPdf = async () => {
+    await props.navigation.navigate('ShowPdfComponent', {
+      dataPDF: props.dataPdf,
+    });
+    await admob()
+    await props.logoutExportPdfAction();
+  };
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
       const value = await AsyncStorage.getItem('lang');
       const valueJson = await AsyncStorage.getItem('@template_cv_id');
-      setUserId(jsonValue != null ? JSON.parse(jsonValue) : null)
+      setUserId(jsonValue != null ? JSON.parse(jsonValue) : null);
       setTemId(valueJson != null ? JSON.parse(valueJson) : null);
       setLangId(value != null ? value : 'vi');
       props.navigation.addListener('focus', async () => {
@@ -217,18 +230,40 @@ const Home = (props) => {
   };
   const onExport = () => {
     console.log('====================================');
-    props.exportPdfAction({ codeId: codeId ,userId :userId ,langId:langId ,temId:temId})
+    props.exportPdfAction({
+      codeId: codeId,
+      userId: userId,
+      langId: langId,
+      temId: temId,
+    });
     console.log('code==', codeId);
     console.log('user_id', userId);
-    console.log('temId==',temId);
+    console.log('temId==', temId);
     console.log('langId', langId);
     console.log('====================================');
+  };
+
+  const admob = () => {
+    let interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+      requestNonPersonalizedAdsOnly: true,
+      keywords: ['fashion', 'clothing'],
+    });
+    let interstitialer = interstitial.onAdEvent((type) => {
+      if (type === AdEventType.LOADED) {
+        interstitial.show();
+      
+      }
+    });
+    interstitial.load();
+    return () => {
+      interstitialer = null;
+    };
   };
 
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
       {props.loadingUser && <LoadingView />}
-      {props.loadingPdf && <LoadingView /> }
+      {props.loadingPdf && <LoadingView />}
 
       <Header
         isShowMenu
@@ -672,6 +707,7 @@ const Home = (props) => {
             </Text>
           </TouchableOpacity>
         </View>
+        <BannerAd unitId={adUnitId} size={BannerAdSize.SMART_BANNER} />
       </ScrollView>
     </View>
   );

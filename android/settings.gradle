@@ -1,4 +1,6 @@
 rootProject.name = 'Resume_Maker'
+include ':@react-native-firebase_admob'
+project(':@react-native-firebase_admob').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-firebase/admob/android')
 include ':react-native-fbsdk'
 project(':react-native-fbsdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fbsdk/android')
 include ':react-native-pdf'

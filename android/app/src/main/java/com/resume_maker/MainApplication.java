@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.admob.ReactNativeFirebaseAdmobPackage;
+import io.invertase.firebase.admob.ReactNativeFirebaseAdmobPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import org.wonday.pdf.RCTPdfView;
 import org.wonday.pdf.RCTPdfView;

@@ -20,6 +20,8 @@ target 'Resume_Maker' do
 
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
+  pod 'RNFBAdMob', :path => '../node_modules/@react-native-firebase/admob'
+
   target 'Resume_MakerTests' do
     inherit! :complete
     # Pods for testing

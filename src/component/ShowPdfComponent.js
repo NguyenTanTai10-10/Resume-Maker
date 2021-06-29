@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Dimensions,TouchableOpacity,Image, Platform, PermissionsAndroid} from 'react-native';
+import {View, Text, StyleSheet, Dimensions,TouchableOpacity,Image, Platform, PermissionsAndroid, Share} from 'react-native';
 import Pdf from 'react-native-pdf';
 import Images from '../res/image';
 import Sizes from '../utils/Sizes';
@@ -22,6 +22,24 @@ const ShowPdfComponent = (props) => {
     setSource(kq.linkPdf);
     console.log('====================================');
   }, []);
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: source === ''?'':source,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const  historyDownload=()=> {
     //Function to check the platform
