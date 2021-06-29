@@ -41,7 +41,7 @@ export default class Detail extends Component {
         //   },
         // ]}
         />
-                <Text> textInComponent </Text>
+                <Text> 124344535 </Text>
             </View>
         )
     }
