@@ -33,6 +33,9 @@ const resources = {
       'Trung cấp':'Trung cấp',
       'Cao cấp':'Cao cấp',
       'Hoàn thành':'Hoàn thành',
+      'Chia sẻ':'Chia sẻ',
+      'Chi tiết' :'Chi tiết',
+      'Tải xuống':'Tải xuống',
       //================HOME============================
       'Mức độ hoàn thiện CiVi': 'Mức độ hoàn thiện CiVi',
       'Liên kết của bạn': 'Liên kết của bạn',
@@ -146,7 +149,16 @@ const resources = {
       'Hiện nay':'Hiện nay',
       //==================Exp=========================
       'Chọn kỹ năng':'Chọn kỹ năng',
-      'Vui lòng chọn kỹ năng':'Vui lòng chọn kỹ năng'
+      'Vui lòng chọn kỹ năng':'Vui lòng chọn kỹ năng',
+       //==================ChangePass=========================
+       'Vui lòng nhập mật khẩu hiện tại':'Vui lòng nhập mật khẩu hiện tại',
+      'Mật khẩu hiện tại':'Mật khẩu hiện tại',
+      'Vui lòng nhập mật khẩu 4 kí tự trở lên':'Vui lòng nhập mật khẩu 4 kí tự trở lên',
+      'Vui lòng nhập mật khẩu mới khác hiện tại':'Vui lòng nhập mật khẩu mới khác hiện tại',
+      'Vui lòng nhập mật khẩu mới':'Vui lòng nhập mật khẩu mới',
+      'Mật khẩu mới':'Mật khẩu mới',
+      'Mật khẩu cũ sai':'Mật khẩu cũ sai'
+
       
 
       
@@ -181,6 +193,9 @@ const resources = {
       'Trung cấp':'Intermediate',
       'Cao cấp':'Premium',
       'Hoàn thành':'Finish',
+      'Chia sẻ':'Share',
+      'Chi tiết' :'Detail',
+      'Tải xuống':'Download',
 
       //================HOME============================
       'Mức độ hoàn thiện CiVi': 'Level of perfection Civi',
@@ -292,7 +307,17 @@ const resources = {
       'Hiện nay' :'Now',
       //==================Skill=========================
       'Chọn kỹ năng':'Choose skills',
-      'Vui lòng chọn kỹ năng':'Please select skill'
+      'Vui lòng chọn kỹ năng':'Please select skill',
+      //==================ChangePass=========================
+      'Vui lòng nhập mật khẩu hiện tại':'Please enter the current password',
+      'Mật khẩu hiện tại':'Current password',
+      'Vui lòng nhập mật khẩu 4 kí tự trở lên':'Please enter a password of 4 or more characters',
+      'Vui lòng nhập mật khẩu mới khác hiện tại':'Please enter a new password other than the current one',
+      'Vui lòng nhập mật khẩu mới':'Please enter a new password',
+      'Mật khẩu mới':'New password',
+      'Mật khẩu cũ sai':'Wrong old password'
+
+
 
 
       

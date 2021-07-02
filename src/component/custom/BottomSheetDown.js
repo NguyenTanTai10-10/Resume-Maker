@@ -102,7 +102,7 @@ const BottomSheetDown = forwardRef((props, ref) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={{color: 'white'}}>Chia sẽ</Text>
+                  <Text style={{color: 'white'}}>{t('Chia sẻ')}</Text>
                   {/* {selectItem===item?<Image source={require("../../res/image/img/arrow-up.png")} style={{ width: Sizes.h16, height: Sizes.h16, resizeMode: 'contain' }} />:null} */}
                 </TouchableOpacity>
               </View>
@@ -129,7 +129,7 @@ const BottomSheetDown = forwardRef((props, ref) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={{color: 'white'}}>Tải xuống</Text>
+                  <Text style={{color: 'white'}}>{t('Tải xuống')}</Text>
                 </TouchableOpacity>
               </View>
             </Animated.View>

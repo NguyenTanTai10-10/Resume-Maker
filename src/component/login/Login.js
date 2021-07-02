@@ -107,9 +107,27 @@ const Login = (props) => {
         SaveLogin();
         storeData(props.data.jobseeker_id);
       } else if (props.status === 0) {
-        console.log('====================================');
-        props.navigation.navigate('ListCVContainer');
-        console.log('====================================');
+        Alert.alert(
+          t(props.message),
+          'Bạn có muốn tạo tài khoản không ?',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: async () => {
+                props.navigation.navigate('ListCVContainer');
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+        // console.log('====================================');
+        // props.navigation.navigate('ListCVContainer');
+        // console.log('====================================');
       }
     } else if (props.error !== null) {
       Alert.alert(t(props.error));
@@ -561,7 +579,7 @@ const Login = (props) => {
             <View style={{marginTop: 20, flexDirection: 'row'}}>
               <TouchableOpacity
                 onPress={() => {
-                  props.navigation.navigate('LoginContainer');
+                  OnPessFB()
                 }}
                 style={{
                   height: 60,

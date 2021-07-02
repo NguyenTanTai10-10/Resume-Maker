@@ -321,6 +321,10 @@ const ListExperienComponent = (props) => {
           </TouchableOpacity>
 
           <TouchableOpacity
+          onPress={()=>{
+            props.navigation.navigate('SkillsContainer')
+          }}
+          
             style={{
               justifyContent: 'center',
               alignItems: 'center',

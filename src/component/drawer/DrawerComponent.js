@@ -152,21 +152,6 @@ const DrawerComponent = (props) => {
             {t('Cài đặt tài khoản').toUpperCase()}
           </Text>
           <TouchableOpacity
-            style={{
-              alignItems: 'center',
-              flexDirection: 'row',
-              marginLeft: 30,
-              marginVertical: 10,
-            }}>
-            <Image
-              style={{height: 20, width: 20}}
-              source={require('../../res/image/img/icon_edit_account.png')}
-            />
-            <Text style={{marginLeft: 15, fontSize: 12}}>
-              {t('Thay đổi thông tin').toUpperCase()}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
           onPress={()=>{props.navigation.navigate('ChangePassContainer')}}
             style={{
               alignItems: 'center',

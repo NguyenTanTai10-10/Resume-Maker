@@ -16,17 +16,6 @@ import Header from '../custom/Header';
 import LoadingView from '../custom/LoadingView';
 import Slider from '../custom/Slider';
 import {useTranslation} from 'react-i18next';
-import {
-  BannerAd,
-  BannerAdSize,
-  TestIds,
-  InterstitialAd,
-  AdEventType,
-} from '@react-native-firebase/admob';
-
-const adUnitId = __DEV__
-  ? TestIds.INTERSTITIAL
-  : 'ca-app-pub-2243198721344643~4768875832';
 
 const Home = (props) => {
   const {t, i18n} = useTranslation();
@@ -140,7 +129,6 @@ const Home = (props) => {
     await props.navigation.navigate('ShowPdfComponent', {
       dataPDF: props.dataPdf,
     });
-    await admob()
     await props.logoutExportPdfAction();
   };
   const getData = async () => {
@@ -243,22 +231,6 @@ const Home = (props) => {
     console.log('====================================');
   };
 
-  const admob = () => {
-    let interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-      requestNonPersonalizedAdsOnly: true,
-      keywords: ['fashion', 'clothing'],
-    });
-    let interstitialer = interstitial.onAdEvent((type) => {
-      if (type === AdEventType.LOADED) {
-        interstitial.show();
-      
-      }
-    });
-    interstitial.load();
-    return () => {
-      interstitialer = null;
-    };
-  };
 
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
@@ -707,7 +679,6 @@ const Home = (props) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <BannerAd unitId={adUnitId} size={BannerAdSize.SMART_BANNER} />
       </ScrollView>
     </View>
   );

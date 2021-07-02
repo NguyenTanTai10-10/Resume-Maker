@@ -13,6 +13,7 @@ import {useTranslation} from 'react-i18next';
 import Header from './custom/Header';
 import LoadingView from './custom/LoadingView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const ChangPassComponent = (props) => {
   useEffect(() => {
     getData();
@@ -76,11 +77,11 @@ const ChangPassComponent = (props) => {
         setCheckPassNew(true);
         setPasswordNew('');
       }
-      if (password === passwordNew) {
+      else if (password === passwordNew) {
         setCheckPassNewSame(true);
         setPasswordNew('');
       }
-      if (passwordNew.length < 4) {
+      else if (passwordNew.length < 4) {
         setCheckPassNewSameLength(true);
         setPasswordNew('');
       }
@@ -105,7 +106,7 @@ const ChangPassComponent = (props) => {
       if (props.statusChangePass === 1) {
         console.log('mk dung');
         Alert.alert(
-          t('Thêm Thành Công'),
+          t(props.messageChangePass),
           '',
           [
             {
@@ -116,6 +117,7 @@ const ChangPassComponent = (props) => {
             {
               text: 'OK',
               onPress: async () => {
+                await props.logoutChangPassAction()
                  await props.navigation.navigate('Drawers');
               },
             },
@@ -124,7 +126,7 @@ const ChangPassComponent = (props) => {
         );
       } else if (props.statusChangePass === 0) {
         console.log('mk sai');
-        Alert.alert(t('Thông báo'), props.messageChangePass);
+        Alert.alert(t('Thông báo'), t(props.messageChangePass));
       }
     } else if (props.errorChangePass !== null) {
       Alert.alert(t('Thông báo'), t(props.errorChangePass));
@@ -148,7 +150,7 @@ const ChangPassComponent = (props) => {
               fontSize: 20,
               color: '#2EB553',
             }}>
-            Thay đổi mật khẩu
+           {t('Thay đổi mật khẩu')} 
           </Text>
           <View
             style={{
@@ -158,7 +160,7 @@ const ChangPassComponent = (props) => {
             }}>
             {checkPass && (
               <Text style={{color: 'red'}}>
-                * Vui lòng nhập mật khẩu hiện tại
+                * {t('Vui lòng nhập mật khẩu hiện tại')}
               </Text>
             )}
           </View>
@@ -241,16 +243,16 @@ const ChangPassComponent = (props) => {
             }}>
             {checkPassNewLength && (
               <Text style={{color: 'red'}}>
-                * Vui lòng nhập mật khẩu 4 kí tự trở lên
+                * {t('Vui lòng nhập mật khẩu 4 kí tự trở lên')}
               </Text>
             )}
             {checkPassNewSame && (
               <Text style={{color: 'red'}}>
-                * Vui lòng nhập mật khẩu mới khác hiện tại
+                * {t('Vui lòng nhập mật khẩu mới khác hiện tại')}
               </Text>
             )}
             {checkPassNew && (
-              <Text style={{color: 'red'}}>* Vui lòng nhập mật khẩu mới</Text>
+              <Text style={{color: 'red'}}>* {t('Vui lòng nhập mật khẩu mới')}</Text>
             )}
           </View>
           <View
