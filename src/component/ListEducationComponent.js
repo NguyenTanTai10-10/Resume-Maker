@@ -24,6 +24,7 @@ const ListEducationComponent = (props) => {
   const [eductionId, setEductionId] = useState('');
   const [eduction_Id, setEduction_Id] = useState('');
   const [user_Id, setUser_Id] = useState('');
+  const [dataSkill, setDataSkill] = useState('');
   const modal = React.createRef();
   useEffect(() => {
     getData();
@@ -32,6 +33,8 @@ const ListEducationComponent = (props) => {
     if (props.statusUser !== null) {
       if (props.statusUser === 1) {
         setDataEducation(props.dataUser.qualifications);
+        setDataSkill(props.dataUser.skills);
+
       } else {
         setTimeout(() => {
           Alert.alert(t('Thông báo'), t(props.messageUser));
@@ -122,6 +125,13 @@ const ListEducationComponent = (props) => {
         eduction_Id: item,
       });
     }, 300);
+  };
+  const onSkill = () => {
+    if (dataSkill.length === 0) {
+      props.navigation.navigate('AddExperiencesContainer');
+    } else if (dataEducation.length > 0) {
+      props.navigation.navigate('ListExperienContainer');
+    }
   };
 
   const renderItem = (item) => {
@@ -253,7 +263,7 @@ const ListEducationComponent = (props) => {
             </TouchableOpacity>
 
             <Image
-              source={require('../res/image/img/iconnumber05.png')}
+              source={require('../res/image/img/iconnumber04.png')}
               style={{
                 width: Sizes.s140,
                 height: Sizes.s140,
@@ -320,7 +330,7 @@ const ListEducationComponent = (props) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-          onPress={()=>props.navigation.navigate('ListExperienContainer')}
+          onPress={()=>onSkill()}
           // ListExperienContainer
             style={{
               justifyContent: 'center',

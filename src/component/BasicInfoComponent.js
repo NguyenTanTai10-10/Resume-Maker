@@ -26,6 +26,7 @@ const BasicInfoComponent = (props) => {
   const [dataCity, setDataCity] = useState([]);
   const [getDataCity, setGetDataCity] = useState([]);
   const [totalCity, setTotalCity] = useState([]);
+  const [edu, setEdu] = useState([]);
   useEffect(() => {
     getdata();
   }, []);
@@ -67,6 +68,7 @@ const BasicInfoComponent = (props) => {
         setMoneyNew(props.dataUser.expected_annual_salary.toLocaleString());
         setHideMoneyNew(props.dataUser.is_negotiation);
         setResumeTitle(props.dataUser.resume_title);
+        setEdu(props.dataUser.qualifications)
         dataIndustry.map((item) => {
           if (item.industry_id === props.dataUser.functional_role_id) {
             setIndustry(item.industry);
@@ -408,6 +410,16 @@ const BasicInfoComponent = (props) => {
       setHideMoneyNew(0);
     }
   };
+  const navigateEdu = () => {
+    
+    if (edu.length == 0) {
+      props.navigation.navigate('AddEducationContainer')
+      
+    } else if (edu.length > 0){
+      props.navigation.navigate('ListEducationContainer')
+     
+    }
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -568,7 +580,7 @@ const BasicInfoComponent = (props) => {
             }}
             keyboardType="number-pad"
             placeholder={t('Lương hiện tại')}
-            style={{width: '58%', marginLeft: 15}}></TextInput>
+            style={{width:checkOnMoneyNow == true ? '60%':'70%', marginLeft: 15,}}></TextInput>
 
           <Text style={{}}>VND</Text>
           {checkOnMoneyNow && (
@@ -647,7 +659,7 @@ const BasicInfoComponent = (props) => {
             keyboardType="number-pad"
             onChangeText={(text) => textMoneyNew(text)}
             placeholder={t('Lương mong muốn')}
-            style={{width: '58%', marginLeft: 15}}></TextInput>
+            style={{width:checkOnMoneyNew == true ? '60%':'70%', marginLeft: 15,}}></TextInput>
 
           <Text style={{}}>VND</Text>
           {checkOnMoneyNew && (
@@ -908,7 +920,7 @@ const BasicInfoComponent = (props) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => props.navigation.navigate('ListLanguageContainer')}
+            onPress={() => navigateEdu()}
             style={{
               justifyContent: 'center',
               alignItems: 'center',

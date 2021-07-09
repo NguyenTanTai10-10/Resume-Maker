@@ -547,7 +547,7 @@ const ContactComponent = (props) => {
                 defaultValue={userName}
                 onChangeText={(text) => onUserName(text)}
                 placeholder={t('Họ và tên')}
-                style={{width: '70%', marginLeft: 15}}></TextInput>
+                style={{width:clearHoTen == true ? '70%':'80%', marginLeft: 15 , }}></TextInput>
             </View>
             {clearHoTen && (
               <TouchableOpacity
@@ -631,7 +631,7 @@ const ContactComponent = (props) => {
               }}
               defaultValue={emailKh}
               placeholder="Email"
-              style={{width: '70%', marginLeft: 15}}></TextInput>
+              style={{width:clearEmail == true ? '70%':'80%', marginLeft: 15,}}></TextInput>
           </View>
           {clearEmail && (
             <TouchableOpacity
@@ -714,7 +714,7 @@ const ContactComponent = (props) => {
               }}
               defaultValue={Password}
               placeholder={t("Mật khẩu")}
-              style={{width: '60%', marginLeft: 15}}></TextInput>
+              style={{width:clearPassword == true ? '60%':'80%', marginLeft: 15,}}></TextInput>
           </View>
           {clearPassword && (
             <View style={{flexDirection: 'row'}}>
@@ -801,7 +801,7 @@ const ContactComponent = (props) => {
               }}
               keyboardType="phone-pad"
               placeholder="Phone"
-              style={{width: '70%', marginLeft: 15}}></TextInput>
+              style={{width:clearPhone == true ? '70%':'80%', marginLeft: 15,}}></TextInput>
           </View>
           {clearPhone && (
             <TouchableOpacity
@@ -856,7 +856,8 @@ const ContactComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                width: '70%',
+                width:clearCity == true ? '70%':'80%',
+                
                 color: City === t('Tỉnh/thành phố') ? '#BFBFBF' : 'black',
               }}>
               {City}
@@ -917,7 +918,7 @@ const ContactComponent = (props) => {
                 onAdress(text);
               }}
               placeholder={t("Địa chỉ")}
-              style={{width: '70%', marginLeft: 15}}></TextInput>
+              style={{width:clearAdress == true ? '70%':'80%', marginLeft: 15}}></TextInput>
           </View>
           {clearAdress && (
             <TouchableOpacity

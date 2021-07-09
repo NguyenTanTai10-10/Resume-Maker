@@ -251,7 +251,7 @@ const ListLanguageComponent = (props) => {
             </TouchableOpacity>
 
             <Image
-              source={require('../res/image/img/iconnumber04.png')}
+              source={require('../res/image/img/iconnumber06.png')}
               style={{
                 width: Sizes.s140,
                 height: Sizes.s140,
@@ -316,7 +316,7 @@ const ListLanguageComponent = (props) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-          onPress={()=>{props.navigation.navigate('ListEducationContainer')}}
+          onPress={()=>{props.navigation.navigate('SkillsContainer')}}
             style={{
               justifyContent: 'center',
               alignItems: 'center',

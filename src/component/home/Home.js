@@ -30,6 +30,7 @@ const Home = (props) => {
   const [widthNoPercent, setWidthNoPercent] = useState();
   const [dataEducation, setDataEducation] = useState('');
   const [dataSkill, setDataSkill] = useState('');
+  const [dataLang, setDataLang] = useState('');
   const [percent_cv, setPercent_cv] = useState('');
   const [emtyQua, setEmtyQua] = useState(false);
   const [emtySkills, setEmtySkills] = useState(false);
@@ -105,6 +106,7 @@ const Home = (props) => {
         setWidthNoPercent(kq2);
         setDataEducation(props.dataUser.qualifications);
         setDataSkill(props.dataUser.skills);
+        setDataLang(props.dataUser.langs)
       } else {
         setTimeout(() => {
           Alert.alert('Thông báo', props.messageUser);
@@ -171,8 +173,15 @@ const Home = (props) => {
   const onSkill = () => {
     if (dataSkill.length === 0) {
       props.navigation.navigate('AddExperiencesContainer');
-    } else if (dataEducation.length > 0) {
+    } else if (dataSkill.length > 0) {
       props.navigation.navigate('ListExperienContainer');
+    }
+  };
+  const onlang = () => {
+    if (dataLang.length === 0) {
+      props.navigation.navigate('AddLanguageContainer');
+    } else if (dataLang.length > 0) {
+      props.navigation.navigate('ListLanguageContainer');
     }
   };
 
@@ -514,42 +523,7 @@ const Home = (props) => {
               )}
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            // LanguageComponent
-            onPress={() => props.navigation.navigate('ListLanguageContainer')}
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 15,
-              borderBottomWidth: 1,
-              borderBottomColor: '#BFBFBF',
-            }}>
-            <View
-              style={{flexDirection: 'row', flex: 0.8, alignItems: 'center'}}>
-              <Image
-                style={{height: 30, width: 30}}
-                source={require('../../res/image/img/translate.png')}
-              />
-              <Text style={{marginLeft: 10}}>{t('Ngôn ngữ')}</Text>
-            </View>
-            <View
-              style={{
-                justifyContent: 'flex-end',
-                alignItems: 'flex-end',
-                flex: 0.2,
-              }}>
-              {emtyLangs === false ? (
-                <Image
-                  style={{height: 30, width: 30}}
-                  source={require('../../res/image/img/icon_empty_tick.png')}
-                />
-              ) : (
-                <Image
-                  style={{height: 30, width: 30}}
-                  source={require('../../res/image/img/icon_active_tick.png')}
-                />
-              )}
-            </View>
-          </TouchableOpacity>
+          
           <TouchableOpacity
             onPress={() => onEducation()}
             style={{
@@ -608,6 +582,42 @@ const Home = (props) => {
                 flex: 0.2,
               }}>
               {emtySkills === false ? (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_empty_tick.png')}
+                />
+              ) : (
+                <Image
+                  style={{height: 30, width: 30}}
+                  source={require('../../res/image/img/icon_active_tick.png')}
+                />
+              )}
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            // LanguageComponent
+            onPress={() => onlang()}
+            style={{
+              flexDirection: 'row',
+              paddingVertical: 15,
+              borderBottomWidth: 1,
+              borderBottomColor: '#BFBFBF',
+            }}>
+            <View
+              style={{flexDirection: 'row', flex: 0.8, alignItems: 'center'}}>
+              <Image
+                style={{height: 30, width: 30}}
+                source={require('../../res/image/img/translate.png')}
+              />
+              <Text style={{marginLeft: 10}}>{t('Ngôn ngữ')}</Text>
+            </View>
+            <View
+              style={{
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+                flex: 0.2,
+              }}>
+              {emtyLangs === false ? (
                 <Image
                   style={{height: 30, width: 30}}
                   source={require('../../res/image/img/icon_empty_tick.png')}

@@ -65,7 +65,7 @@ const ShowPdfComponent = (props) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: source === '' ? '' : source,
+        message: source !== '' ? source :'' ,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {

@@ -252,7 +252,7 @@ const ResumeHomeComponent = (props) => {
               onChangeText(text);
             }}
             placeholder={t('Tiêu đề')}
-            style={{width: '70%'}}></TextInput>
+            style={{width: '70%',  }}></TextInput>
         </View>
       </View>
 

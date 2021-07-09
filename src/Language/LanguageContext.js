@@ -39,7 +39,7 @@ const resources = {
       //================HOME============================
       'Mức độ hoàn thiện CiVi': 'Mức độ hoàn thiện CiVi',
       'Liên kết của bạn': 'Liên kết của bạn',
-      'Tiêu đề Civi': 'Tiêu đề Civi',
+      'Tiêu đề Civi': 'Tiêu đề CV',
       'Thông tin liên lạc': 'Thông tin liên lạc',
       'Thông tin xin việc': 'Thông tin xin việc',
       'Ngôn ngữ': 'Ngôn ngữ',
@@ -183,7 +183,7 @@ const resources = {
       'Lưu ý': 'Note',
       'Bạn phải nhập đầy đủ thông tin đăng nhập':
         'You must enter full login information',
-      'Lưu mật khẩu': 'Save Password',
+      'Lưu mật khẩu': 'Remember me',
       'Sửa Thành Công': 'Successfully Edited',
       'Thêm Thành Công': 'Successfully Added',
       'Xóa Thành Công': 'Successfully Deleted',

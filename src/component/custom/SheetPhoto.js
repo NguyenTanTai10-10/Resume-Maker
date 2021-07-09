@@ -91,6 +91,7 @@ import { useTranslation } from 'react-i18next';
                   <TouchableOpacity
                     onPress={() => {
                       props.onPressTakePhoto();
+                      onHide()
                       
                     }}
                     style={{
@@ -121,6 +122,7 @@ import { useTranslation } from 'react-i18next';
                   <TouchableOpacity
                     onPress={() => {
                       props.onPressLibraryPhoto();
+                      onHide()
                       
                     }}
                     style={{

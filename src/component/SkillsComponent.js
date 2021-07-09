@@ -242,7 +242,7 @@ const SkillsComponent = (props) => {
             </TouchableOpacity>
 
             <Image
-              source={require('../res/image/img/iconnumber06.png')}
+              source={require('../res/image/img/iconnumber07.png')}
               style={{
                 width: Sizes.s140,
                 height: Sizes.s140,

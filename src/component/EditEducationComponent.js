@@ -292,7 +292,7 @@ const EditEducationComponent = (props) => {
             </TouchableOpacity>
 
             <Image
-              source={require('../res/image/img/iconnumber05.png')}
+              source={require('../res/image/img/iconnumber04.png')}
               style={{
                 width: Sizes.s140,
                 height: Sizes.s140,
@@ -472,7 +472,7 @@ const EditEducationComponent = (props) => {
               onChangeText={(text) => textSchool(text)}
               defaultValue={school}
               placeholder={t('Trường')}
-              style={{width: '70%', marginLeft: 15}}
+              style={{width:deleteSchool== true? '70%':'80%', marginLeft: 15,}}
             />
           </View>
           {deleteSchool && (

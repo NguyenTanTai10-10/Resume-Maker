@@ -20,7 +20,7 @@ import messaging from '@react-native-firebase/messaging';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import LoadingView from '../custom/LoadingView';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import {LoginManager, AccessToken} from 'react-native-fbsdk';
 GoogleSignin.configure({
   webClientId:
     '585809866706-f7ohvdh2of7v48u6su4v7gud050t122o.apps.googleusercontent.com',
@@ -138,19 +138,8 @@ const Login = (props) => {
     try {
       const jsonValue = JSON.stringify(value);
       await AsyncStorage.setItem('@jobseeker_id', jsonValue);
-      await Alert.alert(
-        t(props.message),
-        '',
-        [
-          {
-            text: 'OK',
-            onPress: async () => {
-              props.navigation.replace('Drawers');
-            },
-          },
-        ],
-        {cancelable: false},
-      );
+      await props.navigation.replace('Drawers');
+  
     } catch (e) {
       // saving error
     }
@@ -189,7 +178,7 @@ const Login = (props) => {
   }, []);
   const getToken = async () => {
     const token = await messaging().getToken();
-    console.log("Toke mess ==",token);
+    console.log('Toke mess ==', token);
   };
   const SaveLogin = async () => {
     if (saveLogin) {
@@ -237,30 +226,34 @@ const Login = (props) => {
   };
   const {t, i18n} = useTranslation();
   const OnPessFB = async () => {
-  //   if(LoginManager.getInstance()!=null){
-  //     LoginManager.getInstance().logOut();
-  // }
-    
-      // Attempt login with permissions
-      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-    
-      if (result.isCancelled) {
-        throw 'User cancelled the login process';
-      }
-    
-      // Once signed in, get the users AccesToken
-      const data = await AccessToken.getCurrentAccessToken();
-    
-      if (!data) {
-        throw 'Something went wrong obtaining access token';
-      }
-    
-      // Create a Firebase credential with the AccessToken
-      const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-    
-      // Sign-in the user with the credential
-      return auth().signInWithCredential(facebookCredential);
-    
+    //   if(LoginManager.getInstance()!=null){
+    //     LoginManager.getInstance().logOut();
+    // }
+
+    // Attempt login with permissions
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
+
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+
+    // Once signed in, get the users AccesToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    // Create a Firebase credential with the AccessToken
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(facebookCredential);
   };
   const OnPessGG = async () => {
     const {idToken} = await GoogleSignin.signIn();
@@ -273,6 +266,26 @@ const Login = (props) => {
   const LogOut = async () => {
     setLogin(true);
   };
+  const onPressVn = async () => {
+    try {
+      await AsyncStorage.setItem('lang', 'vi');
+    } catch (e) {
+      // saving error
+    }
+    i18n.changeLanguage('vi');
+
+    // this.props.i18n.changeLanguage('en')
+  };
+  const onPressEn = async () => {
+    try {
+      await AsyncStorage.setItem('lang', 'en');
+    } catch (e) {
+      // saving error
+    }
+    i18n.changeLanguage('en');
+
+    // this.props.i18n.changeLanguage('en')
+  };
 
   return (
     <View>
@@ -284,91 +297,44 @@ const Login = (props) => {
             style={{
               width: screenWidth,
               height: screenHeight,
-              justifyContent: 'center',
-              alignItems: 'center',
             }}
             source={Images.bg_register}>
-               <TouchableOpacity
+            <View
               style={{
-                flexDirection: 'row',
-                backgroundColor: '#e6bf00',
-                justifyContent: 'center',
+                height: Sizes.s80,
+                marginHorizontal: Sizes.s20,
+                justifyContent: 'flex-end',
                 alignItems: 'center',
-                paddingRight: 10,
-                width: '55%',
-                
-              }}
-              onPress={() => setLogin(true)}
-              >
-              <Image
-                source={require('../../res/image/img/email.png')}
-                style={{height: 40, width: 40, flex:0.3}}
-                resizeMode="contain"
-              />
-              <Text
-                style={{color: 'white', paddingLeft: 10, fontSize: Sizes.h30,flex:0.7}}>
-                {t('Đăng nhập Email')}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
                 flexDirection: 'row',
-                backgroundColor: '#1976D2',
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingRight: 10,
-                width: '55%',
-                marginTop: 10,
-                
-              }}
-              onPress={() => OnPessFB()}>
-              <Image
-                source={Images.ic_facebook}
-                style={{height: 40, width: 40,flex:0.3}}
-                resizeMode="contain"
-              />
-              <Text
-                style={{color: 'white', paddingLeft: 10, fontSize: Sizes.h30,flex:0.7}}>
-                {t('Đăng nhập Facebook')}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => OnPessGG()}
-              style={{
-                flexDirection: 'row',
-                backgroundColor: '#f44336',
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingRight: 10,
-                width: '55%',
-                marginTop: 10,
               }}>
-              <Image
-                source={Images.google_png}
-                style={{height: 40, width: 40,flex:0.3}}
-                resizeMode="contain"
-              />
-              <Text
-                style={{color: 'white', paddingLeft: 10, fontSize: Sizes.h30,flex:0.7}}>
-                {t('Đăng nhập Google')}
-              </Text>
-            </TouchableOpacity>
-            {Platform.OS === 'ios' && (
+              <TouchableOpacity onPress={() => onPressVn()}>
+                <Image
+                  source={require('../../res/image/img/flag_vietnam.png')}
+                  style={{width: Sizes.s50, height: Sizes.s50}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => onPressEn()}>
+                <Image
+                  source={require('../../res/image/img/flag_english.png')}
+                  style={{width: Sizes.s50, marginLeft: 10, height: Sizes.s50}}
+                />
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
               <TouchableOpacity
-                onPress={() => OnPessAP()}
                 style={{
-                  height: 40,
                   flexDirection: 'row',
-                  backgroundColor: 'black',
+                  backgroundColor: '#e6bf00',
                   justifyContent: 'center',
                   alignItems: 'center',
                   paddingRight: 10,
                   width: '55%',
-                  marginTop: 10,
-                }}>
+                }}
+                onPress={() => setLogin(true)}>
                 <Image
-                  source={Images.apple}
-                  style={{height: 35, width: 35}}
+                  source={require('../../res/image/img/email.png')}
+                  style={{height: 40, width: 40, flex: 0.3}}
                   resizeMode="contain"
                 />
                 <Text
@@ -376,24 +342,113 @@ const Login = (props) => {
                     color: 'white',
                     paddingLeft: 10,
                     fontSize: Sizes.h30,
+                    flex: 0.7,
                   }}>
-                  {t('Đăng nhập Apple')}
+                  {t('Đăng nhập Email')}
                 </Text>
               </TouchableOpacity>
-            )}
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  backgroundColor: '#1976D2',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingRight: 10,
+                  width: '55%',
+                  marginTop: 10,
+                }}
+                onPress={() => OnPessFB()}>
+                <Image
+                  source={Images.ic_facebook}
+                  style={{height: 40, width: 40, flex: 0.3}}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    color: 'white',
+                    paddingLeft: 10,
+                    fontSize: Sizes.h30,
+                    flex: 0.7,
+                  }}>
+                  {t('Đăng nhập Facebook')}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => OnPessGG()}
+                style={{
+                  flexDirection: 'row',
+                  backgroundColor: '#f44336',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingRight: 10,
+                  width: '55%',
+                  marginTop: 10,
+                }}>
+                <Image
+                  source={Images.google_png}
+                  style={{height: 40, width: 40, flex: 0.3}}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    color: 'white',
+                    paddingLeft: 10,
+                    fontSize: Sizes.h30,
+                    flex: 0.7,
+                  }}>
+                  {t('Đăng nhập Google')}
+                </Text>
+              </TouchableOpacity>
+              {Platform.OS === 'ios' && (
+                <TouchableOpacity
+                  onPress={() => OnPessAP()}
+                  style={{
+                    height: 40,
+                    flexDirection: 'row',
+                    backgroundColor: 'black',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingRight: 10,
+                    width: '55%',
+                    marginTop: 10,
+                  }}>
+                  <Image
+                    source={Images.apple}
+                    style={{height: 35, width: 35}}
+                    resizeMode="contain"
+                  />
+                  <Text
+                    style={{
+                      color: 'white',
+                      paddingLeft: 10,
+                      fontSize: Sizes.h30,
+                    }}>
+                    {t('Đăng nhập Apple')}
+                  </Text>
+                </TouchableOpacity>
+              )}
 
-            <TouchableOpacity style={{marginTop: 20}} onPress={() => LogOut()}>
-              <Text style={{color: 'white', fontSize: Sizes.h30}}>
-                {t('Bạn là thành viên? Đăng nhập')}
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={{marginTop: 20}}
+                onPress={() => LogOut()}>
+                <Text style={{color: 'white', fontSize: Sizes.h30}}>
+                  {t('Bạn là thành viên? Đăng nhập')}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </ImageBackground>
         </View>
       ) : (
         //=================================================================================================================================
         //=================================================================================================================================
         <View>
-          <Header isShowBack onPressBack={() => setLogin(false)} />
+          <Header
+            isShowBack
+            onPressBack={() => setLogin(false)}
+            isShowRight
+            onPressRightVN={() => onPressVn()}
+            onPressRightEN={() => onPressEn()}
+          />
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image
               source={require('../../res/image/img/resumeicon.png')}
@@ -579,7 +634,7 @@ const Login = (props) => {
             <View style={{marginTop: 20, flexDirection: 'row'}}>
               <TouchableOpacity
                 onPress={() => {
-                  OnPessFB()
+                  OnPessFB();
                 }}
                 style={{
                   height: 60,

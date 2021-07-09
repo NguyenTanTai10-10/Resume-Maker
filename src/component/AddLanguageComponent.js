@@ -177,7 +177,7 @@ const AddLanguageComponent = (props) => {
             </TouchableOpacity>
 
             <Image
-              source={require('../res/image/img/iconnumber04.png')}
+              source={require('../res/image/img/iconnumber06.png')}
               style={{
                 width: Sizes.s140,
                 height: Sizes.s140,

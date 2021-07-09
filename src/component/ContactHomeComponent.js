@@ -550,7 +550,7 @@ const ContactHomeComponent = (props) => {
                 defaultValue={userName}
                 onChangeText={(text) => onUserName(text)}
                 placeholder={t('Họ và tên')}
-                style={{width: '70%', marginLeft: 15}}></TextInput>
+                style={{width:clearHoTen == true ? '70%':'80%', marginLeft: 15,}}></TextInput>
             </View>
             {clearHoTen && (
               <TouchableOpacity
@@ -636,7 +636,7 @@ const ContactHomeComponent = (props) => {
               }}
               defaultValue={emailKh}
               placeholder="Email"
-              style={{width: '70%', marginLeft: 15}}></TextInput>
+              style={{width:clearEmail == true ? '70%':'80%', marginLeft: 15,}}></TextInput>
           </View>
           {clearEmail && (
             <TouchableOpacity
@@ -718,7 +718,7 @@ const ContactHomeComponent = (props) => {
               }}
               keyboardType="phone-pad"
               placeholder="Phone"
-              style={{width: '70%', marginLeft: 15}}></TextInput>
+              style={{width:clearPhone == true ? '70%':'80%', marginLeft: 15,}}></TextInput>
           </View>
           {clearPhone && (
             <TouchableOpacity
@@ -775,7 +775,7 @@ const ContactHomeComponent = (props) => {
             <Text
               style={{
                 marginLeft: 15,
-                width: '70%',
+                width:clearCity == true ? '70%':'80%',
                 color: City === t('Tỉnh/thành phố') ? '#BFBFBF' : 'black',
               }}>
               {City}
@@ -836,7 +836,7 @@ const ContactHomeComponent = (props) => {
                 onAdress(text);
               }}
               placeholder={t('Địa chỉ')}
-              style={{width: '70%', marginLeft: 15}}></TextInput>
+              style={{width:clearAdress == true ? '70%':'80%', marginLeft: 15,}}></TextInput>
           </View>
           {clearAdress && (
             <TouchableOpacity

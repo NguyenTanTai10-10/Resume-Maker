@@ -24,6 +24,7 @@ const ListExperienComponent = (props) => {
   const [skill_Id, setSkill_Id] = useState('');
   const [eduction_Id, setEduction_Id] = useState('');
   const [user_Id, setUser_Id] = useState('');
+  const [dataLang, setDataLang] = useState('');
   const modal = React.createRef();
   useEffect(() => {
     getData();
@@ -32,6 +33,7 @@ const ListExperienComponent = (props) => {
     if (props.statusUser !== null) {
       if (props.statusUser === 1) {
         setDataExp(props.dataUser.skills);
+        setDataLang(props.dataUser.langs)
       } else {
         setTimeout(() => {
           Alert.alert(t('Thông báo'), t(props.messageUser));
@@ -122,6 +124,13 @@ const ListExperienComponent = (props) => {
         Skill_Id: item,
       });
     }, 300);
+  };
+  const onlang = () => {
+    if (dataLang.length === 0) {
+      props.navigation.navigate('AddLanguageContainer');
+    } else if (dataLang.length > 0) {
+      props.navigation.navigate('ListLanguageContainer');
+    }
   };
 
   const renderItem = (item) => {
@@ -254,7 +263,7 @@ const ListExperienComponent = (props) => {
             </TouchableOpacity>
 
             <Image
-              source={require('../res/image/img/iconnumber06.png')}
+              source={require('../res/image/img/iconnumber05.png')}
               style={{
                 width: Sizes.s140,
                 height: Sizes.s140,
@@ -322,7 +331,7 @@ const ListExperienComponent = (props) => {
 
           <TouchableOpacity
           onPress={()=>{
-            props.navigation.navigate('SkillsContainer')
+            onlang()
           }}
           
             style={{

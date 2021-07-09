@@ -260,7 +260,7 @@ const AddExperiencesComponent = (props) => {
             </TouchableOpacity>
 
             <Image
-              source={require('../res/image/img/iconnumber06.png')}
+              source={require('../res/image/img/iconnumber05.png')}
               style={{
                 width: Sizes.s140,
                 height: Sizes.s140,
@@ -324,7 +324,7 @@ const AddExperiencesComponent = (props) => {
                 textExp(text);
               }}
               placeholder={t('Kinh nghiệm')}
-              style={{width: '70%', marginLeft: 15}}></TextInput>
+              style={{width:clearExp== true? '70%':'80%', marginLeft: 15, }}></TextInput>
           </View>
           {clearExp && (
             <TouchableOpacity
@@ -379,7 +379,7 @@ const AddExperiencesComponent = (props) => {
               onChangeText={(text) => {
                 textNameCom(text);
               }}
-              style={{width: '70%', marginLeft: 15}}></TextInput>
+              style={{width: clearNameCom== true? '70%':'80%', marginLeft: 15,}}></TextInput>
           </View>
           {clearNameCom && (
             <TouchableOpacity
