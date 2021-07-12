@@ -419,4 +419,22 @@ export const logoutExportPdfAction = () => {
     type: LOGOUT_EXPORT_PDF,
   };
 };
+//===================================================================================
+
+export const FORGET_PASS = 'FORGET_PASS';
+export const FORGET_PASS_SUCCESS = 'FORGET_PASS_SUCCESS';
+export const FORGET_PASS_ERROR = 'FORGET_PASS_ERROR';
+export const ForgetPassAction = (input) => {
+
+  return {
+    type: FORGET_PASS,
+    input: input,
+  };
+};
+export const LOGOUT_FORGET_PASS = 'LOGOUT_FORGET_PASS';
+export const logoutForgetPassAction = () => {
+  return {
+    type: LOGOUT_FORGET_PASS,
+  };
+};
 

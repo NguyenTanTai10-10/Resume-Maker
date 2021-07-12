@@ -685,9 +685,11 @@ const Login = (props) => {
               style={{marginTop: 20}}>
               <Text>{t('Tạo tài khoản')}</Text>
             </TouchableOpacity>
-            <View style={{marginTop: 20}}>
+            <TouchableOpacity style={{marginTop: 20}}
+            onPress={() => props.navigation.navigate('ForgetPasswordContainer')}>
+            {/* ForgetPasswordContainer */}
               <Text>{t('Quên mật khẩu')}</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       )}

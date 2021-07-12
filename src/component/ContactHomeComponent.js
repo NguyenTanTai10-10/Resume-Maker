@@ -95,8 +95,6 @@ const ContactHomeComponent = (props) => {
       if (props.statusEditInfo === 1) {
         setDataRegister(props.dataEditInfo);
         setCheck(true);
-
-        Alert.alert(t('Thông báo'), t(props.messageEditInfo));
       }
     } else if (props.errorEditInfo !== null) {
       setTimeout(() => {
@@ -180,8 +178,18 @@ const ContactHomeComponent = (props) => {
       height: 400,
       cropping: true,
       includeBase64: true,
-    }).then((image) => {
-      console.log(image);
+    }).then(async (image) => {
+      setCheck(false);
+      const Image64 = `data:${image.mime};base64,${image.data}`;
+      try {
+        await AsyncStorage.setItem('@Images64', Image64);
+      } catch (e) {
+        // saving error
+      }
+      // console.log(`data:${image.mime};base64,${image.data}`);
+
+      setPhotoBase64(`data:${image.mime};base64,${image.data}`);
+      setDataPhoto(image.data);
       //     // this.bs.current.snapTo(1);
     });
   };

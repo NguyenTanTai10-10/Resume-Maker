@@ -29,6 +29,7 @@ import getTechniqueReducer from './GetTechniqueReducer';
 import updateTechReducer from './UpdatetechReducer';
 import changePassReducer from './ChangePassReducer';
 import exportPdfReducer from './ExportPdfReducer';
+import forgetPassReducer from './ForgetPassReducer';
 
 
 
@@ -61,7 +62,8 @@ const allReducers = combineReducers({
    getTechniqueReducer,
    updateTechReducer,
    changePassReducer,
-   exportPdfReducer
+   exportPdfReducer,
+   forgetPassReducer
 });
 
 export default allReducers;

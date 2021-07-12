@@ -38,6 +38,8 @@ import EditExpContainer from './src/container/EditExpContainer/EditExpContainer'
 import i18n from './src/Language/LanguageContext'
 import  ChangePassContainer  from './src/container/ChangePassContainer/ChangePassContainer';
 import ShowPdfComponent from './src/component/ShowPdfComponent';
+import ForgetPasswordContainer from './src/container/ForgetPasswordContainer/ForgetPasswordContainer';
+
 
 
 
@@ -141,6 +143,11 @@ const App = () => {
           name="ShowPdfComponent"
           component={ShowPdfComponent}
         />
+        <Stack.Screen
+          name="ForgetPasswordContainer"
+          component={ForgetPasswordContainer}
+        />
+        {/* ForgetPasswordContainer */}
         {/* ShowPdfComponent */}
         {/* ChangePassContainer */}
         {/* EditLanguageContainer */}

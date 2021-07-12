@@ -87,6 +87,7 @@ const BottomSheetChoose = forwardRef((props, ref) => {
                 <TouchableOpacity
                   onPress={() => {
                     props.onPressNavigation();
+                    
                   }}
                   style={{
                     padding: Sizes.h16,

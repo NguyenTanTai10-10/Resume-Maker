@@ -65,8 +65,6 @@ const ContactComponent = (props) => {
       if (props.statusRegister === 1) {
         setDataRegister(props.dataRegister);
         setCheck(true);
-
-        Alert.alert(t('Thông báo'), t(props.messageRegister));
       } else {
         setTimeout(() => {
           Alert.alert(t('Thông báo'),t(props.messageRegister) );
@@ -154,7 +152,7 @@ const ContactComponent = (props) => {
       cropping: true,
       includeBase64: true,
     }).then((image) => {
-      console.log(image);
+      setPhotoBase64(`data:${image.mime};base64,${image.data}`);
       //     // this.bs.current.snapTo(1);
     });
   };
@@ -395,6 +393,7 @@ const ContactComponent = (props) => {
   return (
     <View style={{flex: 1}}>
       {props.loadingRegister && <LoadingView />}
+      {props.loadingCity && <LoadingView />}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>
@@ -704,7 +703,7 @@ const ContactComponent = (props) => {
               alignItems: 'center',
             }}>
             <Image
-              source={require('../res/image/img/padlock(8).png')}
+              source={require('../res/image/img/padlock.png')}
               style={{height: 35, width: 35, resizeMode: 'contain'}}
             />
             <TextInput

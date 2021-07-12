@@ -181,7 +181,6 @@ const BasicInfoComponent = (props) => {
   useEffect(() => {
     if (props.statusEditCv !== null) {
       if (props.statusEditCv === 1) {
-        Alert.alert(t('Thông báo'), t(props.messageEditCv));
         setCheck(true);
       } else if (props.statusEditCv === 0) {
         Alert.alert(t('Thông báo'), t(props.messageEditCv));

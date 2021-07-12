@@ -30,6 +30,7 @@ import { watchGetTechnique } from './GetTechniqueSaga';
 import { watchUpdateTech } from './UpdateTechSaga';
 import { watchChangePass } from './ChangePassSaga';
 import { watchExportPdf } from './ExportPdfSaga';
+import { watchFogetPass } from './ForgetPassSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -61,7 +62,8 @@ export default function* rootSaga() {
     watchGetTechnique(),
     watchUpdateTech(),
     watchChangePass(),
-    watchExportPdf()
+    watchExportPdf(),
+    watchFogetPass()
 
   ]);
 }

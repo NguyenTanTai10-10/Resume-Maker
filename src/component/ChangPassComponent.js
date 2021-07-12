@@ -32,12 +32,17 @@ const ChangPassComponent = (props) => {
   const [showPassword, setShowPassword] = useState(true);
   const [clearPassword, setClearPassword] = useState(false);
   const [passwordNew, setPasswordNew] = useState('');
+  const [passwordNewAgain, setPasswordNewAgain] = useState('');
   const [showPasswordNew, setShowPasswordNew] = useState(true);
+  const [showPasswordNewAgain, setShowPasswordNewAgain] = useState(true);
   const [clearPasswordNew, setClearPasswordNew] = useState(false);
   const [checkPassNew, setCheckPassNew] = useState(false);
   const [checkPassNewSame, setCheckPassNewSame] = useState(false);
   const [checkPassNewLength, setCheckPassNewSameLength] = useState(false);
   const [checkPass, setCheckPass] = useState(false);
+  const [clearPasswordNewAgain, setClearPasswordNewAgain] = useState(false);
+  const [checkPassNewAgain, setCheckPassNewAgain] = useState(false);
+  const [checkPassSameAgain, setCheckPassSaneAgain] = useState(false);
 
   const onClearPassword = () => {
     setPassword('');
@@ -59,6 +64,17 @@ const ChangPassComponent = (props) => {
     setCheckPassNewSame(false);
     setCheckPassNewSameLength(false);
   };
+  const onClearPasswordAgain = () => {
+    setPasswordNewAgain('');
+    setClearPasswordNewAgain(false)
+
+  };
+  const onChangePassNewAgain = (text) => {
+    setPasswordNewAgain(text);
+    setClearPasswordNewAgain(true)
+    setCheckPassNewAgain(false)
+    setCheckPassSaneAgain(false)
+  };
   const onSubmit = () => {
     if (
       password === null ||
@@ -67,7 +83,10 @@ const ChangPassComponent = (props) => {
       passwordNew.trim() === '' ||
       password === passwordNew ||
       password.length < 4 ||
-      passwordNew.length < 4
+      passwordNew.length < 4||
+      passwordNewAgain === null ||
+      passwordNewAgain.trim() === '' ||
+      passwordNew !== passwordNewAgain
     ) {
       if (password === null || password.trim() === '') {
         setCheckPass(true);
@@ -80,20 +99,29 @@ const ChangPassComponent = (props) => {
       else if (password === passwordNew) {
         setCheckPassNewSame(true);
         setPasswordNew('');
+        setPasswordNewAgain('');
       }
       else if (passwordNew.length < 4) {
         setCheckPassNewSameLength(true);
         setPasswordNew('');
       }
+      if (passwordNewAgain === null || passwordNewAgain.trim() === '') {
+        setPasswordNewAgain('');
+        setCheckPassNewAgain(true)
+      }
+      else if (passwordNew !== passwordNewAgain) {
+        setPasswordNewAgain('');
+        setCheckPassSaneAgain(true)
+      }
     } else {
       props.changePassAction({
         old_password: password,
-        new_password: passwordNew,
+        new_password: passwordNewAgain,
         user_id: userId,
       });
       console.log('====================================');
       console.log('password', password);
-      console.log('passwordNew', passwordNew);
+      console.log('passwordNew', passwordNewAgain);
       console.log('userId', userId);
       console.log('====================================');
     }
@@ -190,7 +218,7 @@ const ChangPassComponent = (props) => {
                 onChangeText={(text) => {
                   onChangePass(text);
                 }}
-                style={{width: '60%'}}></TextInput>
+                style={{width: clearPassword == true?'60%':'85%'}}></TextInput>
             </View>
 
             {clearPassword && (
@@ -281,7 +309,7 @@ const ChangPassComponent = (props) => {
                 onChangeText={(text) => {
                   onChangePassNew(text);
                 }}
-                style={{width: '60%'}}></TextInput>
+                style={{width: clearPasswordNew == true?'60%':'85%'}}></TextInput>
             </View>
 
             {clearPasswordNew && (
@@ -311,6 +339,93 @@ const ChangPassComponent = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     onClearPasswordNew();
+                  }}
+                  style={{
+                    height: 30,
+                    width: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    source={require('../res/image/img/icon_close.png')}
+                    style={{height: 15, width: 15, resizeMode: 'contain'}}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            {checkPassSameAgain && (
+              <Text style={{color: 'red'}}>
+                * Mật khẩu nhập lại không đúng
+              </Text>
+            )}
+            
+            {checkPassNewAgain && (
+              <Text style={{color: 'red'}}>* Vui lòng nhập lại mật khẩu mới</Text>
+            )}
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottomColor: '#FA8C16',
+              borderBottomWidth: 2,
+              width: screenWidth * 0.7,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../res/image/img/padlock.png')}
+                style={{height: 35, width: 35}}
+              />
+              <TextInput
+                defaultValue={passwordNewAgain}
+                secureTextEntry={showPasswordNewAgain}
+                placeholder={t('Nhập lại mật khẩu mới')}
+                onChangeText={(text) => {
+                  onChangePassNewAgain(text);
+                }}
+                style={{width: clearPasswordNewAgain == true?'60%':'85%'}}></TextInput>
+            </View>
+
+            {clearPasswordNewAgain && (
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setShowPasswordNewAgain(!showPasswordNewAgain);
+                  }}
+                  style={{
+                    height: 30,
+                    width: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  {showPasswordNewAgain === true ? (
+                    <Image
+                      source={require('../res/image/img/eye.png')}
+                      style={{height: 20, width: 25, resizeMode: 'contain'}}
+                    />
+                  ) : (
+                    <Image
+                      source={require('../res/image/img/invisible.png')}
+                      style={{height: 20, width: 25, resizeMode: 'contain'}}
+                    />
+                  )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    onClearPasswordAgain();
                   }}
                   style={{
                     height: 30,
