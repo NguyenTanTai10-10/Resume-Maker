@@ -33,6 +33,7 @@ const ListLanguageComponent = (props) => {
     if (props.statusUser !== null) {
       if (props.statusUser === 1) {
         setDataLang(props.dataUser.langs);
+        console.log(props.dataUser.langs);
       } else {
         setTimeout(() => {
           Alert.alert(t('Thông báo'), t(props.messageUser));
@@ -76,14 +77,14 @@ const ListLanguageComponent = (props) => {
       props.navigation.addListener('focus', async () => {
         props.infoUserAction({
           user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-          language: value,
+          language: value != null ?value:'vi',
           emp_id: '',
           is_app_cv: 1,
         });
       });
       props.infoUserAction({
         user_id: jsonValue != null ? JSON.parse(jsonValue) : null,
-        language: value,
+        language:  value != null ?value:'vi',
         emp_id: '',
         is_app_cv: 1,
       });
@@ -140,6 +141,8 @@ const ListLanguageComponent = (props) => {
   };
 
   const renderItem = (item) => {
+    // console.log('item',item);
+    
     return (
       <View
         style={{

@@ -25,6 +25,7 @@ import React, {
     // console.log('123',props.data);
     const [show, setShow] = useState(false);
     const [selectItem, setSelectItem] = useState('');
+    const [listData, setListData] = useState([]);
     const time = 300;
     const modalHeight = props.modalHeight;
     const animation = new Animated.Value(modalHeight);
@@ -63,6 +64,8 @@ import React, {
     };
     
     const renderItems = ({item, index}) => {
+      // console.log('item.term',listData);
+      // const Term = item
       
       
       return (
@@ -73,6 +76,7 @@ import React, {
             setSelectItem(item.term);
             props.OnChooseTech_id(item.id)
             props.OnChooseTech(item)
+            
             
   
             setShow(false);

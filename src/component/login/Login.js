@@ -361,7 +361,7 @@ const Login = (props) => {
                   style={{
                     color: 'white',
                     paddingLeft: 10,
-                    fontSize: Sizes.h30,
+                    fontSize: Sizes.h26,
                     flex: 0.7,
                   }}>
                   {t('Đăng nhập Email')}
@@ -387,8 +387,9 @@ const Login = (props) => {
                   style={{
                     color: 'white',
                     paddingLeft: 10,
-                    fontSize: Sizes.h30,
+                    fontSize: Sizes.h26,
                     flex: 0.7,
+                    
                   }}>
                   {t('Đăng nhập Facebook')}
                 </Text>
@@ -413,7 +414,7 @@ const Login = (props) => {
                   style={{
                     color: 'white',
                     paddingLeft: 10,
-                    fontSize: Sizes.h30,
+                    fontSize: Sizes.h26,
                     flex: 0.7,
                   }}>
                   {t('Đăng nhập Google')}
