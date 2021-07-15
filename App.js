@@ -37,8 +37,13 @@ import  SkillsContainer  from './src/container/SkillsContainer/SkillsContainer';
 import EditExpContainer from './src/container/EditExpContainer/EditExpContainer';
 import i18n from './src/Language/LanguageContext'
 import  ChangePassContainer  from './src/container/ChangePassContainer/ChangePassContainer';
-import ShowPdfComponent from './src/component/ShowPdfComponent';
 import ForgetPasswordContainer from './src/container/ForgetPasswordContainer/ForgetPasswordContainer';
+import ChooseCVContainer from './src/container/ChooseCVConatiner/ChooseCVContainer';
+import ShowPdfContainer from './src/container/ShowPdfContainer/ShowPdfContainer';
+import PDFShowContainer from './src/container/PDFShowContainer/PDFShowContainer';
+
+
+
 
 
 
@@ -140,13 +145,24 @@ const App = () => {
           component={ChangePassContainer}
         />
         <Stack.Screen
-          name="ShowPdfComponent"
-          component={ShowPdfComponent}
-        />
-        <Stack.Screen
           name="ForgetPasswordContainer"
           component={ForgetPasswordContainer}
         />
+        <Stack.Screen
+          name="ChooseCVContainer"
+          component={ChooseCVContainer}
+        />
+        <Stack.Screen
+          name="ShowPdfContainer"
+          component={ShowPdfContainer}
+        />
+        <Stack.Screen
+          name="PDFShowContainer"
+          component={PDFShowContainer}
+        />
+        {/* PDFShowContainer */}
+        {/* ShowPdfContainer */}
+        {/* ChooseCVContainer */}
         {/* ForgetPasswordContainer */}
         {/* ShowPdfComponent */}
         {/* ChangePassContainer */}

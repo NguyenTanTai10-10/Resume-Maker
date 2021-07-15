@@ -8,6 +8,7 @@ import {
   Alert,
   Platform,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Images from '../../res/image';
@@ -207,7 +208,10 @@ const Login = (props) => {
   };
   const getData = async () => {
     try {
+      const values = await AsyncStorage.getItem('setLogin');
       const jsonValue = await AsyncStorage.getItem('@saveLogin');
+      console.log('values==',values);
+      setLogin(values != null ?JSON.parse(values) :false)
       if (jsonValue != null) {
         var data = JSON.parse(jsonValue);
         setUsername(data.username);
@@ -265,6 +269,13 @@ const Login = (props) => {
   };
   const LogOut = async () => {
     setLogin(true);
+  
+    try {
+      const jsonValue = JSON.stringify(true)
+      await AsyncStorage.setItem('setLogin', jsonValue)
+    } catch (e) {
+      // saving error
+    }
   };
   const onPressVn = async () => {
     try {
@@ -286,6 +297,15 @@ const Login = (props) => {
 
     // this.props.i18n.changeLanguage('en')
   };
+  const SetLogin = async () => {
+    setLogin(false)
+    try {
+      const jsonValue = JSON.stringify(false)
+      await AsyncStorage.setItem('setLogin', jsonValue)
+    } catch (e) {
+      // saving error
+    }
+  }
 
   return (
     <View>
@@ -444,11 +464,14 @@ const Login = (props) => {
         <View>
           <Header
             isShowBack
-            onPressBack={() => setLogin(false)}
+            onPressBack={() => SetLogin()}
             isShowRight
             onPressRightVN={() => onPressVn()}
             onPressRightEN={() => onPressEn()}
           />
+          <ScrollView>
+
+          
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image
               source={require('../../res/image/img/resumeicon.png')}
@@ -691,6 +714,7 @@ const Login = (props) => {
               <Text>{t('Quên mật khẩu')}</Text>
             </TouchableOpacity>
           </View>
+          </ScrollView>
         </View>
       )}
     </View>

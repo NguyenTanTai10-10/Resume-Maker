@@ -68,9 +68,9 @@ import React, {
         <TouchableOpacity
           onPress={() => {
             // props.onPress();
-            setSelectItem(item.industry);
-            props.OnChooseIndustry_id(item.industry_id)
-            props.OnChooseIndustry(item.industry)
+            setSelectItem(item.functional_role);
+            props.OnChooseIndustry_id(item.functional_role_id)
+            props.OnChooseIndustry(item.functional_role)
             
   
             setShow(false);
@@ -83,8 +83,8 @@ import React, {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <Text>{item.industry}</Text>
-          {selectItem === item.industry ? (
+          <Text>{item.functional_role}</Text>
+          {selectItem === item.functional_role ? (
             <Image
               source={require('../../res/image/img/checked.png')}
               style={{width: Sizes.s30, height: Sizes.s30, resizeMode: 'contain'}}

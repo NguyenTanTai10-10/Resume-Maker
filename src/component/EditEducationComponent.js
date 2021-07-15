@@ -50,6 +50,7 @@ const EditEducationComponent = (props) => {
   const [checkDayEnd2, setCheckDayEnd2] = useState(false);
   const [checkSchool, setCheckSchool] = useState(false);
   const [deleteSchool, setDeleteSchool] = useState(false);
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     getData();
@@ -136,6 +137,12 @@ const EditEducationComponent = (props) => {
   const modal = React.createRef();
   const modal1 = React.createRef();
   const onChooseQua = (item) => {
+    if (item == 'Trung học') {
+      setDisable(true);
+      setFuncName('');
+    } else {
+      setDisable(false);
+    }
     setCheckQuaName(false);
     setDeleteQuaName(true);
     setQuaName(item);
@@ -203,20 +210,20 @@ const EditEducationComponent = (props) => {
   const onSubmit = (item) => {
     if (
       quaName === t('Trình độ') ||
-      funcName === t('Chuyên ngành') ||
       dayPass === t('Năm học (từ)') ||
       dayEnd === t('Năm học (đến)') ||
       (monthEnd < monthPass && yearPass === yearEnd) ||
       yearPass > yearEnd ||
       school === '' ||
-      school.trim() === ''
+      school.trim() === '' ||
+      funcName === t('Chuyên ngành')
     ) {
       if (quaName === t('Trình độ')) {
         setCheckQuaName(true);
       }
-      if (funcName === t('Chuyên ngành')) {
-        setCheckFuncName(true);
-      }
+        if (funcName === t('Chuyên ngành')) {
+          setCheckFuncName(true);
+        }
       if (dayPass === t('Năm học (từ)')) {
         setCheckDayPass(true);
       }
@@ -377,66 +384,70 @@ const EditEducationComponent = (props) => {
             </TouchableOpacity>
           )}
         </TouchableOpacity>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-          }}>
-          {checkFuncName && (
-            <Text style={{color: 'red'}}>
-              * {t('Vui lòng chọn chuyên ngành')}
-            </Text>
-          )}
-        </View>
-        <TouchableOpacity
-          onPress={() => modal1.current.open()}
-          style={{
-            marginTop: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomColor: '#FA8C16',
-            borderBottomWidth: 2,
-            marginHorizontal: 80,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../res/image/img/iconspeci.png')}
-              style={{height: 35, width: 35, resizeMode: 'contain'}}
-            />
-            <Text
+        {disable == true ? null : (
+          <View>
+            <View
               style={{
-                marginLeft: 15,
-                width: '70%',
-                color: funcName === t('Chuyên ngành') ? '#BFBFBF' : 'black',
-              }}>
-              {funcName}
-            </Text>
-          </View>
-          {deleteFuncName && (
-            <TouchableOpacity
-              onPress={() => {
-                onDeleteFunc();
-              }}
-              style={{
-                height: 30,
-                width: 30,
                 justifyContent: 'center',
                 alignItems: 'center',
+                marginTop: 20,
               }}>
-              <Image
-                source={require('../res/image/img/icon_close.png')}
-                style={{height: 15, width: 15, resizeMode: 'contain'}}
-              />
+              {checkFuncName && (
+                <Text style={{color: 'red'}}>
+                  * {t('Vui lòng chọn chuyên ngành')}
+                </Text>
+              )}
+            </View>
+            <TouchableOpacity
+              onPress={() => modal1.current.open()}
+              style={{
+                marginTop: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderBottomColor: '#FA8C16',
+                borderBottomWidth: 2,
+                marginHorizontal: 80,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../res/image/img/iconspeci.png')}
+                  style={{height: 35, width: 35, resizeMode: 'contain'}}
+                />
+                <Text
+                  style={{
+                    marginLeft: 15,
+                    width: '70%',
+                    color: funcName === t('Chuyên ngành') ? '#BFBFBF' : 'black',
+                  }}>
+                  {funcName}
+                </Text>
+              </View>
+              {deleteFuncName && (
+                <TouchableOpacity
+                  onPress={() => {
+                    onDeleteFunc();
+                  }}
+                  style={{
+                    height: 30,
+                    width: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    source={require('../res/image/img/icon_close.png')}
+                    style={{height: 15, width: 15, resizeMode: 'contain'}}
+                  />
+                </TouchableOpacity>
+              )}
             </TouchableOpacity>
-          )}
-        </TouchableOpacity>
+          </View>
+        )}
         <View
           style={{
             justifyContent: 'center',
@@ -472,7 +483,10 @@ const EditEducationComponent = (props) => {
               onChangeText={(text) => textSchool(text)}
               defaultValue={school}
               placeholder={t('Trường')}
-              style={{width:deleteSchool== true? '70%':'80%', marginLeft: 15,}}
+              style={{
+                width: deleteSchool == true ? '70%' : '80%',
+                marginLeft: 15,
+              }}
             />
           </View>
           {deleteSchool && (
@@ -563,7 +577,7 @@ const EditEducationComponent = (props) => {
               borderRadius: 13,
             }}>
             <Text style={{color: 'white', fontSize: 17, fontWeight: '700'}}>
-            {t('Cập nhập')}
+              {t('Cập nhập')}
             </Text>
           </TouchableOpacity>
         </View>

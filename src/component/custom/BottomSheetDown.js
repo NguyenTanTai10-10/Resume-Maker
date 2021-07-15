@@ -88,8 +88,36 @@ const BottomSheetDown = forwardRef((props, ref) => {
                   marginVertical: Sizes.h16,
                 }}>
                 <TouchableOpacity
-                  onPress={() => {
-                    props.OnShare();
+                  onPress={async() => {
+                    await onHide();
+                    await props.ChooseCivi();
+                  }}
+                  style={{
+                    padding: Sizes.h16,
+                    borderWidth: 1,
+                    backgroundColor: '#FA8C16',
+                    width: '70%',
+                    borderRadius: 6,
+                    borderColor: 'white',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white'}}>Chọn Civi khác</Text>
+                  {/* {selectItem===item?<Image source={require("../../res/image/img/arrow-up.png")} style={{ width: Sizes.h16, height: Sizes.h16, resizeMode: 'contain' }} />:null} */}
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginHorizontal: Sizes.h16,
+                  marginVertical: Sizes.h16,
+                }}>
+                <TouchableOpacity
+                  onPress={async() => {
+                    await onHide();
+                    await props.OnShare();
                   }}
                   style={{
                     padding: Sizes.h16,
@@ -147,6 +175,7 @@ BottomSheetDown.defaultProps = {
   onPress: () => {},
   OnShare: () => {},
   OnDown: () => {},
+  ChooseCivi: () => {},
 };
 const styles = StyleSheet.create({
   container: {

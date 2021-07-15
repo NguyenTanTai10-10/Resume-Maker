@@ -636,6 +636,7 @@ function* ChangePass(input) {
 }
 //========================================================
 function* ExportPdf(input) {
+  console.log('input==',input);
   let temp;
   yield axios
     .post(urlSv, {

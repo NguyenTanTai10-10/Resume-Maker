@@ -31,8 +31,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     infoUserAction: (input) => dispatch(infoUserAction(input)),
-    exportPdfAction: (input) => dispatch(exportPdfAction(input)),
-    logoutExportPdfAction: () => dispatch(logoutExportPdfAction()),
     
   };
 };

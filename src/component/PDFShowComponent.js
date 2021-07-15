@@ -27,24 +27,74 @@ import {
   InterstitialAd,
   AdEventType,
 } from '@react-native-firebase/admob';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const adUnitId = __DEV__
   ? TestIds.INTERSTITIAL
   : 'ca-app-pub-2243198721344643~4768875832';
 
-const ShowPdfComponent = (props) => {
+const PDFShowComponent = (props) => {
   const {t} = useTranslation();
+  const [codeId, setCodeId] = useState('');
+  const [temId, setTemId] = useState('');
+  const [langId, setLangId] = useState('');
+  const [userId, setUserId] = useState('');
   const [source, setSource] = useState('');
   const [loadDown, setLoadDown] = useState(false);
 
   const modal = React.createRef();
   useEffect(() => {
-    console.log('====================================');
-    console.log(props.route.params);
-    const kq = props.route.params.dataPDF;
-    setSource(kq.linkPdf);
-    console.log('====================================');
     admob();
+    getData()
+    
   }, []);
+
+
+
+  const getData = async () => {
+    console.log('phaivaoday');
+    
+
+    try {
+      const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
+      const value = await AsyncStorage.getItem('lang');
+      const code_Id = await AsyncStorage.getItem('codeId');
+      const valueJson = await AsyncStorage.getItem('@template_cv_id');
+      console.log('123====',valueJson != null ? JSON.parse(valueJson) : null);
+
+      props.exportPdfAction({
+        codeId: code_Id != null ? code_Id : null,
+        userId: jsonValue != null ? JSON.parse(jsonValue) : null,
+        langId: value != null ? value : 'vi',
+        temId: valueJson != null ? JSON.parse(valueJson) : null,
+      });
+      props.navigation.addListener('focus', async () => {
+        props.exportPdfAction({
+          codeId: code_Id != null ? code_Id : null,
+          userId: jsonValue != null ? JSON.parse(jsonValue) : null,
+          langId: value != null ? value : 'vi',
+          temId: valueJson != null ? JSON.parse(valueJson) : null,
+        });
+      });
+
+      // console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
+    } catch (e) {}
+  };
+
+
+
+  useEffect(() => {
+    console.log(props.statusPdf);
+    if (props.statusPdf !== null) {
+      if (props.statusPdf === 1) {
+        console.log('datave');
+        // console.log('data', props.dataPdf);
+        setSource(props.dataPdf.linkPdf)
+        // admob();
+      }
+    } else if (props.errorPdf !== null) {
+      Alert.alert('Thông báo', props.errorPdf);
+    }
+  }, [props.statusPdf]);
   const admob = () => {
     let interstitial = InterstitialAd.createForAdRequest(adUnitId, {
       requestNonPersonalizedAdsOnly: true,
@@ -79,6 +129,10 @@ const ShowPdfComponent = (props) => {
     } catch (error) {
       alert(error.message);
     }
+  };
+  const chooseCivi =  async() => {
+    await props.logoutExportPdfAction()
+    await props.navigation.navigate('ChooseCVContainer')
   };
 
   const historyDownload = () => {
@@ -160,7 +214,7 @@ const ShowPdfComponent = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}
-          onPress={() => props.navigation.goBack()}>
+          onPress={() => props.navigation.navigate('HomeContainer')}>
           <Image
             source={Images.arrow}
             style={{
@@ -222,6 +276,7 @@ const ShowPdfComponent = (props) => {
       <BottomSheetDown
         OnShare={() => onShare()}
         OnDown={() => historyDownload()}
+        ChooseCivi={()=>chooseCivi()}
         ref={modal}
         title={t("Chi tiết")}
         modalHeight={200}
@@ -243,4 +298,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowPdfComponent;
+export default PDFShowComponent;
+

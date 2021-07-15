@@ -34,6 +34,11 @@ const BasicInfoComponent = (props) => {
     // props.navigation.addListener('focus', async () => {
     try {
       const value = await AsyncStorage.getItem('lang');
+      props.getFunctionRoleAction({
+        funcrole_group_id: '',
+        funcrole_role_id: '',
+        language: value != null ? value : 'vi',
+      });
 
         props.getCityAction({city_id: '', country_id: '', language: value!= null ? value : 'vi'});
         props.getIndustryAction({industry_id: '', language: value!= null ? value : 'vi'});
@@ -58,6 +63,14 @@ const BasicInfoComponent = (props) => {
     }
     // });
   };
+  useEffect(() => {
+    if (props.statusFunc !== null) {
+      if (props.statusFunc === 1) {
+        // console.log(props.dataFunc);
+        setDataIndustry(props.dataFunc);
+      }
+    }
+  }, [props.statusFunc]);
 
   useEffect(() => {
     if (props.statusUser !== null) {
@@ -70,9 +83,9 @@ const BasicInfoComponent = (props) => {
         setResumeTitle(props.dataUser.resume_title);
         setEdu(props.dataUser.qualifications)
         dataIndustry.map((item) => {
-          if (item.industry_id === props.dataUser.functional_role_id) {
-            setIndustry(item.industry);
-            setFuncRole(item.industry_id);
+          if (item.functional_role_id === props.dataUser.functional_role_id) {
+            setIndustry(item.functional_role);
+            setFuncRole(item.functional_role_id);
           }
         });
         dataLever.map((item) => {
@@ -156,13 +169,13 @@ const BasicInfoComponent = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (props.statusIndustry !== null) {
-      if (props.statusIndustry === 1) {
-        setDataIndustry(props.dataIndustrys);
-      }
-    }
-  }, [props.statusIndustry]);
+  // useEffect(() => {
+  //   if (props.statusIndustry !== null) {
+  //     if (props.statusIndustry === 1) {
+  //       setDataIndustry(props.dataIndustrys);
+  //     }
+  //   }
+  // }, [props.statusIndustry]);
 
   useEffect(() => {
     if (props.statusCity !== null) {
@@ -243,10 +256,12 @@ const BasicInfoComponent = (props) => {
   const modal2 = React.createRef();
 
   const onChooseIndustry = (item) => {
+    console.log('fun' , item);
     setCheck(false);
     setIndustry(item);
   };
   const onChooseIndustry_id = (item) => {
+    console.log('fun1' , item);
     setCheck(false);
     setCheckFuncRole(false);
     setCheckOnFuncRole(true);
@@ -404,6 +419,7 @@ const BasicInfoComponent = (props) => {
     if (checkShow1 === false) {
       setCheckShow1(!checkShow1);
       setHideMoneyNew(1);
+      setMoneyNew('0')
     } else {
       setCheckShow1(!checkShow1);
       setHideMoneyNew(0);

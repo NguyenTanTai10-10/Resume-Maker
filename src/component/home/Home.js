@@ -116,23 +116,6 @@ const Home = (props) => {
       Alert.alert('Thông báo', props.errorUser);
     }
   }, [props.statusUser]);
-
-  useEffect(() => {
-    console.log(props.statusPdf);
-    if (props.statusPdf !== null) {
-      if (props.statusPdf === 1) {
-        navigateShowPdf();
-      }
-    } else if (props.errorPdf !== null) {
-      Alert.alert('Thông báo', props.errorPdf);
-    }
-  }, [props.statusPdf]);
-  const navigateShowPdf = async () => {
-    await props.navigation.navigate('ShowPdfComponent', {
-      dataPDF: props.dataPdf,
-    });
-    await props.logoutExportPdfAction();
-  };
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
@@ -225,19 +208,25 @@ const Home = (props) => {
 
     // this.props.i18n.changeLanguage('en')
   };
-  const onExport = () => {
-    console.log('====================================');
-    props.exportPdfAction({
-      codeId: codeId,
-      userId: userId,
-      langId: langId,
-      temId: temId,
-    });
-    console.log('code==', codeId);
-    console.log('user_id', userId);
-    console.log('temId==', temId);
-    console.log('langId', langId);
-    console.log('====================================');
+  const onExport = async() => {
+    props.navigation.navigate('PDFShowContainer')
+        try {
+          await AsyncStorage.setItem('codeId', codeId)
+        } catch (e) {
+          // saving error
+        }
+  //   console.log('====================================');
+  //   props.exportPdfAction({
+  //     codeId: codeId,
+  //     userId: userId,
+  //     langId: langId,
+  //     temId: temId,
+  //   });
+  //   console.log('code==', codeId);
+  //   console.log('user_id', userId);
+  //   console.log('temId==', temId);
+  //   console.log('langId', langId);
+  //   console.log('====================================');
   };
 
 

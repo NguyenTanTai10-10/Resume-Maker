@@ -8,7 +8,8 @@ import {
   editCiviAction,
   infoUserAction,
   editInfoUserAction,
-  logoutEditCiviAction
+  logoutEditCiviAction,
+  getFunctionRoleAction
   
 } from '../../redux/actions/Action';
 
@@ -51,6 +52,12 @@ const mapStateToProps = (state) => {
     loadingUser: state.userInfoReducer.loading,
     messageUser: state.userInfoReducer.message,
     errorUser: state.userInfoReducer.error,
+    //=========================================
+    statusFunc: state.getFuncRoleReducer.status,
+    dataFunc: state.getFuncRoleReducer.data,
+    loadingFunc: state.getFuncRoleReducer.loading,
+    messageFunc: state.getFuncRoleReducer.message,
+    errorFunc: state.getFuncRoleReducer.error,
    
   };
 };
@@ -64,6 +71,7 @@ const mapDispatchToProps = (dispatch) => {
     infoUserAction: (input) => dispatch(infoUserAction(input)),
     editInfoUserAction: (input) => dispatch(editInfoUserAction(input)),
     logoutEditCiviAction: (input) => dispatch(logoutEditCiviAction(input)),
+    getFunctionRoleAction: (input) => dispatch(getFunctionRoleAction(input)),
     
     
   };
