@@ -19,7 +19,7 @@ import StatusBarView from './custom/StatusBarView';
 import BottomSheetDown from './custom/BottomSheetDown';
 
 import {useTranslation} from 'react-i18next';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   BannerAd,
   BannerAdSize,
@@ -27,7 +27,7 @@ import {
   InterstitialAd,
   AdEventType,
 } from '@react-native-firebase/admob';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const adUnitId = __DEV__
   ? TestIds.INTERSTITIAL
   : 'ca-app-pub-2243198721344643~4768875832';
@@ -43,7 +43,7 @@ const PDFShowComponent = (props) => {
 
   const modal = React.createRef();
   useEffect(() => {
-    admob();
+    // admob();
     getData()
     
   }, []);

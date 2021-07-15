@@ -102,9 +102,11 @@ const BasicInfoComponent = (props) => {
           setHideMoneyNow(0);
         }
         if (props.dataUser.is_negotiation === 1) {
+          console.log('vao day ,',props.dataUser.is_negotiation);
           setCheckShow1(true);
           setHideMoneyNew(1);
-        } else {
+        } else if (props.dataUser.is_negotiation === 0) {
+          console.log('vao day1 ,',props.dataUser.is_negotiation);
           setCheckShow1(false);
           setHideMoneyNew(0);
         }
@@ -426,6 +428,7 @@ const BasicInfoComponent = (props) => {
     }
   };
   const navigateEdu = () => {
+    console.log('34555==',edu.length);
     
     if (edu.length == 0) {
       props.navigation.navigate('AddEducationContainer')
@@ -708,14 +711,14 @@ const BasicInfoComponent = (props) => {
           }}>
           {checkShow1 === false ? (
             <Image
-              source={require('../res/image/img/stop.png')}
-              style={{height: 17, width: 17, resizeMode: 'contain'}}
-            />
-          ) : (
-            <Image
-              source={require('../res/image/img/check.png')}
-              style={{height: 17, width: 17, resizeMode: 'contain'}}
-            />
+            source={require('../res/image/img/stop.png')}
+            style={{height: 17, width: 17, resizeMode: 'contain'}}
+          />
+        ) : (
+          <Image
+            source={require('../res/image/img/check.png')}
+            style={{height: 17, width: 17, resizeMode: 'contain'}}
+          />
           )}
 
           <Text style={{alignSelf: 'center', marginLeft: 15}}>
@@ -888,7 +891,7 @@ const BasicInfoComponent = (props) => {
           ) : (
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('ListLanguageContainer');
+                navigateEdu()
               }}
               style={{
                 justifyContent: 'center',

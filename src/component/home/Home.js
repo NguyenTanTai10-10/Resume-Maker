@@ -9,6 +9,8 @@ import {
   Linking,
   Alert,
   Share,
+  PermissionsAndroid,
+  Platform
 } from 'react-native';
 
 import {screenWidth} from '../../res/style/theme';
@@ -16,6 +18,18 @@ import Header from '../custom/Header';
 import LoadingView from '../custom/LoadingView';
 import Slider from '../custom/Slider';
 import {useTranslation} from 'react-i18next';
+import RNFetchBlob from 'rn-fetch-blob';
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+  InterstitialAd,
+  AdEventType,
+} from '@react-native-firebase/admob';
+
+const adUnitId = __DEV__
+  ? TestIds.INTERSTITIAL
+  : 'ca-app-pub-2243198721344643~4768875832';
 
 const Home = (props) => {
   const {t, i18n} = useTranslation();
@@ -43,6 +57,23 @@ const Home = (props) => {
   useEffect(() => {
     getData();
   }, []);
+  const admob = () => {
+    let interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+      requestNonPersonalizedAdsOnly: true,
+      keywords: ['fashion', 'clothing'],
+    });
+    let interstitialer = interstitial.onAdEvent((type) => {
+      if (type === AdEventType.LOADED) {
+        interstitial.show();
+      } else if (type === AdEventType.CLOSED) {
+        // onExport()
+      }
+    });
+    interstitial.load();
+    return () => {
+      interstitialer = null;
+    };
+  };
 
   useEffect(() => {
     if (props.statusUser !== null) {
@@ -209,7 +240,8 @@ const Home = (props) => {
     // this.props.i18n.changeLanguage('en')
   };
   const onExport = async() => {
-    props.navigation.navigate('PDFShowContainer')
+    await admob()
+    await props.navigation.navigate('PDFShowContainer')
         try {
           await AsyncStorage.setItem('codeId', codeId)
         } catch (e) {
@@ -678,6 +710,7 @@ const Home = (props) => {
             </Text>
           </TouchableOpacity>
         </View>
+        <BannerAd unitId={adUnitId} size={BannerAdSize.SMART_BANNER} />
       </ScrollView>
     </View>
   );

@@ -195,6 +195,7 @@ function* EditInfoUser(input) {
   return temp;
 }
 function* EditCivi(input) {
+  console.log('123===',input);
   let temp;
   yield axios
     .post(urlSever, {
