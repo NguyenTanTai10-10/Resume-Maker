@@ -175,7 +175,7 @@ function* EditInfoUser(input) {
         user_id: input.user_id,
         email: input.email,
         name: input.name,
-        birthday: input.name,
+        birthday: input.birthday,
         gender: input.gender,
         marital_status: '1',
         address: input.address,

@@ -179,11 +179,11 @@ const AddExperiencesComponent = (props) => {
       lever_Name === t('Cấp bậc')
     ) {
       if (exp === null || exp.trim() === '') {
-        setNameCompany('');
+        setExp('');
         setCheckExp(true);
       }
       if (nameCompany === null || nameCompany.trim() === '') {
-        setExp('');
+        setNameCompany('');
         setCheckNameCom(true);
       }
       if (dayPass === t('Thời gian bắt đầu làm việc từ')) {

@@ -25,7 +25,9 @@ import {useTranslation} from 'react-i18next';
 const ContactHomeComponent = (props) => {
   const {t} = useTranslation();
   const [data, setData] = useState('');
+  const [langCodez, setLangCodez] = useState('');
   const [ImagesAVT, setImagesAVT] = useState(false);
+  const [gentle, setGentle] = useState('');
 
   useEffect(() => {
     props.navigation.addListener('focus', async () => {
@@ -34,6 +36,7 @@ const ContactHomeComponent = (props) => {
       // props.getCityAction({city_id: '', country_id: ''});
       try {
         const values = await AsyncStorage.getItem('lang');
+        setLangCodez(values != null ? values : 'vi')
 
         props.getCityAction({
           city_id: '',
@@ -71,6 +74,7 @@ const ContactHomeComponent = (props) => {
         setAdress(props.dataUser.address);
         setCity_id(props.dataUser.city_id);
         setPhotoBase64(props.dataUser.profile_image);
+        setGentle(props.dataUser.gender)
 
         DataCity.map((item) => {
           if (item.id === props.dataUser.city_id) {
@@ -370,6 +374,8 @@ const ContactHomeComponent = (props) => {
       console.log('City', City);
       console.log('Adress', Adress);
       console.log('Gender', Gender);
+      console.log('langCode', langCodez);
+      
 
       props.editInfoUserAction({
         user_id: userID,
@@ -381,6 +387,7 @@ const ContactHomeComponent = (props) => {
         birthday: birthDay,
         gender: Gender,
         skype: '',
+        langCode:langCodez
       });
       if (dataPhoto !== '') {
         await props.editAvatarAction({user_id: userID, image: dataPhoto});
@@ -578,7 +585,9 @@ const ContactHomeComponent = (props) => {
           </View>
         </View>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <ButtonChoose OnGender={(item) => onGender(item)} />
+          <ButtonChoose OnGender={(item) => onGender(item)}
+          title={gentle}
+          />
         </View>
 
         <View

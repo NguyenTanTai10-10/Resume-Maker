@@ -240,7 +240,10 @@ const BasicInfoComponent = (props) => {
   const textMoneyNow = (text) => {
     setCheck(false);
     const kq = text.replace(/^0+/, '');
-    setMoneyNow(kq);
+    var x = parseInt(text);
+x = x.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+console.log(x.toLocaleString());
+    setMoneyNow(x.toLocaleString());
     setCheckMoneyNow(false);
     setCheckOnMoneyNow(true);
   };

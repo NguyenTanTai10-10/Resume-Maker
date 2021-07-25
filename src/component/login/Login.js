@@ -110,17 +110,15 @@ const Login = (props) => {
       } else if (props.status === 0) {
         Alert.alert(
           t(props.message),
-          'Bạn có muốn tạo tài khoản không ?',
+          '',
           [
             {
               text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
               style: 'cancel',
             },
             {
               text: 'OK',
               onPress: async () => {
-                props.navigation.navigate('ListCVContainer');
               },
             },
           ],

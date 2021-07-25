@@ -1,27 +1,36 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {Component} from 'react';
-import { withTranslation } from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {screenWidth} from '../../res/style/theme';
 
- class ButtonChoose extends Component {
+class ButtonChoose extends Component {
   constructor(props) {
     super(props);
     this.state = {
       arrButton: ['1', '2'],
-      select: '1',
+      select: '',
     };
   }
-  async componentDidMount() {
-    try {
-      const kq = await AsyncStorage.getItem('@storage_Key');
-
-      if (kq !== null) {
-        this.setState({select: kq});
-      }
-    } catch (e) {
-      // error reading value
+  componentDidUpdate(prevProps) {
+    // console.log('props',this.props.title);
+    if(this.props.title !== '' && this.props.title !== prevProps.title){
+      console.log('====================================');
+      console.log('this.props.title',this.props.title);
+      console.log('====================================');
+      this.setState({select:this.props.title})
     }
+    
+
+    // try {
+    //   const kq = await AsyncStorage.getItem('@storage_Key');
+
+    //   if (kq !== null) {
+    //     this.setState({select: kq});
+    //   }
+    // } catch (e) {
+    //   // error reading value
+    // }
   }
 
   storeData = async (value) => {
@@ -124,4 +133,4 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
 });
-export default withTranslation()(ButtonChoose) 
+export default withTranslation()(ButtonChoose);

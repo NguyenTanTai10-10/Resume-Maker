@@ -9,7 +9,7 @@ const resources = {
       //================================================
       'Tiếp tục': 'Tiếp tục',
       'Trở lại': 'Trở lại',
-      'Cập nhập': 'Cập nhập',
+      'Cập nhập': 'Cập nhật',
       'Cập nhật thông tin thành công': 'Cập nhật thông tin thành công',
       'Thông báo': 'Thông báo',
       'Cập nhật không thành công': 'Cập nhật không thành công',

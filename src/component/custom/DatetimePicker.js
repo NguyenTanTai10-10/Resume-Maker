@@ -16,6 +16,9 @@ import {useTranslation} from 'react-i18next';
 const DatetimePicker = (props) => {
   const {t}= useTranslation()
   useEffect(() => {
+    console.log('====================================');
+    console.log('props.title',props.title);
+    console.log('====================================');
     setDateStart(props.title)
   
   }, [props.title])
@@ -83,7 +86,7 @@ const DatetimePicker = (props) => {
     const y = `${dateChooose}`.slice(-4);
     const d = `${dateChooose}`.slice(3, 5);
     const m = `${dateChooose}`.slice(0, 2);
-    return `${y}-${d}-${m}`;
+    return `${y}-${m}-${d}`;
   };
   return (
     <View>

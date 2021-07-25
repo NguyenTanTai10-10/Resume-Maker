@@ -139,7 +139,7 @@ const EditEducationComponent = (props) => {
   const onChooseQua = (item) => {
     if (item == 'Trung học') {
       setDisable(true);
-      setFuncName('');
+      setFuncName(t('Chuyên ngành'));
     } else {
       setDisable(false);
     }
@@ -216,7 +216,7 @@ const EditEducationComponent = (props) => {
       yearPass > yearEnd ||
       school === '' ||
       school.trim() === '' ||
-      funcName === t('Chuyên ngành')
+      (disabled == false && funcName === t('Chuyên ngành'))
     ) {
       if (quaName === t('Trình độ')) {
         setCheckQuaName(true);

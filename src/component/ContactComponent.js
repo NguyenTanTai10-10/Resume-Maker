@@ -7,7 +7,6 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {set} from 'react-native-reanimated';
 import Images from '../res/image';
 import {screenHeight, screenWidth} from '../res/style/theme';
 import Sizes from '../utils/Sizes';
@@ -52,6 +51,15 @@ const ContactComponent = (props) => {
       // error reading value
     }
   };
+  useEffect(() => {
+    if (props.statusEditCv !== null) {
+      if (props.statusEditCv === 1) {
+         props.navigation.navigate('Drawers');
+      }
+    } else if (props.errorEditCv !== null) {
+      Alert.alert('Thông báo', props.errorEditCv);
+    }
+  }, [props.statusEditCv]);
 
   useEffect(() => {
     if (props.statusCity !== null) {
@@ -388,12 +396,14 @@ const ContactComponent = (props) => {
       level_group_id: '',
       location_id: [],
     });
-    await props.navigation.navigate('Drawers');
+    
+    
   };
   return (
     <View style={{flex: 1}}>
       {props.loadingRegister && <LoadingView />}
       {props.loadingCity && <LoadingView />}
+      {props.loadingEditCv && <LoadingView />}
       <StatusBarView />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <View style={{}}>

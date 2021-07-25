@@ -50,6 +50,7 @@ const AddEducationComponent = (props) => {
   const [checkSchool, setCheckSchool] = useState(false);
   const [deleteSchool, setDeleteSchool] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     getData();
@@ -125,9 +126,11 @@ const AddEducationComponent = (props) => {
   const onChooseQua = (item) => {
     if (item == 'Trung học') {
       setDisable(true);
-      setFuncName('');
+      setDisabled(true)
+      setFuncName(t('Chuyên ngành'));
     } else {
       setDisable(false);
+      setDisabled(false)
     }
     setCheck(false);
     setCheckQuaName(false);
@@ -204,7 +207,7 @@ const AddEducationComponent = (props) => {
 
   //==============================================================
   const onSubmit = (item) => {
-    console.log('disable==',disable);
+    console.log('disable==', disable);
     if (
       quaName === t('Trình độ') ||
       dayPass === t('Năm học (từ)') ||
@@ -213,7 +216,7 @@ const AddEducationComponent = (props) => {
       yearPass > yearEnd ||
       school === '' ||
       school.trim() === '' ||
-      funcName === t('Chuyên ngành')
+      (disabled == false && funcName === t('Chuyên ngành'))
     ) {
       if (quaName === t('Trình độ')) {
         setCheckQuaName(true);

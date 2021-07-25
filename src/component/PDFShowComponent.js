@@ -43,7 +43,7 @@ const PDFShowComponent = (props) => {
 
   const modal = React.createRef();
   useEffect(() => {
-    // admob();
+    admob();
     getData()
     
   }, []);
@@ -89,7 +89,7 @@ const PDFShowComponent = (props) => {
         console.log('datave');
         // console.log('data', props.dataPdf);
         setSource(props.dataPdf.linkPdf)
-        // admob();
+        
       }
     } else if (props.errorPdf !== null) {
       Alert.alert('Thông báo', props.errorPdf);

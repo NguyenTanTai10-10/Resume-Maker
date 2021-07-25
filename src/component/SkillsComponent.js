@@ -419,7 +419,7 @@ const SkillsComponent = (props) => {
 
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('HomeContainer');
+              props.navigation.navigate('ShowPdfContainer');
             }}
             style={{
               justifyContent: 'center',

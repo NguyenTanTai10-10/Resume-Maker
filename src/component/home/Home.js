@@ -148,6 +148,7 @@ const Home = (props) => {
     }
   }, [props.statusUser]);
   const getData = async () => {
+    props.logoutEditCiviAction();
     try {
       const jsonValue = await AsyncStorage.getItem('@jobseeker_id');
       const value = await AsyncStorage.getItem('lang');
@@ -240,7 +241,7 @@ const Home = (props) => {
     // this.props.i18n.changeLanguage('en')
   };
   const onExport = async() => {
-    await admob()
+    // await admob()
     await props.navigation.navigate('PDFShowContainer')
         try {
           await AsyncStorage.setItem('codeId', codeId)
